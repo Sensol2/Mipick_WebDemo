@@ -7,7 +7,10 @@ export const GlobalStyle = createGlobalStyle`
     --orange-50: #ffedd5;
     --orange-25: #fff7ed;
   }
-  html { scroll-behavior: smooth; }
+  html { 
+    scroll-behavior: smooth; 
+    scroll-padding-top: 80px; /* 헤더 높이보다 조금 더 크게 설정 */
+  }
   *, *::before, *::after { box-sizing: border-box; }
   body {
     margin: 0;

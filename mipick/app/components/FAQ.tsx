@@ -21,16 +21,16 @@ export default function FAQ(){
         <h2 style={{ marginBottom: 12 }}>FAQ</h2>
         <div style={{ display: "grid", gap: 8 }}>
           <Item>
+            <summary>주문 가능 시간은 언제인가요?</summary>
+            <p>기본은 전날 주문이며, 거리에 따라 당일 오전 10:00 전까지 주문이 가능합니다.</p>
+          </Item>
+          <Item>
             <summary>픽업 가능 시간은 언제인가요?</summary>
-            <p>대부분의 스테이션은 11:30–13:30 사이 픽업이 가능합니다. 스테이션별로 상이할 수 있어 앱에서 안내합니다.</p>
+            <p>11:30–13:30 사이 픽업이 가능합니다.</p>
           </Item>
           <Item>
-            <summary>당일 주문도 가능한가요?</summary>
-            <p>기본은 전날 주문이며, 재고가 있는 경우 한정 수량 당일 주문을 제공할 수 있습니다.</p>
-          </Item>
-          <Item>
-            <summary>환불은 어떻게 진행되나요?</summary>
-            <p>픽업 전 취소는 전액 환불됩니다. 품질 이슈는 사진 첨부 후 고객센터 검토를 거쳐 보상합니다.</p>
+            <summary>어디서 먹나요?</summary>
+            <p>숭실대학교 카페(한경직 기념관)에 먹을 장소가 마련되어 있습니다.</p>
           </Item>
         </div>
       </Container>

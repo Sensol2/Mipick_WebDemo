@@ -15,8 +15,8 @@ export default function LandingPage() {
       <Header />
       <main>
         <Hero />
-        <Features />
         <HowItWorks />
+        <Features />
         <Fresh />
         <PickupStations />
         <SocialProof />

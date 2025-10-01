@@ -3,14 +3,20 @@
 import styled from "styled-components"
 
 export const Input = styled.input`
-  width: 100%;
-  padding: 12px 14px;
-  border-radius: ${({ theme }) => theme.radius.input};
-  border: 1px solid ${({ theme }) => theme.colors.inputBorder};
+  flex: 1;
+  padding: 14px 20px;
+  border-radius: 25px;
+  border: 2px solid #E5E5E5;
   font-size: 16px;
   outline: none;
+  background: white;
+  
+  &::placeholder {
+    color: #9CA3AF;
+  }
+  
   &:focus {
-    border-color: ${({ theme }) => theme.colors.primary};
-    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.15);
+    border-color: #2B3A52;
+    box-shadow: 0 0 0 3px rgba(43, 58, 82, 0.1);
   }
 `

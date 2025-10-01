@@ -24,16 +24,16 @@ export default function SocialProof(){
       <Container>
         <Grid>
           <Stat>
-            <h3>92%</h3>
+            <h3>4.5 / 5.0</h3>
             <p>초기 테스터 만족도</p>
           </Stat>
           <Stat>
-            <h3>₩3,000</h3>
-            <p>픽업 지연 보상 정책</p>
+            <h3>500+</h3>
+            <p>누적 배달 건수</p>
           </Stat>
           <Stat>
-            <h3>10+</h3>
-            <p>학교·기업 파일럿 진행</p>
+            <h3>30+</h3>
+            <p>제휴 음식점 수</p>
           </Stat>
         </Grid>
       </Container>

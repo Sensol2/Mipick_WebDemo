@@ -40,8 +40,8 @@ export default function Header(){
             MiPick
           </Logo>
           <Nav>
+            <a href="#howitworks">이용방법</a>
             <a href="#features">특징</a>
-            <a href="#themes">테마 박스</a>
             <a href="#stations">픽업 스테이션</a>
             <a href="#faq">FAQ</a>
           </Nav>

@@ -26,24 +26,24 @@ const Step = styled(Card)`
 
 export default function HowItWorks(){
   return (
-    <Wrap>
+    <Wrap id="howitworks">
       <Container>
         <h2 style={{ marginBottom: 12 }}>이용 방법</h2>
         <Grid>
           <Step>
             <ShoppingBasket />
             <h3>메뉴 고르기</h3>
-            <p>매일 바뀌는 테마 박스 중 취향대로 선택.</p>
+            <p>선별된 맛집 메뉴 중 취향대로 선택</p>
           </Step>
           <Step>
             <CreditCard />
             <h3>결제하기</h3>
-            <p>간편 결제로 다음날 픽업 예약 완료.</p>
+            <p>간편 결제로 다음날 픽업 예약 완료</p>
           </Step>
           <Step>
             <Store />
             <h3>스테이션 픽업</h3>
-            <p>예약 시간에 줄 없이 바로 픽업.</p>
+            <p>예약 시간에 줄 없이 바로 픽업</p>
           </Step>
         </Grid>
       </Container>

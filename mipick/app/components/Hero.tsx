@@ -6,52 +6,60 @@ import { Button } from "@/app/components/ui/Button"
 import { Input } from "@/app/components/ui/Input"
 
 const Wrap = styled.section`
-  padding: 64px 0;
+  padding: 80px 0 0px;
+  text-align: center;
 `
 
-const Grid = styled.div`
-  display: grid; gap: 20px;
+const ContentWrapper = styled.div`
+  max-width: 800px;
+  margin: 0 auto;
 `
 
 const Title = styled.h1`
-  font-size: clamp(28px, 4vw, 40px);
-  font-weight: 900; color: ${({ theme }) => theme.colors.textMain};
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 700;
+  color: ${({ theme }) => theme.colors.textMain};
+  margin-bottom: 20px;
+  line-height: 1.2;
+  
+  .highlight {
+    color: ${({ theme }) => theme.colors.primary};
+  }
 `
 
 const Sub = styled.p`
-  font-size: 18px; color: ${({ theme }) => theme.colors.textSecondary};
+  font-size: 18px;
+  color: ${({ theme }) => theme.colors.textSecondary};
+  margin-bottom: 40px;
+  line-height: 1.6;
 `
 
-const EmailRow = styled.form`
-  margin-top: 16px; display: flex; gap: 10px;
-  @media (max-width: 480px) { flex-direction: column; }
+const ButtonGroup = styled.div`
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
 `
+
 
 export default function Hero(){
-  const onSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault()
-    const fd = new FormData(e.currentTarget)
-    alert(`알림 신청 완료: ${fd.get('email')}`)
-    e.currentTarget.reset()
-  }
-
   return (
     <Wrap>
       <Container>
-        <Grid>
-          <div>
-            <Title>미리 주문하면, 맛집이 학교 앞으로</Title>
-            <Sub>매일 달라지는 메뉴를 미리 고르고, 원하는 시간에 가까운 스테이션에서 간편하게 찾아가세요.</Sub>
-            <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
-              <Button as="a" href="#features">오늘 메뉴 확인</Button>
-              <Button as="a" href="#cta" variant="secondary">파트너 입점 문의</Button>
-            </div>
-            <EmailRow onSubmit={onSubmit}>
-              <Input name="email" type="email" placeholder="이메일을 입력하세요" required />
-              <Button type="submit">알림 신청</Button>
-            </EmailRow>
-          </div>
-        </Grid>
+        <ContentWrapper>
+          <Title>
+            미리 주문하면, <br /> <span className="highlight">맛집</span>이 학교 안으로
+          </Title>
+          <Sub>
+            매일 달라지는 메뉴를 미리 고르고, 원하는 시간에 가까운 스테이션에서 간편하게 찾아가세요.
+          </Sub>
+          
+          <ButtonGroup>
+            <Button as="a" href="/todayMenu">오늘 메뉴 보러가기</Button>
+            <Button as="a" href="#cta" variant="secondary">파트너 입점 문의</Button>
+          </ButtonGroup>
+        </ContentWrapper>
       </Container>
     </Wrap>
   )

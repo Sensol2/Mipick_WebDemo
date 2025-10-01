@@ -36,10 +36,10 @@ export default function CTA(){
     <Wrap id="cta">
       <Container>
         <Box>
-          <Title>내일의 점심은 미픽에서 시작</Title>
-          <p>새로운 테마 박스가 매일 업데이트됩니다. 알림을 받아보세요.</p>
+          <Title>한 끼의 즐거움, 미픽에서 시작하기</Title>
+          <p>새로운 메뉴가 매일 업데이트됩니다. 알림을 받아보세요.</p>
           <Row onSubmit={onSubmit}>
-            <Input name="email" type="email" placeholder="이메일을 입력하세요" required />
+            <Input name="email" type="email" placeholder="010-xxxx-xxxx" required />
             <Button type="submit">알림 신청</Button>
           </Row>
         </Box>
