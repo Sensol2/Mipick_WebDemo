@@ -2,7 +2,7 @@
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { MapPin, Clock, Coffee, Check } from "lucide-react";
-import "./TodayPickPage.css";
+import "./todayMenu.css";
 
 // Countdown 훅
 function useCountdown(initialSeconds: number) {
