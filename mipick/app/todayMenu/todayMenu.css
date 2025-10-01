@@ -26,11 +26,13 @@
   font-size: 24px;
   font-weight: 800;
   color: #ea580c;
+  margin-bottom: 8px;
 }
 
 .subtitle {
   font-size: 14px;
   color: #6b7280;
+  margin-bottom: 0;
 }
 
 .media {
@@ -63,41 +65,50 @@
 
 .content-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
 }
 
 .menu-title {
-  font-size: 20px;
+  display: flex;
+  align-self: center;
+  font-size: 28px;
   font-weight: 800;
   color: #1f2937;
+  line-height: 20px;
 }
 
 .countdown {
   display: flex;
   align-items: center;
   gap: 4px;
-  font-size: 12px;
+  font-size: 14px;
   color: #dc2626;
   background: #fee2e2;
   padding: 2px 8px;
   border-radius: 8px;
 }
 
-.hashtags {
-  font-size: 12px;
+.description {
+  font-size: 14px;
   color: #6b7280;
   font-weight: 500;
-  margin-top: 8px;
+  margin-top: 0;
+  margin-bottom: 24px;
 }
 
 .info {
   display: flex;
   align-items: center;
-  font-size: 13px;
+  font-size: 16px;
   color: #374151;
   font-weight: 500;
-  margin-top: 4px;
+  margin-bottom: 12px;
+}
+
+.info:last-of-type {
+  margin-bottom: 0;
 }
 
 .info .icon {
@@ -122,7 +133,7 @@
   font-size: 14px;
   font-weight: 700;
   color: #1f2937;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 .steps {

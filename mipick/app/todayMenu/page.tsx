@@ -2,12 +2,19 @@
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { MapPin, Clock, Coffee, Check } from "lucide-react";
+import { StoreService } from "@/lib/storeService";
+import { Store } from "@/lib/supabase";
 import "./todayMenu.css";
+
 
 // Countdown 훅
 function useCountdown(initialSeconds: number) {
   const [secondsLeft, setSecondsLeft] = useState(initialSeconds);
   const intervalRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    console.log(process.env.SUPABASE_URL);
+  }, []);
 
   useEffect(() => {
     if (secondsLeft <= 0) return;
@@ -37,6 +44,26 @@ function useCountdown(initialSeconds: number) {
 export default function Home() {
   const { formatted } = useCountdown(211); // 03:31
   const currentOrders = 35;
+  const [store, setStore] = useState<Store | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  // 스토어 데이터 가져오기
+  useEffect(() => {
+    const TEST_ID = "f8e2c681-19ae-42a6-b374-427727741846"; // 임시 하드코딩
+    const getStoreById = async () => {
+      try {
+        setLoading(true);
+        const storeData = await StoreService.getStoreById(TEST_ID);
+        setStore(storeData);
+      } catch (error) {
+        console.error('Failed to fetch today store:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getStoreById();
+  }, []);
 
   const steps = [
     { num: 0, reward: "배달비 무료" },
@@ -44,6 +71,34 @@ export default function Home() {
     { num: 50, reward: "500원 할인" },
     { num: 100, reward: "음료 무료" },
   ];
+
+  // 로딩 상태
+  if (loading) {
+    return (
+      <div className="page">
+        <div className="card">
+          <div className="card-header">
+            <h2 className="title">오늘의 메뉴</h2>
+            <p className="subtitle">로딩 중...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // 데이터가 없는 경우
+  if (!store) {
+    return (
+      <div className="page">
+        <div className="card">
+          <div className="card-header">
+            <h2 className="title">오늘의 메뉴</h2>
+            <p className="subtitle">준비 중입니다</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="page">
@@ -55,31 +110,31 @@ export default function Home() {
 
         <div className="media">
           <img
-            src="https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20250813_132%2F1755070254048Vr7FN_JPEG%2F%25C1%25A6%25C1%25D6%25BB%25F3%25C8%25B8_%25B8%25DE%25C0%25CE%25BB%25E7%25C1%25F8.jpg"
+            src={store.thumbnail || "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20250813_132%2F1755070254048Vr7FN_JPEG%2F%25C1%25A6%25C1%25D6%25BB%25F3%25C8%25B8_%25B8%25DE%25C0%25CE%25BB%25E7%25C1%25F8.jpg"}
             alt="오늘의 메뉴"
           />
-          <div className="badge">제주상회</div>
+          <div className="badge">{store.name}</div>
         </div>
 
         <div className="content">
           <div className="content-header">
-            <h1 className="menu-title">제주상회 '고기국수'</h1>
+            <h1 className="menu-title">{store.name}</h1>
             <div className="countdown">
               <Clock size={14} />
-              <span>{formatted}</span>
+              <span>{formatted} 뒤에 사라져요!</span>
             </div>
           </div>
 
-          <p className="hashtags">#서울대맛집 #가성비 #든든국밥</p>
+          <p className="description">{store.description || "#맛집 #가성비 #든든한끼"}</p>
 
           <div className="info">
             <MapPin size={14} className="icon" />
-            <span>관악구 관악로</span>
+            <span>{store.address || "위치 정보 없음"}</span>
           </div>
 
           <div className="info">
             <Coffee size={14} className="icon" />
-            <span className="bold">숭실대 카페</span> (한경직 기념관)
+            <span className="bold">(픽업장소) 한경직 기념관</span>
           </div>
 
           <div className="progress-section">
