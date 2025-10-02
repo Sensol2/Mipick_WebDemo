@@ -44,11 +44,10 @@ export default function Home() {
 
   // 스토어 데이터 가져오기
   useEffect(() => {
-    const TEST_ID = "9772abd4-b1bb-4fce-9cbe-a7e8bee0c3ef"; // 임시 하드코딩
     const getTodayStore = async () => {
       try {
         setLoading(true);
-        const storeData = await StoreService.getTodayStore(TEST_ID);
+        const storeData = await StoreService.getTodayStore();
         setStore(storeData);
       } catch (error) {
         console.error('Failed to fetch today store:', error);
