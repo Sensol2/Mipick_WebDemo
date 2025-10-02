@@ -2,7 +2,7 @@
   min-height: 100vh;
   background: linear-gradient(to bottom, #ffedd5, #ffffff, #fff7ed);
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   padding: 24px;
 }
