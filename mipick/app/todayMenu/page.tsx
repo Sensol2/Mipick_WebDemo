@@ -13,10 +13,6 @@ function useCountdown(initialSeconds: number) {
   const intervalRef = useRef<number | null>(null);
 
   useEffect(() => {
-    console.log(process.env.SUPABASE_URL);
-  }, []);
-
-  useEffect(() => {
     if (secondsLeft <= 0) return;
     intervalRef.current = window.setInterval(() => {
       setSecondsLeft((s) => (s > 0 ? s - 1 : 0));

@@ -44,30 +44,7 @@ export class StoreService {
     }
   }
 
-  // 오늘의 추천 스토어 가져오기 (todayMenu용)
-  static async getTodayStore(): Promise<Store | null> {
-    try {
-      const { data, error } = await supabase
-        .from('stores')
-        .select('*')
-        .eq('is_active', true)
-        .order('created_at', { ascending: false })
-        .limit(1)
-        .single();
-
-      if (error) {
-        console.error('Error fetching today store:', error);
-        return null;
-      }
-
-      return data;
-    } catch (error) {
-      console.error('Error in getTodayStore:', error);
-      return null;
-    }
-  }
-
-  // 특정 매장의 메뉴 목록 조회
+  // ID로 특정 매장의 메뉴 목록 조회
   static async getStoreMenus(storeId: string): Promise<Menu[]> {
     try {
       const { data, error } = await supabase
