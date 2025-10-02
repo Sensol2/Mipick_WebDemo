@@ -6,7 +6,6 @@ import { StoreService } from "@/lib/storeService";
 import { Store } from "@/lib/supabase";
 import "./todayMenu.css";
 
-
 // Countdown 훅
 function useCountdown(initialSeconds: number) {
   const [secondsLeft, setSecondsLeft] = useState(initialSeconds);
@@ -45,11 +44,11 @@ export default function Home() {
 
   // 스토어 데이터 가져오기
   useEffect(() => {
-    const TEST_ID = "f8e2c681-19ae-42a6-b374-427727741846"; // 임시 하드코딩
-    const getStoreById = async () => {
+    const TEST_ID = "9772abd4-b1bb-4fce-9cbe-a7e8bee0c3ef"; // 임시 하드코딩
+    const getTodayStore = async () => {
       try {
         setLoading(true);
-        const storeData = await StoreService.getStoreById(TEST_ID);
+        const storeData = await StoreService.getTodayStore(TEST_ID);
         setStore(storeData);
       } catch (error) {
         console.error('Failed to fetch today store:', error);
@@ -58,7 +57,7 @@ export default function Home() {
       }
     };
 
-    getStoreById();
+    getTodayStore();
   }, []);
 
   const steps = [
@@ -125,7 +124,7 @@ export default function Home() {
 
           <div className="info">
             <MapPin size={14} className="icon" />
-            <span>{store.address || "위치 정보 없음"}</span>
+            <span>{store.location || "위치 정보 없음"}</span>
           </div>
 
           <div className="info">
@@ -158,7 +157,10 @@ export default function Home() {
             </div>
           </div>
 
-          <a href="#order" className="order-btn">
+          <a 
+            href={`/todayMenu/list?storeId=${store.id}`}
+            className="order-btn"
+          >
             주문하고 학교에서 먹기
           </a>
         </div>

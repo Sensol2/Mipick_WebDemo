@@ -1,24 +1,26 @@
 import { supabase, type Store, type Menu } from './supabase';
 
 export class StoreService {
-  // 모든 활성 스토어 가져오기 (홈 화면용)
-  static async getAllStores(): Promise<Store[]> {
+  // 오늘의 추천 스토어 가져오기 (todayMenu용)
+  static async getTodayStore(): Promise<Store | null> {
     try {
       const { data, error } = await supabase
         .from('stores')
         .select('*')
         .eq('is_active', true)
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .single();
 
       if (error) {
-        console.error('Error fetching stores:', error);
-        return [];
+        console.error('Error fetching today store:', error);
+        return null;
       }
 
-      return data || [];
+      return data;
     } catch (error) {
-      console.error('Error in getAllStores:', error);
-      return [];
+      console.error('Error in getTodayStore:', error);
+      return null;
     }
   }
 

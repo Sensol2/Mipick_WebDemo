@@ -11,10 +11,8 @@ export interface Store {
   id: string
   name: string
   description?: string
-  image_url?: string
-  location?: string
-  pickup_location?: string
-  hashtags?: string
+  thumbnail?: string
+  address?: string
   is_active: boolean
   created_at: string
   updated_at: string
@@ -23,11 +21,25 @@ export interface Store {
 export interface Menu {
   id: string
   store_id: string
-  name: string
+  title: string
   description?: string
   price: number
-  image_url?: string
+  thumbnail?: string
   is_active: boolean
   created_at: string
   updated_at: string
+}
+
+export interface MenuOption {
+  id: string
+  name: string
+  price: number
+}
+
+export interface MenuOptionGroup {
+  id: string
+  name: string
+  isRequired: boolean
+  maxSelections: number
+  options: MenuOption[]
 }
