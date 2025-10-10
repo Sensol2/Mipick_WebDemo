@@ -107,8 +107,7 @@ export default function MenuDetailPage() {
       <Page>
         <Sheet>
           <Header>
-            <HeaderTitle>메뉴 상세</HeaderTitle>
-            <HeaderSubtitle>메뉴 정보를 불러오는 중...</HeaderSubtitle>
+            <HeaderTitle>옵션 선택</HeaderTitle>
           </Header>
         </Sheet>
       </Page>
@@ -121,7 +120,6 @@ export default function MenuDetailPage() {
         <Sheet>
           <Header>
             <HeaderTitle>오류</HeaderTitle>
-            <HeaderSubtitle>메뉴 정보를 찾을 수 없습니다.</HeaderSubtitle>
           </Header>
         </Sheet>
       </Page>
@@ -133,8 +131,7 @@ export default function MenuDetailPage() {
       <Sheet>
         <Header>
           <CloseBtn onClick={handleBack}>←</CloseBtn>
-          <HeaderTitle>오늘의 메뉴</HeaderTitle>
-          <HeaderSubtitle>매일 바뀌는 오늘의 픽</HeaderSubtitle>
+          <HeaderTitle>옵션 선택</HeaderTitle>
         </Header>
 
         <Body>

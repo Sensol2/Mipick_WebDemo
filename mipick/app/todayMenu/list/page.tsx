@@ -56,8 +56,7 @@ export default function MenuListPage() {
       <Page>
         <Sheet>
           <Header>
-            <HeaderTitle>매장 정보</HeaderTitle>
-            <HeaderSubtitle>메뉴를 불러오는 중...</HeaderSubtitle>
+            <HeaderTitle>주문하기</HeaderTitle>
           </Header>
         </Sheet>
       </Page>
@@ -82,8 +81,7 @@ export default function MenuListPage() {
       <Sheet>
         <Header>
           <CloseBtn onClick={handleBack}>←</CloseBtn>
-          <HeaderTitle>오늘의 메뉴</HeaderTitle>
-          <HeaderSubtitle>매일 바뀌는 오늘의 픽</HeaderSubtitle>
+          <HeaderTitle>주문하기</HeaderTitle>
         </Header>
 
         <StoreImageContainer>
@@ -91,25 +89,16 @@ export default function MenuListPage() {
             src={store.thumbnail}
             alt={store.name}
           />
-          <StoreBadge>{store.name}</StoreBadge>
+          <ImageOverlay />
+          <StoreInfoOverlay>
+            <StoreName>{store.name}</StoreName>
+            {/* <StoreRating>⭐ 4.7 · 리뷰 1,069개 〉</StoreRating> */}
+            <StoreDeliveryTime>{store.description}</StoreDeliveryTime>
+            
+          </StoreInfoOverlay>
         </StoreImageContainer>
 
         <Body>
-          <Section>
-            <SectionTitle>{store.name}</SectionTitle>
-            <StoreHashtags>{store.description || "#스페셜티커피 #가성비 #든든한끼"}</StoreHashtags>
-
-            <StoreInfo>
-              <InfoIcon>📍</InfoIcon>
-              <InfoText>{store.address || "서울특별시 강남구 테헤란로 123"}</InfoText>
-            </StoreInfo>
-
-            <StoreInfo>
-              <InfoIcon>☕</InfoIcon>
-              <InfoText>(픽업장소) 한경직 기념관</InfoText>
-            </StoreInfo>
-          </Section>
-
           <Section>
             <SectionTitle>메뉴 ({menus.length})</SectionTitle>
             
@@ -206,7 +195,7 @@ const CloseBtn = styled.button`
 const StoreImageContainer = styled.div`
   position: relative;
   width: 100%;
-  height: 260px;
+  height: 220px;
   background: #e5e7eb;
 
   img {
@@ -216,15 +205,47 @@ const StoreImageContainer = styled.div`
   }
 `;
 
-const StoreBadge = styled.div`
+const ImageOverlay = styled.div`
   position: absolute;
-  top: 12px;
-  left: 12px;
-  background: rgba(0, 0, 0, 0.7);
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60%;
+  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.7));
+  pointer-events: none;
+`;
+
+const StoreInfoOverlay = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px;
   color: white;
-  font-size: 12px;
-  padding: 4px 8px;
-  border-radius: 12px;
+`;
+
+const StoreName = styled.h1`
+  font-size: 28px;
+  font-weight: 800;
+  color: white;
+  margin: 0 0 8px 0;
+`;
+
+const StoreRating = styled.div`
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  margin: 0 0 6px 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+`;
+
+const StoreDeliveryTime = styled.div`
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
 `;
 
 const Body = styled.div`
@@ -246,10 +267,10 @@ const SectionTitle = styled.h3`
 `;
 
 const StoreHashtags = styled.p`
-  font-size: 12px;
+  font-size: 13px;
   color: #6b7280;
   font-weight: 500;
-  margin: 8px 0 0 0;
+  margin: 0 0 12px 0;
 `;
 
 const StoreInfo = styled.div`

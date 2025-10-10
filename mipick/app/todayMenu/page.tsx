@@ -44,7 +44,6 @@ export default function Home() {
         <Sheet>
           <Header>
             <HeaderTitle>오늘의 메뉴</HeaderTitle>
-            <HeaderSubtitle>로딩 중...</HeaderSubtitle>
           </Header>
         </Sheet>
       </Page>
@@ -70,7 +69,6 @@ export default function Home() {
       <Sheet>
         <Header>
           <HeaderTitle>오늘의 메뉴</HeaderTitle>
-          <HeaderSubtitle>매일 바뀌는 오늘의 픽</HeaderSubtitle>
         </Header>
 
         <StoreImageContainer>
@@ -86,7 +84,6 @@ export default function Home() {
           <Section>
             <TitleRow>
               <StoreTitle>{store.name}</StoreTitle>
-
             </TitleRow>
             
             <StoreDescription>{store.description || "#맛집 #가성비 #든든한끼"}</StoreDescription>
@@ -237,41 +234,27 @@ const TitleRow = styled.div`
 `;
 
 const StoreTitle = styled.h1`
-  font-size: 22px;
+  font-size: 28px;
   font-weight: 800;
   color: #1f2937;
-  margin: 0 0 10px 0;
-`;
-
-const Countdown = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  font-size: 13px;
-  color: #dc2626;
-  background: #fee2e2;
-  padding: 6px 10px;
-  border-radius: 9px;
-  font-weight: 600;
-  margin-bottom: 10px;
+  margin: 0 0 6px 0;
 `;
 
 const StoreDescription = styled.p`
-  font-size: 13px;
+  font-size: 16px;
   color: #6b7280;
   font-weight: 500;
-  margin: 0 0 12px 0;
+  margin: 0 0 14px 0;
 `;
 
 const StoreInfo = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 13px;
+  font-size: 16px;
   color: #374151;
   font-weight: 500;
-  margin: 0 0 6px 0;
+  margin: 0 0 8px 0;
 
   &:last-of-type {
     margin-bottom: 0;
@@ -365,6 +348,20 @@ const Footer = styled.div`
   padding: 16px;
   background: #fff;
   box-shadow: 0 -6px 12px rgba(0, 0, 0, 0.04);
+`;
+
+const Countdown = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 13px;
+  color: #dc2626;
+  background: #fee2e2;
+  padding: 6px 10px;
+  border-radius: 9px;
+  font-weight: 600;
+  margin-bottom: 10px;
 `;
 
 const PayButton = styled.a`
