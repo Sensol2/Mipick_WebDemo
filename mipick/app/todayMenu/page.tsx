@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MapPin, Clock, Coffee, Check } from "lucide-react";
 import { StoreService } from "@/lib/storeService";
 import { Store } from "@/lib/supabase";
@@ -41,12 +41,12 @@ export default function Home() {
   if (loading) {
     return (
       <Page>
-        <Card>
-          <CardHeader>
-            <Title>오늘의 메뉴</Title>
-            <Subtitle>로딩 중...</Subtitle>
-          </CardHeader>
-        </Card>
+        <Sheet>
+          <Header>
+            <HeaderTitle>오늘의 메뉴</HeaderTitle>
+            <HeaderSubtitle>로딩 중...</HeaderSubtitle>
+          </Header>
+        </Sheet>
       </Page>
     );
   }
@@ -55,76 +55,85 @@ export default function Home() {
   if (!store) {
     return (
       <Page>
-        <Card>
-          <CardHeader>
-            <Title>오늘의 메뉴</Title>
-            <Subtitle>준비 중입니다</Subtitle>
-          </CardHeader>
-        </Card>
+        <Sheet>
+          <Header>
+            <HeaderTitle>오늘의 메뉴</HeaderTitle>
+            <HeaderSubtitle>준비 중입니다</HeaderSubtitle>
+          </Header>
+        </Sheet>
       </Page>
     );
   }
 
   return (
     <Page>
-      <Card>
-        <CardHeader>
-          <Title>오늘의 메뉴</Title>
-          <Subtitle>매일 바뀌는 오늘의 픽</Subtitle>
-        </CardHeader>
+      <Sheet>
+        <Header>
+          <HeaderTitle>오늘의 메뉴</HeaderTitle>
+          <HeaderSubtitle>매일 바뀌는 오늘의 픽</HeaderSubtitle>
+        </Header>
 
-        <Media>
+        <StoreImageContainer>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={store.thumbnail || "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20250813_132%2F1755070254048Vr7FN_JPEG%2F%25C1%25A6%25C1%25D6%25BB%25F3%25C8%25B8_%25B8%25DE%25C0%25CE%25BB%25E7%25C1%25F8.jpg"}
             alt="오늘의 메뉴"
           />
-          <Badge>{store.name}</Badge>
-        </Media>
+          <StoreBadge>{store.name}</StoreBadge>
+        </StoreImageContainer>
 
-        <Content>
-          <ContentHeader>
-            <MenuTitle>{store.name}</MenuTitle>
-            <Countdown>
+        <Body>
+          <Section>
+            <TitleRow>
+              <StoreTitle>{store.name}</StoreTitle>
+
+            </TitleRow>
+            
+            <StoreDescription>{store.description || "#맛집 #가성비 #든든한끼"}</StoreDescription>
+
+            <StoreInfo>
+              <MapPin size={14} />
+              <span>{store.address || "위치 정보 없음"}</span>
+            </StoreInfo>
+
+            <StoreInfo>
+              <Coffee size={14} />
+              <InfoBold>(픽업장소) 한경직 기념관</InfoBold>
+            </StoreInfo>
+          </Section>
+
+          <Section>
+
+            <ProgressContainer>
+              <ProgressTitle>현재 {currentOrders}명 주문중</ProgressTitle>
+              <Steps>
+                {steps.map((step, idx) => (
+                  <Step key={step.num}>
+                    <StepLabel>{step.num}명</StepLabel>
+                    <StepCircle $active={currentOrders >= step.num}>
+                      {currentOrders >= step.num ? <Check size={14} /> : idx + 1}
+                    </StepCircle>
+                    <StepReward>{step.reward}</StepReward>
+                  </Step>
+                ))}
+                <ProgressLine>
+                  <ProgressFill $width={((currentOrders - 0) / 100) * 100} />
+                </ProgressLine>
+              </Steps>
+            </ProgressContainer>
+          </Section>
+        </Body>
+
+        <Footer>
+          <Countdown>
               <Clock size={14} />
               <span>{formatted} 뒤에 사라져요!</span>
-            </Countdown>
-          </ContentHeader>
-
-          <Description>{store.description || "#맛집 #가성비 #든든한끼"}</Description>
-
-          <Info>
-            <MapPin size={14} className="icon" />
-            <span>{store.address || "위치 정보 없음"}</span>
-          </Info>
-
-          <Info>
-            <Coffee size={14} className="icon" />
-            <Bold>(픽업장소) 한경직 기념관</Bold>
-          </Info>
-
-          <ProgressSection>
-            <CurrentOrders>현재 {currentOrders}명 주문중</CurrentOrders>
-            <Steps>
-              {steps.map((step, idx) => (
-                <Step key={step.num}>
-                  <StepLabel>{step.num}명</StepLabel>
-                  <Circle $active={currentOrders >= step.num}>
-                    {currentOrders >= step.num ? <Check size={14} /> : idx + 1}
-                  </Circle>
-                  <Reward>{step.reward}</Reward>
-                </Step>
-              ))}
-              <ProgressLine>
-                <ProgressFill $width={((currentOrders - 0) / 100) * 100} />
-              </ProgressLine>
-            </Steps>
-          </ProgressSection>
-
-          <OrderBtn href={`/todayMenu/list?storeId=${store.id}`}>
+          </Countdown>
+          <PayButton href={`/todayMenu/list?storeId=${store.id}`}>
             주문하고 학교에서 먹기
-          </OrderBtn>
-        </Content>
-      </Card>
+          </PayButton>
+        </Footer>
+      </Sheet>
     </Page>
   );
 }
@@ -137,41 +146,46 @@ const Page = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: 16px;
 `;
 
-const Card = styled.div`
-  background: white;
-  border-radius: 24px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+const Sheet = styled.div`
+  background: #fff;
   border: 1px solid #fed7aa;
+  border-radius: 20px;
   max-width: 420px;
   width: 100%;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 `;
 
-const CardHeader = styled.div`
-  padding: 24px;
+const Header = styled.div`
+  position: relative;
+  padding: 20px 48px;
   text-align: center;
+  border-bottom: 1px solid #ffe4cc;
 `;
 
-const Title = styled.h2`
-  font-size: 24px;
+const HeaderTitle = styled.h2`
+  margin: 0;
+  font-size: 20px;
   font-weight: 800;
-  color: #ea580c;
-  margin-bottom: 8px;
+  color: #111827;
 `;
 
-const Subtitle = styled.p`
-  font-size: 14px;
+const HeaderSubtitle = styled.p`
+  margin: 4px 0 0 0;
+  font-size: 12px;
   color: #6b7280;
-  margin-bottom: 0;
 `;
 
-const Media = styled.div`
+const StoreImageContainer = styled.div`
   position: relative;
   width: 100%;
-  height: 260px;
+  height: 240px;
   background: #e5e7eb;
 
   img {
@@ -181,92 +195,103 @@ const Media = styled.div`
   }
 `;
 
-const Badge = styled.div`
+const StoreBadge = styled.div`
   position: absolute;
-  top: 12px;
-  left: 12px;
+  top: 14px;
+  left: 14px;
   background: rgba(0, 0, 0, 0.7);
   color: white;
-  font-size: 12px;
-  padding: 4px 8px;
+  font-size: 13px;
+  padding: 6px 10px;
   border-radius: 12px;
+  font-weight: 600;
 `;
 
-const Content = styled.div`
-  padding: 24px;
+const Body = styled.div`
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 `;
 
-const ContentHeader = styled.div`
+const Section = styled.section`
+  display: flex;
+  flex-direction: column;
+`;
+
+const ProgressTitle = styled.h3`
+  font-size: 16px;
+  font-weight: 800;
+  color: #111827;
+  margin: 0 0 14px 0;
+  text-align: center;
+`;
+
+const TitleRow = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 12px;
+  gap: 12px;
 `;
 
-const MenuTitle = styled.h1`
-  display: flex;
-  align-self: center;
-  font-size: 28px;
+const StoreTitle = styled.h1`
+  font-size: 22px;
   font-weight: 800;
   color: #1f2937;
-  line-height: 20px;
+  margin: 0 0 10px 0;
 `;
 
 const Countdown = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 4px;
-  font-size: 14px;
+  font-size: 13px;
   color: #dc2626;
   background: #fee2e2;
-  padding: 2px 8px;
-  border-radius: 8px;
+  padding: 6px 10px;
+  border-radius: 9px;
+  font-weight: 600;
+  margin-bottom: 10px;
 `;
 
-const Description = styled.p`
-  font-size: 14px;
+const StoreDescription = styled.p`
+  font-size: 13px;
   color: #6b7280;
   font-weight: 500;
-  margin-top: 0;
-  margin-bottom: 24px;
+  margin: 0 0 12px 0;
 `;
 
-const Info = styled.div`
+const StoreInfo = styled.div`
   display: flex;
   align-items: center;
-  font-size: 16px;
+  gap: 8px;
+  font-size: 13px;
   color: #374151;
   font-weight: 500;
-  margin-bottom: 12px;
+  margin: 0 0 6px 0;
 
   &:last-of-type {
     margin-bottom: 0;
   }
 
-  .icon {
-    margin-right: 4px;
+  svg {
     color: #f97316;
+    flex-shrink: 0;
   }
 `;
 
-const Bold = styled.span`
+const InfoBold = styled.span`
   font-weight: 600;
 `;
 
-const ProgressSection = styled.div`
-  margin-top: 28px;
-  padding: 20px 0;
+const ProgressContainer = styled.div`
   background: #fafafa;
   border-radius: 12px;
-  margin-bottom: 4px;
-`;
-
-const CurrentOrders = styled.p`
-  text-align: center;
-  font-size: 18px;
-  font-weight: 700;
-  color: #1f2937;
-  margin-bottom: 20px;
+  padding: 20px 0;
+  margin-top: 10px;
 `;
 
 const Steps = styled.div`
@@ -284,15 +309,15 @@ const Step = styled.div`
 `;
 
 const StepLabel = styled.p`
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
   color: #1f2937;
-  margin-bottom: 6px;
+  margin: 0 0 6px 0;
 `;
 
-const Circle = styled.div<{ $active?: boolean }>`
-  width: 36px;
-  height: 36px;
+const StepCircle = styled.div<{ $active?: boolean }>`
+  width: 38px;
+  height: 38px;
   border: 3px solid ${props => props.$active ? '#22c55e' : '#d1d5db'};
   border-radius: 50%;
   margin: 0 auto;
@@ -306,18 +331,18 @@ const Circle = styled.div<{ $active?: boolean }>`
   box-shadow: ${props => props.$active ? '0 2px 8px rgba(34, 197, 94, 0.3)' : '0 2px 4px rgba(0, 0, 0, 0.1)'};
 `;
 
-const Reward = styled.p`
+const StepReward = styled.p`
   font-size: 11px;
   color: #1f2937;
   font-weight: 600;
-  margin-top: 6px;
+  margin: 6px 0 0 0;
 `;
 
 const ProgressLine = styled.div`
   position: absolute;
-  top: 43px;
-  left: 50px;
-  right: 50px;
+  top: 48px;
+  left: 55px;
+  right: 55px;
   height: 5px;
   background: #e5e7eb;
   z-index: 0;
@@ -332,17 +357,30 @@ const ProgressFill = styled.div<{ $width: number }>`
   width: ${props => props.$width}%;
 `;
 
-const OrderBtn = styled.a`
+const Footer = styled.div` 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 16px;
+  background: #fff;
+  box-shadow: 0 -6px 12px rgba(0, 0, 0, 0.04);
+`;
+
+const PayButton = styled.a`
   display: block;
   width: 100%;
   text-align: center;
-  background: #f97316;
-  color: white;
-  font-weight: 700;
-  padding: 12px;
-  border-radius: 12px;
-  margin-top: 16px;
   text-decoration: none;
+  border: none;
+  border-radius: 14px;
+  background: #f97316;
+  color: #fff;
+  padding: 16px;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background 0.2s ease;
 
   &:hover {
     background: #ea580c;

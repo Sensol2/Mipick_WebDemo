@@ -17,19 +17,12 @@ export default function MenuDetailPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const menuId = searchParams?.get("menuId");
-  const storeId = searchParams?.get("storeId");
   
   const [menu, setMenu] = useState<Menu | null>(null);
   const [options, setOptions] = useState<MenuOptionGroup[]>([]);
   const [selectedOptions, setSelectedOptions] = useState<SelectedOption[]>([]);
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (menuId) {
-      loadMenuData();
-    }
-  }, [menuId]);
 
   const loadMenuData = async () => {
     try {
@@ -64,6 +57,13 @@ export default function MenuDetailPage() {
     }
   };
 
+  useEffect(() => {
+    if (menuId) {
+      loadMenuData();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [menuId]);
+
   const handleOptionSelect = (groupId: string, option: MenuOption) => {
     setSelectedOptions(prev => {
       const filtered = prev.filter(item => item.groupId !== groupId);
@@ -95,7 +95,6 @@ export default function MenuDetailPage() {
       quantity,
       totalPrice
     });
-    // 여기에 장바구니 추가 로직 구현
     alert(`장바구니에 추가되었습니다! (₩${totalPrice.toLocaleString()})`);
   };
 
@@ -106,12 +105,12 @@ export default function MenuDetailPage() {
   if (loading) {
     return (
       <Page>
-        <Card>
-          <CardHeader>
-            <Title>메뉴 상세</Title>
-            <Subtitle>메뉴 정보를 불러오는 중...</Subtitle>
-          </CardHeader>
-        </Card>
+        <Sheet>
+          <Header>
+            <HeaderTitle>메뉴 상세</HeaderTitle>
+            <HeaderSubtitle>메뉴 정보를 불러오는 중...</HeaderSubtitle>
+          </Header>
+        </Sheet>
       </Page>
     );
   }
@@ -119,169 +118,208 @@ export default function MenuDetailPage() {
   if (!menu) {
     return (
       <Page>
-        <Card>
-          <CardHeader>
-            <Title>오류</Title>
-            <Subtitle>메뉴 정보를 찾을 수 없습니다.</Subtitle>
-          </CardHeader>
-        </Card>
+        <Sheet>
+          <Header>
+            <HeaderTitle>오류</HeaderTitle>
+            <HeaderSubtitle>메뉴 정보를 찾을 수 없습니다.</HeaderSubtitle>
+          </Header>
+        </Sheet>
       </Page>
     );
   }
 
   return (
     <Page>
-      <Card>
-        <CardHeader>
-          <BackButton onClick={handleBack}>
-            ←
-          </BackButton>
-          <HeaderContent>
-            <Title>오늘의 메뉴</Title>
-            <Subtitle>매일 바뀌는 오늘의 픽</Subtitle>
-          </HeaderContent>
-        </CardHeader>
+      <Sheet>
+        <Header>
+          <CloseBtn onClick={handleBack}>←</CloseBtn>
+          <HeaderTitle>오늘의 메뉴</HeaderTitle>
+          <HeaderSubtitle>매일 바뀌는 오늘의 픽</HeaderSubtitle>
+        </Header>
 
-        <MenuImageSection>
-          {menu.thumbnail ? (
-            <img
-              src={menu.thumbnail}
-              alt={menu.title}
-            />
-          ) : (
-            <MenuPlaceholder>
-              <PlaceholderText>{menu.title}</PlaceholderText>
-            </MenuPlaceholder>
-          )}
-        </MenuImageSection>
+        <Body>
+          <Section>
+            <MenuImageContainer>
+              {menu.thumbnail ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={menu.thumbnail}
+                  alt={menu.title}
+                />
+              ) : (
+                <ThumbPlaceholder>{menu.title}</ThumbPlaceholder>
+              )}
+            </MenuImageContainer>
+          </Section>
 
-        <MenuDetailContent>
-          <PriceSection>
-            <PriceLabel>기본</PriceLabel>
-            <PriceValue>₩{menu.price.toLocaleString()}</PriceValue>
-          </PriceSection>
+          <Section>
+            <SummaryCard>
+              <SummaryLine>
+                <span>기본 가격</span>
+                <b>₩{menu.price.toLocaleString()}</b>
+              </SummaryLine>
+            </SummaryCard>
+          </Section>
 
           {options.map((group) => (
-            <OptionGroup key={group.id}>
-              <OptionGroupHeader>
-                <OptionGroupTitle>{group.name}</OptionGroupTitle>
+            <Section key={group.id}>
+              <SectionTitle>
+                {group.name}
                 {group.isRequired && <RequiredBadge>필수</RequiredBadge>}
-              </OptionGroupHeader>
+              </SectionTitle>
 
-              <OptionItems>
+              <List>
                 {group.options.map((option) => {
                   const isSelected = selectedOptions.some(
                     selected => selected.groupId === group.id && selected.optionId === option.id
                   );
 
                   return (
-                    <OptionItem
+                    <Row
                       key={option.id}
                       $selected={isSelected}
                       onClick={() => handleOptionSelect(group.id, option)}
                     >
-                      <OptionRadio>
-                        <RadioButton $checked={isSelected}>
-                          {isSelected && <RadioDot />}
-                        </RadioButton>
-                      </OptionRadio>
-                      <OptionInfo>
-                        <OptionName>{option.name}</OptionName>
+                      <Radio $checked={isSelected}>
+                        {isSelected && <RadioDot />}
+                      </Radio>
+                      <RowInfo>
+                        <RowTitle>{option.name}</RowTitle>
                         {option.price > 0 && (
-                          <OptionPrice>+₩{option.price.toLocaleString()}</OptionPrice>
+                          <RowPrice>+₩{option.price.toLocaleString()}</RowPrice>
                         )}
-                      </OptionInfo>
-                    </OptionItem>
+                      </RowInfo>
+                    </Row>
                   );
                 })}
-              </OptionItems>
-            </OptionGroup>
+              </List>
+            </Section>
           ))}
 
-          <QuantitySection>
-            <QuantityControls>
-              <QuantityBtn 
+          <Section>
+            <SectionTitle>수량</SectionTitle>
+            <QtyControls>
+              <CircleBtn
+                aria-label="decrease"
                 onClick={() => handleQuantityChange(-1)}
                 disabled={quantity <= 1}
               >
-                -
-              </QuantityBtn>
-              <QuantityValue>{quantity}</QuantityValue>
-              <QuantityBtn 
+                −
+              </CircleBtn>
+              <QtyValue>{quantity}</QtyValue>
+              <CircleBtn
+                aria-label="increase"
                 onClick={() => handleQuantityChange(1)}
               >
                 +
-              </QuantityBtn>
-            </QuantityControls>
-          </QuantitySection>
+              </CircleBtn>
+            </QtyControls>
+          </Section>
+        </Body>
 
-          <AddToCartBtn onClick={handleAddToCart}>
+        <Footer>
+          <PayButton onClick={handleAddToCart}>
             장바구니 담기 • ₩{calculateTotalPrice().toLocaleString()}
-          </AddToCartBtn>
-        </MenuDetailContent>
-      </Card>
+          </PayButton>
+        </Footer>
+      </Sheet>
     </Page>
   );
 }
 
-
+// ========== styled ==========
 const Page = styled.div`
   min-height: 100vh;
   background: linear-gradient(to bottom, #ffedd5, #ffffff, #fff7ed);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: 16px;
 `;
 
-const Card = styled.div`
-  background: white;
-  border-radius: 24px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+const Sheet = styled.div`
+  background: #fff;
   border: 1px solid #fed7aa;
+  border-radius: 20px;
   max-width: 420px;
   width: 100%;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 `;
 
-const CardHeader = styled.div`
-  padding: 24px;
-  text-align: center;
+const Header = styled.div`
   position: relative;
+  padding: 18px 48px;
+  text-align: center;
+  border-bottom: 1px solid #ffe4cc;
 `;
 
-const BackButton = styled.button`
+const HeaderTitle = styled.h2`
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+  color: #111827;
+`;
+
+const HeaderSubtitle = styled.p`
+  margin: 4px 0 0 0;
+  font-size: 12px;
+  color: #6b7280;
+`;
+
+const CloseBtn = styled.button`
   position: absolute;
-  left: 24px;
+  left: 16px;
   top: 50%;
   transform: translateY(-50%);
-  background: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
   border: none;
-  font-size: 20px;
+  background: #fff7ed;
+  color: #111827;
+  font-size: 18px;
   cursor: pointer;
-  color: #ea580c;
-  font-weight: bold;
 `;
 
-const HeaderContent = styled.div``;
+const Body = styled.div`
+  flex: 1;
+  overflow: auto;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+`;
 
-const Title = styled.h2`
-  font-size: 24px;
+const Section = styled.section``;
+
+const SectionTitle = styled.h3`
+  font-size: 16px;
   font-weight: 800;
-  color: #ea580c;
-  margin: 0;
+  color: #111827;
+  margin: 0 0 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 `;
 
-const Subtitle = styled.p`
-  font-size: 14px;
-  color: #6b7280;
-  margin: 4px 0 0 0;
+const RequiredBadge = styled.span`
+  background: #dc2626;
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
 `;
 
-const MenuImageSection = styled.div`
-  position: relative;
+const MenuImageContainer = styled.div`
   width: 100%;
   height: 240px;
+  border-radius: 12px;
+  overflow: hidden;
   background: #f3f4f6;
   display: flex;
   align-items: center;
@@ -294,87 +332,28 @@ const MenuImageSection = styled.div`
   }
 `;
 
-const MenuPlaceholder = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  background: #f9fafb;
-  color: #6b7280;
-`;
-
-const PlaceholderText = styled.div`
+const ThumbPlaceholder = styled.div`
   font-size: 18px;
   font-weight: 600;
+  color: #9ca3af;
+  text-align: center;
+  padding: 20px;
 `;
 
-const MenuDetailContent = styled.div`
-  padding: 24px;
-`;
-
-const PriceSection = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 0;
-  border-bottom: 1px solid #e5e7eb;
-  margin-bottom: 24px;
-`;
-
-const PriceLabel = styled.div`
-  font-size: 16px;
-  font-weight: 600;
-  color: #1f2937;
-`;
-
-const PriceValue = styled.div`
-  font-size: 18px;
-  font-weight: 700;
-  color: #f97316;
-`;
-
-const OptionGroup = styled.div`
-  margin-bottom: 24px;
-`;
-
-const OptionGroupHeader = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 12px;
-`;
-
-const OptionGroupTitle = styled.h3`
-  font-size: 16px;
-  font-weight: 700;
-  color: #1f2937;
-  margin: 0;
-`;
-
-const RequiredBadge = styled.span`
-  background: #dc2626;
-  color: white;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 2px 6px;
-  border-radius: 4px;
-`;
-
-const OptionItems = styled.div`
+const List = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
 `;
 
-const OptionItem = styled.div<{ $selected?: boolean }>`
+const Row = styled.div<{ $selected?: boolean }>`
   display: flex;
   align-items: center;
   padding: 12px;
-  border: 2px solid ${props => props.$selected ? '#f97316' : '#e5e7eb'};
-  border-radius: 8px;
+  border: 1px solid ${props => props.$selected ? '#f97316' : '#e5e7eb'};
+  border-radius: 12px;
+  background: ${props => props.$selected ? '#fff7ed' : '#fff'};
   cursor: pointer;
-  background: ${props => props.$selected ? '#fff7ed' : 'white'};
   transition: all 0.2s ease;
 
   &:hover {
@@ -383,91 +362,101 @@ const OptionItem = styled.div<{ $selected?: boolean }>`
   }
 `;
 
-const OptionRadio = styled.div`
-  margin-right: 12px;
-`;
-
-const RadioButton = styled.div<{ $checked?: boolean }>`
-  width: 20px;
-  height: 20px;
-  border: 2px solid ${props => props.$checked ? '#f97316' : '#d1d5db'};
+const Radio = styled.div<{ $checked?: boolean }>`
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
+  border: 2px solid ${(p) => (p.$checked ? "#f97316" : "#d1d5db")};
   display: flex;
   align-items: center;
   justify-content: center;
-  background: ${props => props.$checked ? '#f97316' : 'white'};
+  background: ${(p) => (p.$checked ? "#f97316" : "#fff")};
+  margin-right: 12px;
+  flex-shrink: 0;
 `;
 
 const RadioDot = styled.div`
-  width: 8px;
-  height: 8px;
-  background: white;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
+  background: #fff;
 `;
 
-const OptionInfo = styled.div`
+const RowInfo = styled.div`
   flex: 1;
 `;
 
-const OptionName = styled.div`
+const RowTitle = styled.div`
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   color: #1f2937;
-  margin-bottom: 2px;
 `;
 
-const OptionPrice = styled.div`
+const RowPrice = styled.div`
   font-size: 12px;
-  color: #6b7280;
+  color: #f97316;
+  font-weight: 700;
+  margin-top: 4px;
 `;
 
-const QuantitySection = styled.div`
+const SummaryCard = styled.div`
+  margin-top: 0;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 12px;
   display: flex;
-  justify-content: center;
-  margin: 32px 0;
+  flex-direction: column;
+  gap: 8px;
+  background: #fff;
 `;
 
-const QuantityControls = styled.div`
+const SummaryLine = styled.div`
   display: flex;
   align-items: center;
-  gap: 16px;
-  border: 2px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 8px 16px;
+  justify-content: space-between;
+  color: #374151;
+  font-size: 14px;
 `;
 
-const QuantityBtn = styled.button<{ disabled?: boolean }>`
-  background: none;
-  border: none;
-  font-size: 20px;
-  font-weight: 600;
-  color: ${props => props.disabled ? '#d1d5db' : '#f97316'};
-  cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
-  padding: 4px 8px;
-  
-  &:hover:not(:disabled) {
-    background: #f3f4f6;
-    border-radius: 4px;
-  }
+const QtyControls = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
 `;
 
-const QuantityValue = styled.span`
-  font-size: 18px;
-  font-weight: 600;
-  color: #1f2937;
-  min-width: 30px;
-  text-align: center;
-`;
-
-const AddToCartBtn = styled.button`
-  width: 100%;
-  background: #f97316;
-  color: white;
+const CircleBtn = styled.button<{ disabled?: boolean }>`
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid #e5e7eb;
+  background: ${(p) => (p.disabled ? "#f9fafb" : "#fff")};
+  color: ${(p) => (p.disabled ? "#d1d5db" : "#111827")};
   font-size: 16px;
+  cursor: ${(p) => (p.disabled ? "not-allowed" : "pointer")};
+`;
+
+const QtyValue = styled.div`
+  min-width: 16px;
+  text-align: center;
   font-weight: 700;
-  padding: 16px;
+`;
+
+const Footer = styled.div`
+  padding: 14px;
+  background: #fff;
+  box-shadow: 0 -6px 12px rgba(0, 0, 0, 0.04);
+`;
+
+const PayButton = styled.button`
+  width: 100%;
   border: none;
-  border-radius: 12px;
+  border-radius: 14px;
+  background: #f97316;
+  color: #fff;
+  padding: 16px 18px;
+  font-size: 15px;
+  font-weight: 800;
   cursor: pointer;
   transition: background 0.2s ease;
 

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -16,12 +16,6 @@ export default function MenuListPage() {
   const [store, setStore] = useState<Store | null>(null);
   const [menus, setMenus] = useState<Menu[]>([]);
   const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (storeId) {
-      loadStoreAndMenus();
-    }
-  }, [storeId]);
 
   const loadStoreAndMenus = async () => {
     try {
@@ -42,8 +36,15 @@ export default function MenuListPage() {
     }
   };
 
+  useEffect(() => {
+    if (storeId) {
+      loadStoreAndMenus();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [storeId]);
+
   const handleMenuClick = (menuId: string) => {
-    router.push(`/todayMenu/detail?menuId=${menuId}&storeId=${storeId}`);
+    router.push(`/todayMenu/detail?menuId=${menuId}&storeId=$${storeId}`);
   };
 
   const handleBack = () => {
@@ -53,12 +54,12 @@ export default function MenuListPage() {
   if (loading) {
     return (
       <Page>
-        <Card>
-          <CardHeader>
-            <Title>매장 정보</Title>
-            <Subtitle>메뉴를 불러오는 중...</Subtitle>
-          </CardHeader>
-        </Card>
+        <Sheet>
+          <Header>
+            <HeaderTitle>매장 정보</HeaderTitle>
+            <HeaderSubtitle>메뉴를 불러오는 중...</HeaderSubtitle>
+          </Header>
+        </Sheet>
       </Page>
     );
   }
@@ -66,86 +67,81 @@ export default function MenuListPage() {
   if (!store) {
     return (
       <Page>
-        <Card>
-          <CardHeader>
-            <Title>오류</Title>
-            <Subtitle>매장 정보를 찾을 수 없습니다.</Subtitle>
-          </CardHeader>
-        </Card>
+        <Sheet>
+          <Header>
+            <HeaderTitle>오류</HeaderTitle>
+            <HeaderSubtitle>매장 정보를 찾을 수 없습니다.</HeaderSubtitle>
+          </Header>
+        </Sheet>
       </Page>
     );
   }
 
   return (
     <Page>
-      <Card>
-        <CardHeader>
-          <BackButton onClick={handleBack}>
-            ←
-          </BackButton>
-          <HeaderContent>
-            <Title>오늘의 메뉴</Title>
-            <Subtitle>매일 바뀌는 오늘의 픽</Subtitle>
-          </HeaderContent>
-        </CardHeader>
+      <Sheet>
+        <Header>
+          <CloseBtn onClick={handleBack}>←</CloseBtn>
+          <HeaderTitle>오늘의 메뉴</HeaderTitle>
+          <HeaderSubtitle>매일 바뀌는 오늘의 픽</HeaderSubtitle>
+        </Header>
 
-        <Media>
+        <StoreImageContainer>
           <img
             src={store.thumbnail}
             alt={store.name}
           />
-          <Badge>{store.name}</Badge>
-        </Media>
+          <StoreBadge>{store.name}</StoreBadge>
+        </StoreImageContainer>
 
-        <Content>
-          <ContentHeader>
-            <MenuTitle>{store.name}</MenuTitle>
-          </ContentHeader>
+        <Body>
+          <Section>
+            <SectionTitle>{store.name}</SectionTitle>
+            <StoreHashtags>{store.description || "#스페셜티커피 #가성비 #든든한끼"}</StoreHashtags>
 
-          <Hashtags>{store.description || "#스페셜티커피 #가성비 #든든한끼"}</Hashtags>
+            <StoreInfo>
+              <InfoIcon>📍</InfoIcon>
+              <InfoText>{store.address || "서울특별시 강남구 테헤란로 123"}</InfoText>
+            </StoreInfo>
 
-          <Info>
-            <span className="icon">📍</span>
-            <span>{store.address || "서울특별시 강남구 테헤란로 123"}</span>
-          </Info>
+            <StoreInfo>
+              <InfoIcon>☕</InfoIcon>
+              <InfoText>(픽업장소) 한경직 기념관</InfoText>
+            </StoreInfo>
+          </Section>
 
-          <Info>
-            <span className="icon">☕</span>
-            <Bold>"(픽업장소) 한경직 기념관"</Bold>
-          </Info>
-
-          <MenuListSection>
-            <MenuSectionTitle>메뉴 ({menus.length})</MenuSectionTitle>
+          <Section>
+            <SectionTitle>메뉴 ({menus.length})</SectionTitle>
             
             {menus.length === 0 ? (
               <NoMenus>등록된 메뉴가 없습니다.</NoMenus>
             ) : (
-              <MenuItems>
+              <List>
                 {menus.map((menu) => (
-                  <MenuItem
+                  <Row
                     key={menu.id}
                     onClick={() => handleMenuClick(menu.id)}
                   >
-                    <MenuItemImage>
+                    <Thumb>
                       {menu.thumbnail ? (
                         <img src={menu.thumbnail} alt={menu.title} />
                       ) : (
-                        <PlaceholderMenuImage>☕</PlaceholderMenuImage>
+                        <ThumbPlaceholder>☕</ThumbPlaceholder>
                       )}
-                    </MenuItemImage>
-                    <MenuItemInfo>
-                      <MenuItemName>{menu.title}</MenuItemName>
-                      <MenuItemDescription>{menu.description || "에스프레소와 스팀 밀크의 부드러운 조화"}</MenuItemDescription>
-                      <MenuItemPrice>₩{menu.price.toLocaleString()}</MenuItemPrice>
-                    </MenuItemInfo>
-                    <MenuItemArrow>→</MenuItemArrow>
-                  </MenuItem>
+                    </Thumb>
+                    <RowInfo>
+                      <RowTitle>{menu.title}</RowTitle>
+                      <RowDescription>{menu.description || "에스프레소와 스팀 밀크의 부드러운 조화"}</RowDescription>
+                      <RowPrice>₩{menu.price.toLocaleString()}</RowPrice>
+                    </RowInfo>
+                    <RowArrow>→</RowArrow>
+                  </Row>
                 ))}
-              </MenuItems>
+              </List>
             )}
-          </MenuListSection>
-        </Content>
-      </Card>
+          </Section>
+        </Body>
+      </Sheet>
     </Page>
   );
 }
@@ -156,54 +152,58 @@ const Page = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: 16px;
 `;
 
-const Card = styled.div`
-  background: white;
-  border-radius: 24px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+const Sheet = styled.div`
+  background: #fff;
   border: 1px solid #fed7aa;
+  border-radius: 20px;
   max-width: 420px;
   width: 100%;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 `;
 
-const CardHeader = styled.div`
-  padding: 24px;
-  text-align: center;
+const Header = styled.div`
   position: relative;
+  padding: 18px 48px;
+  text-align: center;
+  border-bottom: 1px solid #ffe4cc;
 `;
 
-const BackButton = styled.button`
+const HeaderTitle = styled.h2`
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+  color: #111827;
+`;
+
+const HeaderSubtitle = styled.p`
+  margin: 4px 0 0 0;
+  font-size: 12px;
+  color: #6b7280;
+`;
+
+const CloseBtn = styled.button`
   position: absolute;
-  left: 24px;
+  left: 16px;
   top: 50%;
   transform: translateY(-50%);
-  background: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
   border: none;
-  font-size: 20px;
+  background: #fff7ed;
+  color: #111827;
+  font-size: 18px;
   cursor: pointer;
-  color: #ea580c;
-  font-weight: bold;
 `;
 
-const HeaderContent = styled.div``;
-
-const Title = styled.h2`
-  font-size: 24px;
-  font-weight: 800;
-  color: #ea580c;
-  margin: 0;
-`;
-
-const Subtitle = styled.p`
-  font-size: 14px;
-  color: #6b7280;
-  margin: 4px 0 0 0;
-`;
-
-const Media = styled.div`
+const StoreImageContainer = styled.div`
   position: relative;
   width: 100%;
   height: 260px;
@@ -216,7 +216,7 @@ const Media = styled.div`
   }
 `;
 
-const Badge = styled.div`
+const StoreBadge = styled.div`
   position: absolute;
   top: 12px;
   left: 12px;
@@ -227,72 +227,62 @@ const Badge = styled.div`
   border-radius: 12px;
 `;
 
-const Content = styled.div`
-  padding: 24px;
-`;
-
-const ContentHeader = styled.div`
+const Body = styled.div`
+  flex: 1;
+  overflow: auto;
+  padding: 18px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: 18px;
 `;
 
-const MenuTitle = styled.h1`
-  font-size: 20px;
+const Section = styled.section``;
+
+const SectionTitle = styled.h3`
+  font-size: 16px;
   font-weight: 800;
-  color: #1f2937;
-  margin: 0;
+  color: #111827;
+  margin: 0 0 12px 0;
 `;
 
-const Hashtags = styled.p`
+const StoreHashtags = styled.p`
   font-size: 12px;
   color: #6b7280;
   font-weight: 500;
-  margin-top: 8px;
+  margin: 8px 0 0 0;
 `;
 
-const Info = styled.div`
+const StoreInfo = styled.div`
   display: flex;
   align-items: center;
   font-size: 13px;
   color: #374151;
   font-weight: 500;
   margin-top: 8px;
-
-  .icon {
-    margin-right: 8px;
-    font-size: 14px;
-  }
 `;
 
-const Bold = styled.span`
+const InfoIcon = styled.span`
+  margin-right: 8px;
+  font-size: 14px;
+`;
+
+const InfoText = styled.span`
   font-weight: 600;
 `;
 
-const MenuListSection = styled.div`
-  margin-top: 24px;
-`;
-
-const MenuSectionTitle = styled.h3`
-  font-size: 18px;
-  font-weight: 700;
-  color: #1f2937;
-  margin: 0 0 16px 0;
-`;
-
-const MenuItems = styled.div`
+const List = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
 `;
 
-const MenuItem = styled.div`
+const Row = styled.div`
   display: flex;
   align-items: center;
-  background: white;
+  padding: 12px;
   border: 1px solid #e5e7eb;
   border-radius: 12px;
-  padding: 16px;
+  background: #fff;
   cursor: pointer;
   transition: all 0.2s ease;
 
@@ -302,16 +292,16 @@ const MenuItem = styled.div`
   }
 `;
 
-const MenuItemImage = styled.div`
-  width: 60px;
-  height: 60px;
-  border-radius: 8px;
+const Thumb = styled.div`
+  width: 64px;
+  height: 64px;
+  border-radius: 10px;
   overflow: hidden;
   background: #f3f4f6;
+  margin-right: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 16px;
   flex-shrink: 0;
 
   img {
@@ -321,39 +311,40 @@ const MenuItemImage = styled.div`
   }
 `;
 
-const PlaceholderMenuImage = styled.div`
-  font-size: 24px;
+const ThumbPlaceholder = styled.div`
+  font-size: 22px;
   color: #9ca3af;
 `;
 
-const MenuItemInfo = styled.div`
+const RowInfo = styled.div`
   flex: 1;
 `;
 
-const MenuItemName = styled.h4`
-  font-size: 16px;
+const RowTitle = styled.div`
+  font-size: 14px;
   font-weight: 700;
   color: #1f2937;
   margin: 0 0 4px 0;
 `;
 
-const MenuItemDescription = styled.p`
+const RowDescription = styled.div`
   font-size: 12px;
   color: #6b7280;
   margin: 0 0 8px 0;
   line-height: 1.4;
 `;
 
-const MenuItemPrice = styled.div`
-  font-size: 14px;
-  font-weight: 700;
+const RowPrice = styled.div`
+  font-size: 12px;
   color: #f97316;
+  font-weight: 700;
 `;
 
-const MenuItemArrow = styled.div`
+const RowArrow = styled.div`
   font-size: 16px;
   color: #9ca3af;
   font-weight: bold;
+  margin-left: 8px;
 `;
 
 const NoMenus = styled.div`
