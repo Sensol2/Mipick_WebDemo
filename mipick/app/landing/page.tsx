@@ -1,5 +1,6 @@
-import { Header, Footer } from "@/app/components/layout"
 import { 
+  Header,
+  Footer,
   Hero, 
   Features, 
   HowItWorks, 
@@ -8,7 +9,7 @@ import {
   SocialProof, 
   FAQ, 
   CTA 
-} from "@/app/components/landing"
+} from "./components/index"
 
 export default function LandingPage() {
   return (

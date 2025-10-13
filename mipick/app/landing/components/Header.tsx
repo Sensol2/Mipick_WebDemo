@@ -1,8 +1,8 @@
 "use client"
 
 import styled from "styled-components"
-import Container from "@/app/components/ui/Container"
-import { Button } from "@/app/components/ui/Button"
+import Container from "@/app/landing/components/ui/Container"
+import { Button } from "@/app/landing/components/ui/Button"
 
 const Bar = styled.header`
   position: sticky; top: 0; z-index: 50;

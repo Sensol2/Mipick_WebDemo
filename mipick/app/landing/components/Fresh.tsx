@@ -1,8 +1,8 @@
 "use client"
 
 import styled from "styled-components"
-import Container from "@/app/components/ui/Container"
-import { Card } from "@/app/components/ui/Card"
+import Container from "./ui/Container"
+import { Card } from "./ui/Card"
 
 const Wrap = styled.section`
   padding: ${({ theme }) => theme.layout.sectionPadY} 0;

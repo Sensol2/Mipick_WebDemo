@@ -1,8 +1,8 @@
 "use client"
 
 import styled from "styled-components"
-import Container from "@/app/components/ui/Container"
-import { Button } from "@/app/components/ui/Button"
+import Container from "./ui/Container"
+import { Button } from "./ui/Button"
 
 const Wrap = styled.section`
   padding: 80px 0 0px;

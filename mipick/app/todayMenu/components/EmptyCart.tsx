@@ -1,6 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
+/**
+ * todayMenu - 장바구니가 비어있을 때 표시되는 Empty State 컴포넌트
+ */
+
 interface EmptyCartProps {
   onBack: () => void;
 }

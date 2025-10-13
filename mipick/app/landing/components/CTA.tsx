@@ -1,9 +1,9 @@
 "use client"
 
 import styled from "styled-components"
-import Container from "@/app/components/ui/Container"
-import { Button } from "@/app/components/ui/Button"
-import { Input } from "@/app/components/ui/Input"
+import Container from "./ui/Container"
+import { Button } from "./ui/Button"
+import { Input } from "./ui/Input"
 
 const Wrap = styled.section`
   padding: ${({ theme }) => theme.layout.sectionPadY} 0;

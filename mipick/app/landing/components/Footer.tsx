@@ -1,7 +1,7 @@
 "use client"
 
 import styled from "styled-components"
-import Container from "@/app/components/ui/Container"
+import Container from "@/app/landing/components/ui/Container"
 
 const Bar = styled.footer`
   margin-top: 40px; padding: 24px 0; border-top: 1px solid rgba(0,0,0,0.06);

@@ -7,6 +7,7 @@ import { MenuService } from "@/lib/menuService";
 import { StoreService } from "@/lib/storeService";
 import { type Menu, type Store } from "@/lib/supabase";
 import styled from "styled-components";
+import { Page, Sheet, Header, HeaderTitle, HeaderSubtitle, BackButton, Body } from "../components/ui";
 
 export default function MenuListPage() {
   const router = useRouter();
@@ -80,7 +81,7 @@ export default function MenuListPage() {
     <Page>
       <Sheet>
         <Header>
-          <CloseBtn onClick={handleBack}>←</CloseBtn>
+          <BackButton onClick={handleBack}>←</BackButton>
           <HeaderTitle>주문하기</HeaderTitle>
         </Header>
 
@@ -135,63 +136,6 @@ export default function MenuListPage() {
   );
 }
 
-const Page = styled.div`
-  min-height: 100vh;
-  background: linear-gradient(to bottom, #ffedd5, #ffffff, #fff7ed);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
-`;
-
-const Sheet = styled.div`
-  background: #fff;
-  border: 1px solid #fed7aa;
-  border-radius: 20px;
-  max-width: 420px;
-  width: 100%;
-  height: 80vh;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-`;
-
-const Header = styled.div`
-  position: relative;
-  padding: 18px 48px;
-  text-align: center;
-  border-bottom: 1px solid #ffe4cc;
-`;
-
-const HeaderTitle = styled.h2`
-  margin: 0;
-  font-size: 20px;
-  font-weight: 800;
-  color: #111827;
-`;
-
-const HeaderSubtitle = styled.p`
-  margin: 4px 0 0 0;
-  font-size: 12px;
-  color: #6b7280;
-`;
-
-const CloseBtn = styled.button`
-  position: absolute;
-  left: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  border: none;
-  background: #fff7ed;
-  color: #111827;
-  font-size: 18px;
-  cursor: pointer;
-`;
-
 const StoreImageContainer = styled.div`
   position: relative;
   width: 100%;
@@ -238,23 +182,17 @@ const StoreRating = styled.div`
   margin: 0 0 6px 0;
   display: flex;
   align-items: center;
-  gap: 4px;
-`;
-
-const StoreDeliveryTime = styled.div`
-  font-size: 13px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.9);
   margin: 0;
 `;
 
-const Body = styled.div`
-  flex: 1;
-  overflow: auto;
-  padding: 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
+const StoreDeliveryTime = styled.div`
+  font-size: 16px;
+  color: #ffffff;
+  font-weight: 500;
+`;
+
+const MenuSection = styled.section`
+  padding: 0;
 `;
 
 const Section = styled.section``;

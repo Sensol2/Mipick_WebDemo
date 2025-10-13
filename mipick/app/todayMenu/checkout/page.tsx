@@ -3,7 +3,8 @@
 import React, { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import styled from "styled-components";
-import EmptyCart from "./EmptyCart";
+import EmptyCart from "../components/EmptyCart";
+import { Page, Sheet, Header, HeaderTitle, Body, Footer, CloseButton } from "../components/ui";
 
 type CartItem = {
   id: string;
@@ -84,7 +85,7 @@ export default function CheckoutPage() {
         <Sheet>
           <Header>
             <HeaderTitle>주문하기</HeaderTitle>
-            <CloseBtn onClick={() => router.back()}>×</CloseBtn>
+            <CloseButton onClick={() => router.back()}>×</CloseButton>
           </Header>
           <EmptyCart onBack={() => router.back()} />
         </Sheet>
@@ -97,7 +98,7 @@ export default function CheckoutPage() {
       <Sheet>
         <Header>
           <HeaderTitle>주문하기</HeaderTitle>
-          <CloseBtn onClick={() => router.back()}>×</CloseBtn>
+          <CloseButton onClick={() => router.back()}>×</CloseButton>
         </Header>
 
         <Body>
@@ -202,9 +203,9 @@ export default function CheckoutPage() {
         </Body>
 
         <Footer>
-          <PayButton onClick={handlePay}>
+          <PayBtn onClick={handlePay}>
             {`${format(total)} 결제하기`}
-          </PayButton>
+          </PayBtn>
         </Footer>
       </Sheet>
     </Page>
@@ -212,66 +213,6 @@ export default function CheckoutPage() {
 }
 
 // ========== styled ==========
-const Page = styled.div`
-  min-height: 100vh;
-  background: linear-gradient(to bottom, #ffedd5, #ffffff, #fff7ed);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
-`;
-
-const Sheet = styled.div`
-  background: #fff;
-  border: 1px solid #fed7aa;
-  border-radius: 20px;
-  max-width: 420px;
-  width: 100%;
-  height: 80vh;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-`;
-
-const Header = styled.div`
-  position: relative;
-  padding: 18px 48px;
-  text-align: center;
-  border-bottom: 1px solid #ffe4cc;
-`;
-
-const HeaderTitle = styled.h2`
-  margin: 0;
-  font-size: 20px;
-  font-weight: 800;
-  color: #111827;
-`;
-
-const CloseBtn = styled.button`
-  position: absolute;
-  right: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  border: none;
-  background: #fff7ed;
-  color: #111827;
-  font-size: 18px;
-  cursor: pointer;
-`;
-
-const Body = styled.div`
-  flex: 1;
-  overflow: auto;
-  padding: 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-`;
-
 const Section = styled.section``;
 
 const SectionTitle = styled.h3`
@@ -423,13 +364,7 @@ const PickupLabel = styled.div`
   font-weight: 600;
 `;
 
-const Footer = styled.div`
-  padding: 14px;
-  background: #fff;
-  box-shadow: 0 -6px 12px rgba(0, 0, 0, 0.04);
-`;
-
-const PayButton = styled.button`
+const PayBtn = styled.button`
   width: 100%;
   border: none;
   border-radius: 14px;

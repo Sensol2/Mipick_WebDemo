@@ -6,6 +6,7 @@ import { StoreService } from "@/lib/storeService";
 import { Store } from "@/lib/supabase";
 import styled from "styled-components";
 import { useCountdown } from "@/app/hooks/utils";
+import { Page, Sheet, Header, HeaderTitle, HeaderSubtitle, Body } from "./components/ui";
 
 export default function Home() {
   const { hours, minutes, seconds } = useCountdown(18211); // 5시간 3분 31초
@@ -160,48 +161,6 @@ export default function Home() {
 
 
 
-const Page = styled.div`
-  min-height: 100vh;
-  background: linear-gradient(to bottom, #ffedd5, #ffffff, #fff7ed);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
-`;
-
-const Sheet = styled.div`
-  background: #fff;
-  border: 1px solid #fed7aa;
-  border-radius: 20px;
-  max-width: 420px;
-  width: 100%;
-  height: 80vh;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-`;
-
-const Header = styled.div`
-  position: relative;
-  padding: 20px 48px;
-  text-align: center;
-  border-bottom: 1px solid #ffe4cc;
-`;
-
-const HeaderTitle = styled.h2`
-  margin: 0;
-  font-size: 20px;
-  font-weight: 800;
-  color: #111827;
-`;
-
-const HeaderSubtitle = styled.p`
-  margin: 4px 0 0 0;
-  font-size: 12px;
-  color: #6b7280;
-`;
-
 const StoreImageContainer = styled.div`
   position: relative;
   width: 100%;
@@ -225,15 +184,6 @@ const StoreBadge = styled.div`
   padding: 6px 10px;
   border-radius: 12px;
   font-weight: 600;
-`;
-
-const Body = styled.div`
-  flex: 1;
-  overflow-y: auto;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
 `;
 
 const Section = styled.section`
