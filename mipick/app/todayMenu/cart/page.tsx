@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import styled from "styled-components";
 import { 
@@ -12,69 +12,129 @@ import {
   type CartItem 
 } from "./components";
 import { Page, Sheet, Header, HeaderTitle, Body, Footer, CloseButton } from "../components/ui";
+import { CartService } from "@/lib/cartService";
+import type { CartItemWithOption } from "@/lib/supabase";
+
+// 임시 사용자 ID
+const TEMP_USER_ID = "558fa1fc-f6b6-452a-9c96-eaf7af8078c5";
 
 export default function CheckoutPage() {
   const router = useRouter();
 
-  // Mocked cart items (UI only as requested)
-  const [items, setItems] = useState<CartItem[]>([
-    {
-      id: "1",
-      title: "프리미엄 한우 부채살",
-      price: 15000,
-      quantity: 2,
-      thumbnail: null,
-    },
-    {
-      id: "2",
-      title: "리조또 감자 500g",
-      price: 8000,
-      quantity: 1,
-      thumbnail: null,
-    },
-    {
-      id: "3",
-      title: "수제 소스 패키지",
-      price: 5000,
-      quantity: 3,
-      thumbnail: null,
-    },
-  ]);
-
+  const [cartItems, setCartItems] = useState<CartItemWithOption[]>([]);
+  const [loading, setLoading] = useState(true);
   const [selectedPickup] = useState<string>("한경직 기념관");
   const [pickupTime, setPickupTime] = useState<string>("내일 오전 12:30");
   const [paymentMethod, setPaymentMethod] = useState<string>("신용/체크카드");
 
+  // 장바구니 데이터 불러오기
+  useEffect(() => {
+    const fetchCartItems = async () => {
+      try {
+        setLoading(true);
+        const items = await CartService.getCartItemsWithOptions(TEMP_USER_ID);
+        setCartItems(items);
+      } catch (error) {
+        console.error("Error fetching cart items:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCartItems();
+  }, []);
+
+  // CartItemWithOption을 CartItem 형태로 변환
+  const items: CartItem[] = useMemo(
+    () =>
+      cartItems.map((item) => ({
+        id: item.id,
+        title: item.menu.title,
+        price: item.menu.price, // 메뉴 기본 가격
+        quantity: item.quantity,
+        thumbnail: item.menu.thumbnail || null,
+        options: item.menu_options?.map((opt) => ({ 
+          name: opt.name, 
+          price: opt.price 
+        })) || [], // 옵션 이름과 가격 포함
+      })),
+    [cartItems]
+  );
+
   const deliveryFee = 0;
 
+  // total_price를 직접 사용 (trigger가 이미 계산함)
   const subtotal = useMemo(
-    () => items.reduce((sum, i) => sum + i.price * i.quantity, 0),
-    [items]
+    () => cartItems.reduce((sum, item) => sum + item.total_price, 0),
+    [cartItems]
   );
   const total = subtotal + deliveryFee;
 
   const format = (n: number) => `₩${n.toLocaleString()}`;
 
   // 수량 증가 핸들러
-  const inc = (id: string) =>
-    setItems((prev) =>
-      prev.map((i) => (i.id === id ? { ...i, quantity: i.quantity + 1 } : i))
+  const inc = async (id: string) => {
+    const cartItem = cartItems.find((item) => item.id === id);
+    if (!cartItem) return;
+
+    const success = await CartService.updateCartItemQuantity(
+      id,
+      cartItem.quantity + 1
     );
 
+    if (success) {
+      // 전체 장바구니 새로고침 (trigger가 업데이트한 total_price 반영)
+      const updatedItems = await CartService.getCartItemsWithOptions(TEMP_USER_ID);
+      setCartItems(updatedItems);
+    }
+  };
+
   // 수량 감소 핸들러
-  const dec = (id: string) =>
-    setItems((prev) => {
-      const updated = prev.map((i) =>
-        i.id === id ? { ...i, quantity: i.quantity - 1 } : i
-      );
-      // 수량이 0이 되면 해당 항목을 리스트에서 제거
-      return updated.filter((i) => i.quantity > 0);
-    });
+  const dec = async (id: string) => {
+    const cartItem = cartItems.find((item) => item.id === id);
+    if (!cartItem) return;
+
+    const newQuantity = cartItem.quantity - 1;
+
+    if (newQuantity <= 0) {
+      // 수량이 0이 되면 삭제
+      const success = await CartService.removeFromCart(id);
+      if (success) {
+        const updatedItems = await CartService.getCartItemsWithOptions(TEMP_USER_ID);
+        setCartItems(updatedItems);
+      }
+    } else {
+      // 수량 감소
+      const success = await CartService.updateCartItemQuantity(id, newQuantity);
+      if (success) {
+        // 전체 장바구니 새로고침 (trigger가 업데이트한 total_price 반영)
+        const updatedItems = await CartService.getCartItemsWithOptions(TEMP_USER_ID);
+        setCartItems(updatedItems);
+      }
+    }
+  };
 
   const handlePay = () => {
-    // UI only
+    // TODO: 실제 결제 로직 구현
     alert(`결제 진행: ${format(total)}`);
   };
+
+  // 로딩 중
+  if (loading) {
+    return (
+      <Page>
+        <Sheet>
+          <Header>
+            <HeaderTitle>주문하기</HeaderTitle>
+            <CloseButton onClick={() => router.back()}>×</CloseButton>
+          </Header>
+          <Body>
+            <LoadingText>장바구니를 불러오는 중...</LoadingText>
+          </Body>
+        </Sheet>
+      </Page>
+    );
+  }
 
   // 장바구니가 비어있는 경우
   if (items.length === 0) {
@@ -190,4 +250,11 @@ const PayBtn = styled.button`
   &:hover {
     background: #ea580c;
   }
+`;
+
+const LoadingText = styled.div`
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--color-gray-500);
+  font-size: var(--font-base);
 `;

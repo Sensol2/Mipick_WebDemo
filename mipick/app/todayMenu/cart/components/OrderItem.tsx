@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { PriceCalculator } from "../priceCalculator";
 
 export interface CartItem {
   id: string;
@@ -8,6 +9,7 @@ export interface CartItem {
   quantity: number;
   thumbnail?: string | null;
   description?: string;
+  options?: Array<{ name: string; price: number }>; // 옵션 이름과 가격 포함
 }
 
 interface OrderItemProps {
@@ -18,6 +20,13 @@ interface OrderItemProps {
 
 export default function OrderItem({ item, onIncrease, onDecrease }: OrderItemProps) {
   const format = (n: number) => `₩${n.toLocaleString()}`;
+  
+  // PriceCalculator를 사용하여 총 가격 계산
+  const totalPrice = PriceCalculator.calculateTotal(
+    item.price,
+    item.options || [],
+    item.quantity
+  );
 
   return (
     <Row>
@@ -32,7 +41,16 @@ export default function OrderItem({ item, onIncrease, onDecrease }: OrderItemPro
 
       <RowInfo>
         <RowTitle>{item.title}</RowTitle>
-        <RowPrice>{format(item.price)}</RowPrice>
+        {item.options && item.options.length > 0 && (
+          <RowOptions>
+            {item.options.map((opt, index) => (
+              <OptionItem key={index}>
+                - {opt.name} {opt.price > 0 && `(+${format(opt.price)})`}
+              </OptionItem>
+            ))}
+          </RowOptions>
+        )}
+        <RowPrice>{format(totalPrice)}</RowPrice>
       </RowInfo>
 
       <QtyControls>
@@ -94,6 +112,17 @@ const RowTitle = styled.div`
   font-size: 14px;
   font-weight: 700;
   color: #1f2937;
+`;
+
+const RowOptions = styled.div`
+  font-size: 11px;
+  color: #6b7280;
+  margin-top: 2px;
+  line-height: 1.4;
+`;
+
+const OptionItem = styled.div`
+  margin-top: 1px;
 `;
 
 const RowPrice = styled.div`

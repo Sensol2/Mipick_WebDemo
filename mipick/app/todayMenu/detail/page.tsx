@@ -4,9 +4,13 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import { MenuService, type MenuOptionGroup, type MenuOption } from "@/lib/menuService";
+import { CartService } from "@/lib/cartService";
 import { type Menu } from "@/lib/supabase";
 import styled from "styled-components";
 import { MenuImage, OptionGroup, QuantitySelector } from "./components";
+
+// 임시 사용자 ID (cart/page.tsx와 동일)
+const TEMP_USER_ID = "558fa1fc-f6b6-452a-9c96-eaf7af8078c5";
 
 interface SelectedOption {
   groupId: string;
@@ -149,15 +153,38 @@ export default function MenuDetailPage() {
     setQuantity(prev => Math.max(1, prev + delta));
   };
 
-  const handleAddToCart = () => {
-    const totalPrice = calculateTotalPrice();
-    console.log("장바구니에 추가:", {
-      menu,
-      selectedOptions,
-      quantity,
-      totalPrice
-    });
-    alert(`장바구니에 추가되었습니다! (₩${totalPrice.toLocaleString()})`);
+  const handleAddToCart = async () => {
+    if (!menu) return;
+
+    try {
+      // 선택된 모든 옵션 ID 수집
+      const selectedOptionIds = selectedOptions.flatMap(selection => selection.optionIds);
+
+      // CheckoutService를 사용하여 장바구니에 추가
+      const success = await CartService.addToCart(TEMP_USER_ID, {
+        menuId: menu.id,
+        quantity,
+        selectedOptionIds
+      });
+
+      if (success) {
+        const totalPrice = calculateTotalPrice();
+        alert(`장바구니에 추가되었습니다! (₩${totalPrice.toLocaleString()})`);
+        
+        // 장바구니 페이지로 이동할지 물어보기
+        const goToCart = window.confirm("장바구니로 이동하시겠습니까?");
+        if (goToCart) {
+          router.push("/todayMenu/cart");
+        } else {
+          router.back();
+        }
+      } else {
+        alert("장바구니 추가에 실패했습니다. 다시 시도해주세요.");
+      }
+    } catch (error) {
+      console.error("장바구니 추가 중 오류:", error);
+      alert("오류가 발생했습니다. 다시 시도해주세요.");
+    }
   };
 
   const handleBack = () => {
