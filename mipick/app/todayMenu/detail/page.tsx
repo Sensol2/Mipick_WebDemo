@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { MenuService, type MenuOptionGroup, type MenuOption } from "@/lib/menuService";
 import { type Menu } from "@/lib/supabase";
 import styled from "styled-components";
+import { MenuImage, OptionGroup, QuantitySelector } from "./components";
 
 interface SelectedOption {
   groupId: string;
@@ -136,17 +137,7 @@ export default function MenuDetailPage() {
 
         <Body>
           <Section>
-            <MenuImageContainer>
-              {menu.thumbnail ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={menu.thumbnail}
-                  alt={menu.title}
-                />
-              ) : (
-                <ThumbPlaceholder>{menu.title}</ThumbPlaceholder>
-              )}
-            </MenuImageContainer>
+            <MenuImage menu={menu} />
           </Section>
 
           <Section>
@@ -158,59 +149,26 @@ export default function MenuDetailPage() {
             </SummaryCard>
           </Section>
 
-          {options.map((group) => (
-            <Section key={group.id}>
-              <SectionTitle>
-                {group.name}
-                {group.isRequired && <RequiredBadge>필수</RequiredBadge>}
-              </SectionTitle>
-
-              <List>
-                {group.options.map((option) => {
-                  const isSelected = selectedOptions.some(
-                    selected => selected.groupId === group.id && selected.optionId === option.id
-                  );
-
-                  return (
-                    <Row
-                      key={option.id}
-                      $selected={isSelected}
-                      onClick={() => handleOptionSelect(group.id, option)}
-                    >
-                      <Radio $checked={isSelected}>
-                        {isSelected && <RadioDot />}
-                      </Radio>
-                      <RowInfo>
-                        <RowTitle>{option.name}</RowTitle>
-                        {option.price > 0 && (
-                          <RowPrice>+₩{option.price.toLocaleString()}</RowPrice>
-                        )}
-                      </RowInfo>
-                    </Row>
-                  );
-                })}
-              </List>
-            </Section>
-          ))}
+          {options.map((group) => {
+            const selected = selectedOptions.find(s => s.groupId === group.id);
+            
+            return (
+              <Section key={group.id}>
+                <OptionGroup
+                  group={group}
+                  selectedOptionId={selected?.optionId}
+                  onOptionSelect={(option) => handleOptionSelect(group.id, option)}
+                />
+              </Section>
+            );
+          })}
 
           <Section>
-            <SectionTitle>수량</SectionTitle>
-            <QtyControls>
-              <CircleBtn
-                aria-label="decrease"
-                onClick={() => handleQuantityChange(-1)}
-                disabled={quantity <= 1}
-              >
-                −
-              </CircleBtn>
-              <QtyValue>{quantity}</QtyValue>
-              <CircleBtn
-                aria-label="increase"
-                onClick={() => handleQuantityChange(1)}
-              >
-                +
-              </CircleBtn>
-            </QtyControls>
+            <QuantitySelector
+              quantity={quantity}
+              onIncrease={() => handleQuantityChange(1)}
+              onDecrease={() => handleQuantityChange(-1)}
+            />
           </Section>
         </Body>
 
@@ -293,109 +251,6 @@ const Body = styled.div`
 
 const Section = styled.section``;
 
-const SectionTitle = styled.h3`
-  font-size: 16px;
-  font-weight: 800;
-  color: #111827;
-  margin: 0 0 12px 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-`;
-
-const RequiredBadge = styled.span`
-  background: #dc2626;
-  color: white;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 2px 6px;
-  border-radius: 4px;
-`;
-
-const MenuImageContainer = styled.div`
-  width: 100%;
-  height: 240px;
-  border-radius: 12px;
-  overflow: hidden;
-  background: #f3f4f6;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-`;
-
-const ThumbPlaceholder = styled.div`
-  font-size: 18px;
-  font-weight: 600;
-  color: #9ca3af;
-  text-align: center;
-  padding: 20px;
-`;
-
-const List = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-`;
-
-const Row = styled.div<{ $selected?: boolean }>`
-  display: flex;
-  align-items: center;
-  padding: 12px;
-  border: 1px solid ${props => props.$selected ? '#f97316' : '#e5e7eb'};
-  border-radius: 12px;
-  background: ${props => props.$selected ? '#fff7ed' : '#fff'};
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover {
-    border-color: #f97316;
-    background: #fff7ed;
-  }
-`;
-
-const Radio = styled.div<{ $checked?: boolean }>`
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  border: 2px solid ${(p) => (p.$checked ? "#f97316" : "#d1d5db")};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: ${(p) => (p.$checked ? "#f97316" : "#fff")};
-  margin-right: 12px;
-  flex-shrink: 0;
-`;
-
-const RadioDot = styled.div`
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #fff;
-`;
-
-const RowInfo = styled.div`
-  flex: 1;
-`;
-
-const RowTitle = styled.div`
-  font-size: 14px;
-  font-weight: 700;
-  color: #1f2937;
-`;
-
-const RowPrice = styled.div`
-  font-size: 12px;
-  color: #f97316;
-  font-weight: 700;
-  margin-top: 4px;
-`;
-
 const SummaryCard = styled.div`
   margin-top: 0;
   border: 1px solid #e5e7eb;
@@ -413,30 +268,6 @@ const SummaryLine = styled.div`
   justify-content: space-between;
   color: #374151;
   font-size: 14px;
-`;
-
-const QtyControls = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  justify-content: center;
-`;
-
-const CircleBtn = styled.button<{ disabled?: boolean }>`
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  border: 1px solid #e5e7eb;
-  background: ${(p) => (p.disabled ? "#f9fafb" : "#fff")};
-  color: ${(p) => (p.disabled ? "#d1d5db" : "#111827")};
-  font-size: 16px;
-  cursor: ${(p) => (p.disabled ? "not-allowed" : "pointer")};
-`;
-
-const QtyValue = styled.div`
-  min-width: 16px;
-  text-align: center;
-  font-weight: 700;
 `;
 
 const Footer = styled.div`

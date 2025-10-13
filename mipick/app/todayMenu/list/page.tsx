@@ -8,6 +8,7 @@ import { StoreService } from "@/lib/storeService";
 import { type Menu, type Store } from "@/lib/supabase";
 import styled from "styled-components";
 import { Page, Sheet, Header, HeaderTitle, HeaderSubtitle, BackButton, Body } from "../components/ui";
+import { StoreHeaderImage, MenuListItem } from "./components";
 
 export default function MenuListPage() {
   const router = useRouter();
@@ -85,19 +86,7 @@ export default function MenuListPage() {
           <HeaderTitle>주문하기</HeaderTitle>
         </Header>
 
-        <StoreImageContainer>
-          <img
-            src={store.thumbnail}
-            alt={store.name}
-          />
-          <ImageOverlay />
-          <StoreInfoOverlay>
-            <StoreName>{store.name}</StoreName>
-            {/* <StoreRating>⭐ 4.7 · 리뷰 1,069개 〉</StoreRating> */}
-            <StoreDeliveryTime>{store.description}</StoreDeliveryTime>
-            
-          </StoreInfoOverlay>
-        </StoreImageContainer>
+        <StoreHeaderImage store={store} />
 
         <Body>
           <Section>
@@ -108,24 +97,11 @@ export default function MenuListPage() {
             ) : (
               <List>
                 {menus.map((menu) => (
-                  <Row
+                  <MenuListItem
                     key={menu.id}
-                    onClick={() => handleMenuClick(menu.id)}
-                  >
-                    <Thumb>
-                      {menu.thumbnail ? (
-                        <img src={menu.thumbnail} alt={menu.title} />
-                      ) : (
-                        <ThumbPlaceholder>☕</ThumbPlaceholder>
-                      )}
-                    </Thumb>
-                    <RowInfo>
-                      <RowTitle>{menu.title}</RowTitle>
-                      <RowDescription>{menu.description || "에스프레소와 스팀 밀크의 부드러운 조화"}</RowDescription>
-                      <RowPrice>₩{menu.price.toLocaleString()}</RowPrice>
-                    </RowInfo>
-                    <RowArrow>→</RowArrow>
-                  </Row>
+                    menu={menu}
+                    onClick={handleMenuClick}
+                  />
                 ))}
               </List>
             )}
@@ -136,65 +112,6 @@ export default function MenuListPage() {
   );
 }
 
-const StoreImageContainer = styled.div`
-  position: relative;
-  width: 100%;
-  height: 220px;
-  background: #e5e7eb;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-`;
-
-const ImageOverlay = styled.div`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 60%;
-  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.7));
-  pointer-events: none;
-`;
-
-const StoreInfoOverlay = styled.div`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 20px;
-  color: white;
-`;
-
-const StoreName = styled.h1`
-  font-size: 28px;
-  font-weight: 800;
-  color: white;
-  margin: 0 0 8px 0;
-`;
-
-const StoreRating = styled.div`
-  font-size: 14px;
-  font-weight: 600;
-  color: white;
-  margin: 0 0 6px 0;
-  display: flex;
-  align-items: center;
-  margin: 0;
-`;
-
-const StoreDeliveryTime = styled.div`
-  font-size: 16px;
-  color: #ffffff;
-  font-weight: 500;
-`;
-
-const MenuSection = styled.section`
-  padding: 0;
-`;
-
 const Section = styled.section``;
 
 const SectionTitle = styled.h3`
@@ -204,106 +121,10 @@ const SectionTitle = styled.h3`
   margin: 0 0 12px 0;
 `;
 
-const StoreHashtags = styled.p`
-  font-size: 13px;
-  color: #6b7280;
-  font-weight: 500;
-  margin: 0 0 12px 0;
-`;
-
-const StoreInfo = styled.div`
-  display: flex;
-  align-items: center;
-  font-size: 13px;
-  color: #374151;
-  font-weight: 500;
-  margin-top: 8px;
-`;
-
-const InfoIcon = styled.span`
-  margin-right: 8px;
-  font-size: 14px;
-`;
-
-const InfoText = styled.span`
-  font-weight: 600;
-`;
-
 const List = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
-`;
-
-const Row = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 12px;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  background: #fff;
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover {
-    border-color: #f97316;
-    box-shadow: 0 2px 8px rgba(249, 115, 22, 0.1);
-  }
-`;
-
-const Thumb = styled.div`
-  width: 64px;
-  height: 64px;
-  border-radius: 10px;
-  overflow: hidden;
-  background: #f3f4f6;
-  margin-right: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-`;
-
-const ThumbPlaceholder = styled.div`
-  font-size: 22px;
-  color: #9ca3af;
-`;
-
-const RowInfo = styled.div`
-  flex: 1;
-`;
-
-const RowTitle = styled.div`
-  font-size: 14px;
-  font-weight: 700;
-  color: #1f2937;
-  margin: 0 0 4px 0;
-`;
-
-const RowDescription = styled.div`
-  font-size: 12px;
-  color: #6b7280;
-  margin: 0 0 8px 0;
-  line-height: 1.4;
-`;
-
-const RowPrice = styled.div`
-  font-size: 12px;
-  color: #f97316;
-  font-weight: 700;
-`;
-
-const RowArrow = styled.div`
-  font-size: 16px;
-  color: #9ca3af;
-  font-weight: bold;
-  margin-left: 8px;
 `;
 
 const NoMenus = styled.div`
