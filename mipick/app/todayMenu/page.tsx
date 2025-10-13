@@ -8,8 +8,8 @@ import styled from "styled-components";
 import { useCountdown } from "@/app/hooks/utils";
 
 export default function Home() {
-  const { formatted } = useCountdown(211); // 03:31
-  const currentOrders = 35;
+  const { hours, minutes, seconds } = useCountdown(18211); // 5시간 3분 31초
+  const currentOrders = 1;
   const [store, setStore] = useState<Store | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -118,14 +118,37 @@ export default function Home() {
                 </ProgressLine>
               </Steps>
             </ProgressContainer>
+            <CountdownContainer>
+              <CountdownHeader>
+                <Clock size={18} />
+                <CountdownTitle>주문 마감까지 남은 시간</CountdownTitle>
+              </CountdownHeader>
+              
+              <CountdownTimer>
+                <TimeBox>
+                  <TimeValue>{String(hours).padStart(2, '0')}</TimeValue>
+                  <TimeLabel>시간</TimeLabel>
+                </TimeBox>
+                
+                <TimeSeparator>:</TimeSeparator>
+                
+                <TimeBox>
+                  <TimeValue>{String(minutes).padStart(2, '0')}</TimeValue>
+                  <TimeLabel>분</TimeLabel>
+                </TimeBox>
+                
+                <TimeSeparator>:</TimeSeparator>
+                
+                <TimeBox>
+                  <TimeValue>{String(seconds).padStart(2, '0')}</TimeValue>
+                  <TimeLabel>초</TimeLabel>
+                </TimeBox>
+              </CountdownTimer>
+            </CountdownContainer>
           </Section>
         </Body>
 
         <Footer>
-          <Countdown>
-              <Clock size={14} />
-              <span>{formatted} 뒤에 사라져요!</span>
-          </Countdown>
           <PayButton href={`/todayMenu/list?storeId=${store.id}`}>
             주문하고 학교에서 먹기
           </PayButton>
@@ -323,7 +346,7 @@ const StepReward = styled.p`
 
 const ProgressLine = styled.div`
   position: absolute;
-  top: 48px;
+  top: calc(12px + 6px + 19px);
   left: 55px;
   right: 55px;
   height: 5px;
@@ -344,24 +367,77 @@ const Footer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   padding: 16px;
   background: #fff;
   box-shadow: 0 -6px 12px rgba(0, 0, 0, 0.04);
 `;
 
-const Countdown = styled.div`
+const CountdownContainer = styled.div`
+  width: 100%;
+  background: #fef3f2;
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 12px;
+`;
+
+const CountdownHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  font-size: 13px;
+  gap: 6px;
+  margin-bottom: 12px;
+
+  svg {
+    color: #dc2626;
+  }
+`;
+
+const CountdownTitle = styled.h3`
+  font-size: 15px;
+  font-weight: 700;
+  color: #991b1b;
+  margin: 0;
+`;
+
+const CountdownTimer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+`;
+
+const TimeBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: white;
+  border-radius: 10px;
+  padding: 8px 12px;
+  min-width: 60px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+`;
+
+const TimeValue = styled.div`
+  font-size: 24px;
+  font-weight: 800;
+  color: #1f2937;
+  line-height: 1;
+  margin-bottom: 4px;
+`;
+
+const TimeLabel = styled.div`
+  font-size: 11px;
+  color: #6b7280;
+  font-weight: 500;
+`;
+
+const TimeSeparator = styled.div`
+  font-size: 24px;
+  font-weight: 800;
   color: #dc2626;
-  background: #fee2e2;
-  padding: 6px 10px;
-  border-radius: 9px;
-  font-weight: 600;
-  margin-bottom: 10px;
+  margin: 0 2px;
+  padding-bottom: 16px;
 `;
 
 const PayButton = styled.a`

@@ -13,8 +13,17 @@ export function useCountdown(initialSeconds: number) {
     return () => clearInterval(id);
   }, [secondsLeft]);
 
-  const minutes = String(Math.floor(secondsLeft / 60)).padStart(2, "0");
-  const seconds = String(secondsLeft % 60).padStart(2, "0");
+  const hours = Math.floor(secondsLeft / 3600);
+  const minutes = Math.floor((secondsLeft % 3600) / 60);
+  const seconds = secondsLeft % 60;
 
-  return { secondsLeft, formatted: `${minutes}:${seconds}` };
+  const formatted = `${String(Math.floor(secondsLeft / 60)).padStart(2, "0")}:${String(secondsLeft % 60).padStart(2, "0")}`;
+
+  return { 
+    secondsLeft, 
+    hours,
+    minutes, 
+    seconds,
+    formatted 
+  };
 }

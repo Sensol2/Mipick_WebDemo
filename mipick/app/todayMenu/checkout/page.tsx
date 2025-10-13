@@ -3,6 +3,7 @@
 import React, { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import styled from "styled-components";
+import EmptyCart from "./EmptyCart";
 
 type CartItem = {
   id: string;
@@ -45,7 +46,7 @@ export default function CheckoutPage() {
   const [pickupTime, setPickupTime] = useState<string>("내일 오전 12:30");
   const [paymentMethod, setPaymentMethod] = useState<string>("신용/체크카드");
 
-  const deliveryFee = 2000;
+  const deliveryFee = 0;
 
   const subtotal = useMemo(
     () => items.reduce((sum, i) => sum + i.price * i.quantity, 0),
@@ -55,21 +56,41 @@ export default function CheckoutPage() {
 
   const format = (n: number) => `₩${n.toLocaleString()}`;
 
+  // 수량 증가 핸들러
   const inc = (id: string) =>
     setItems((prev) =>
       prev.map((i) => (i.id === id ? { ...i, quantity: i.quantity + 1 } : i))
     );
+
+  // 수량 감소 핸들러
   const dec = (id: string) =>
-    setItems((prev) =>
-      prev.map((i) =>
-        i.id === id ? { ...i, quantity: Math.max(1, i.quantity - 1) } : i
-      )
-    );
+    setItems((prev) => {
+      const updated = prev.map((i) =>
+        i.id === id ? { ...i, quantity: i.quantity - 1 } : i
+      );
+      // 수량이 0이 되면 해당 항목을 리스트에서 제거
+      return updated.filter((i) => i.quantity > 0);
+    });
 
   const handlePay = () => {
     // UI only
     alert(`결제 진행: ${format(total)}`);
   };
+
+  // 장바구니가 비어있는 경우
+  if (items.length === 0) {
+    return (
+      <Page>
+        <Sheet>
+          <Header>
+            <HeaderTitle>주문하기</HeaderTitle>
+            <CloseBtn onClick={() => router.back()}>×</CloseBtn>
+          </Header>
+          <EmptyCart onBack={() => router.back()} />
+        </Sheet>
+      </Page>
+    );
+  }
 
   return (
     <Page>
@@ -103,7 +124,6 @@ export default function CheckoutPage() {
                     <CircleBtn
                       aria-label="decrease"
                       onClick={() => dec(item.id)}
-                      disabled={item.quantity <= 1}
                     >
                       −
                     </CircleBtn>
