@@ -10,8 +10,8 @@ import { MenuImage, OptionGroup, QuantitySelector } from "./components";
 
 interface SelectedOption {
   groupId: string;
-  optionId: string;
-  price: number;
+  optionIds: string[];  // 단일 선택 → 다중 선택으로 변경
+  prices: { [optionId: string]: number };
 }
 
 export default function MenuDetailPage() {
@@ -42,10 +42,18 @@ export default function MenuDetailPage() {
       const defaultSelections: SelectedOption[] = [];
       optionsData.forEach(group => {
         if (group.isRequired && group.options.length > 0) {
+          const firstOption = group.options[0];
           defaultSelections.push({
             groupId: group.id,
-            optionId: group.options[0].id,
-            price: group.options[0].price
+            optionIds: [firstOption.id],
+            prices: { [firstOption.id]: firstOption.price }
+          });
+        } else {
+          // 선택 사항은 빈 배열로 초기화
+          defaultSelections.push({
+            groupId: group.id,
+            optionIds: [],
+            prices: {}
           });
         }
       });
@@ -65,14 +73,64 @@ export default function MenuDetailPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [menuId]);
 
-  const handleOptionSelect = (groupId: string, option: MenuOption) => {
+  const handleOptionSelect = (groupId: string, option: MenuOption | null) => {
     setSelectedOptions(prev => {
-      const filtered = prev.filter(item => item.groupId !== groupId);
-      return [...filtered, {
-        groupId,
-        optionId: option.id,
-        price: option.price
-      }];
+      const groupSelection = prev.find(item => item.groupId === groupId);
+      const group = options.find(g => g.id === groupId);
+      
+      if (!group || !groupSelection) return prev;
+
+      const isSingleSelect = group.maxSelections === 1;
+
+      if (option === null) {
+        // '선택 안함' 클릭 또는 단일 선택 해제
+        return prev.map(item => 
+          item.groupId === groupId 
+            ? { groupId, optionIds: [], prices: {} }
+            : item
+        );
+      }
+
+      if (isSingleSelect) {
+        // 단일 선택: 토글 방식
+        const isCurrentlySelected = groupSelection.optionIds.includes(option.id);
+        return prev.map(item =>
+          item.groupId === groupId
+            ? {
+                groupId,
+                optionIds: isCurrentlySelected ? [] : [option.id],
+                prices: isCurrentlySelected ? {} : { [option.id]: option.price }
+              }
+            : item
+        );
+      } else {
+        // 다중 선택
+        const isCurrentlySelected = groupSelection.optionIds.includes(option.id);
+        
+        if (isCurrentlySelected) {
+          // 선택 해제
+          const newOptionIds = groupSelection.optionIds.filter(id => id !== option.id);
+          const newPrices = { ...groupSelection.prices };
+          delete newPrices[option.id];
+          
+          return prev.map(item =>
+            item.groupId === groupId
+              ? { groupId, optionIds: newOptionIds, prices: newPrices }
+              : item
+          );
+        } else {
+          // 선택 추가 (최대 개수 체크는 컴포넌트에서 처리)
+          return prev.map(item =>
+            item.groupId === groupId
+              ? {
+                  groupId,
+                  optionIds: [...groupSelection.optionIds, option.id],
+                  prices: { ...groupSelection.prices, [option.id]: option.price }
+                }
+              : item
+          );
+        }
+      }
     });
   };
 
@@ -80,7 +138,10 @@ export default function MenuDetailPage() {
     if (!menu) return 0;
     
     const basePrice = menu.price;
-    const optionsPrice = selectedOptions.reduce((sum, selected) => sum + selected.price, 0);
+    const optionsPrice = selectedOptions.reduce((sum, selection) => {
+      const selectionTotal = Object.values(selection.prices).reduce((s, p) => s + p, 0);
+      return sum + selectionTotal;
+    }, 0);
     return (basePrice + optionsPrice) * quantity;
   };
 
@@ -156,7 +217,7 @@ export default function MenuDetailPage() {
               <Section key={group.id}>
                 <OptionGroup
                   group={group}
-                  selectedOptionId={selected?.optionId}
+                  selectedOptionIds={selected?.optionIds || []}
                   onOptionSelect={(option) => handleOptionSelect(group.id, option)}
                 />
               </Section>
