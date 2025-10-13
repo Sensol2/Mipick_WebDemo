@@ -1,53 +1,18 @@
 ﻿"use client";
 
-import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useSearchParams } from "next/navigation";
-import { MenuService } from "@/lib/menuService";
-import { StoreService } from "@/lib/storeService";
-import { type Menu, type Store } from "@/lib/supabase";
+import React from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import styled from "styled-components";
 import { Page, Sheet, Header, HeaderTitle, HeaderSubtitle, BackButton, Body } from "../components/ui";
 import { StoreHeaderImage, MenuListItem } from "./components";
+import { useMenuList } from "./hooks/useMenuList";
 
 export default function MenuListPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const storeId = searchParams?.get("storeId");
-  
-  const [store, setStore] = useState<Store | null>(null);
-  const [menus, setMenus] = useState<Menu[]>([]);
-  const [loading, setLoading] = useState(true);
 
-  const loadStoreAndMenus = async () => {
-    try {
-      setLoading(true);
-      if (!storeId) return;
-      
-      const [storeData, menusData] = await Promise.all([
-        StoreService.getStoreById(storeId),
-        MenuService.getMenusByStoreId(storeId)
-      ]);
-
-      setStore(storeData);
-      setMenus(menusData);
-    } catch (error) {
-      console.error("데이터 로드 실패:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    if (storeId) {
-      loadStoreAndMenus();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [storeId]);
-
-  const handleMenuClick = (menuId: string) => {
-    router.push(`/todayMenu/detail?menuId=${menuId}&storeId=$${storeId}`);
-  };
+  const { store, menus, loading, handleMenuClick } = useMenuList(storeId);
 
   const handleBack = () => {
     router.back();

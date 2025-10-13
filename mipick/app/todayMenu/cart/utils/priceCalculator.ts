@@ -21,21 +21,4 @@ export class PriceCalculator {
     return (menuPrice + optionsPrice) * quantity;
   }
 
-  /**
-   * 메뉴 객체로 총 가격 계산
-   */
-  static calculateTotalFromMenu(
-    menu: Pick<Menu, 'price'>,
-    options: Pick<MenuOption, 'price'>[],
-    quantity: number
-  ): number {
-    return this.calculateTotal(menu.price, options, quantity);
-  }
-
-  /**
-   * 옵션들의 총 가격 계산
-   */
-  static calculateOptionsTotal(options: Pick<MenuOption, 'price'>[]): number {
-    return options.reduce((sum, opt) => sum + opt.price, 0);
-  }
 }

@@ -1,191 +1,27 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useSearchParams } from "next/navigation";
-import { MenuService, type MenuOptionGroup, type MenuOption } from "@/lib/menuService";
-import { CartService } from "@/lib/cartService";
-import { type Menu } from "@/lib/supabase";
+import React from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import styled from "styled-components";
 import { MenuImage, OptionGroup, QuantitySelector } from "./components";
-
-// 임시 사용자 ID (cart/page.tsx와 동일)
-const TEMP_USER_ID = "558fa1fc-f6b6-452a-9c96-eaf7af8078c5";
-
-interface SelectedOption {
-  groupId: string;
-  optionIds: string[];  // 단일 선택 → 다중 선택으로 변경
-  prices: { [optionId: string]: number };
-}
+import { useMenuDetail } from "./hooks/useMenuDetail";
 
 export default function MenuDetailPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const menuId = searchParams?.get("menuId");
-  
-  const [menu, setMenu] = useState<Menu | null>(null);
-  const [options, setOptions] = useState<MenuOptionGroup[]>([]);
-  const [selectedOptions, setSelectedOptions] = useState<SelectedOption[]>([]);
-  const [quantity, setQuantity] = useState(1);
-  const [loading, setLoading] = useState(true);
 
-  const loadMenuData = async () => {
-    try {
-      setLoading(true);
-      if (!menuId) return;
-      
-      const [menuData, optionsData] = await Promise.all([
-        MenuService.getMenuById(menuId),
-        MenuService.getMenuOptions(menuId)
-      ]);
-
-      setMenu(menuData);
-      setOptions(optionsData);
-      
-      // 기본 선택사항 설정 (필수 옵션의 첫 번째 항목)
-      const defaultSelections: SelectedOption[] = [];
-      optionsData.forEach(group => {
-        if (group.isRequired && group.options.length > 0) {
-          const firstOption = group.options[0];
-          defaultSelections.push({
-            groupId: group.id,
-            optionIds: [firstOption.id],
-            prices: { [firstOption.id]: firstOption.price }
-          });
-        } else {
-          // 선택 사항은 빈 배열로 초기화
-          defaultSelections.push({
-            groupId: group.id,
-            optionIds: [],
-            prices: {}
-          });
-        }
-      });
-      setSelectedOptions(defaultSelections);
-      
-    } catch (error) {
-      console.error("메뉴 데이터 로드 실패:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    if (menuId) {
-      loadMenuData();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [menuId]);
-
-  const handleOptionSelect = (groupId: string, option: MenuOption | null) => {
-    setSelectedOptions(prev => {
-      const groupSelection = prev.find(item => item.groupId === groupId);
-      const group = options.find(g => g.id === groupId);
-      
-      if (!group || !groupSelection) return prev;
-
-      const isSingleSelect = group.maxSelections === 1;
-
-      if (option === null) {
-        // '선택 안함' 클릭 또는 단일 선택 해제
-        return prev.map(item => 
-          item.groupId === groupId 
-            ? { groupId, optionIds: [], prices: {} }
-            : item
-        );
-      }
-
-      if (isSingleSelect) {
-        // 단일 선택: 토글 방식
-        const isCurrentlySelected = groupSelection.optionIds.includes(option.id);
-        return prev.map(item =>
-          item.groupId === groupId
-            ? {
-                groupId,
-                optionIds: isCurrentlySelected ? [] : [option.id],
-                prices: isCurrentlySelected ? {} : { [option.id]: option.price }
-              }
-            : item
-        );
-      } else {
-        // 다중 선택
-        const isCurrentlySelected = groupSelection.optionIds.includes(option.id);
-        
-        if (isCurrentlySelected) {
-          // 선택 해제
-          const newOptionIds = groupSelection.optionIds.filter(id => id !== option.id);
-          const newPrices = { ...groupSelection.prices };
-          delete newPrices[option.id];
-          
-          return prev.map(item =>
-            item.groupId === groupId
-              ? { groupId, optionIds: newOptionIds, prices: newPrices }
-              : item
-          );
-        } else {
-          // 선택 추가 (최대 개수 체크는 컴포넌트에서 처리)
-          return prev.map(item =>
-            item.groupId === groupId
-              ? {
-                  groupId,
-                  optionIds: [...groupSelection.optionIds, option.id],
-                  prices: { ...groupSelection.prices, [option.id]: option.price }
-                }
-              : item
-          );
-        }
-      }
-    });
-  };
-
-  const calculateTotalPrice = () => {
-    if (!menu) return 0;
-    
-    const basePrice = menu.price;
-    const optionsPrice = selectedOptions.reduce((sum, selection) => {
-      const selectionTotal = Object.values(selection.prices).reduce((s, p) => s + p, 0);
-      return sum + selectionTotal;
-    }, 0);
-    return (basePrice + optionsPrice) * quantity;
-  };
-
-  const handleQuantityChange = (delta: number) => {
-    setQuantity(prev => Math.max(1, prev + delta));
-  };
-
-  const handleAddToCart = async () => {
-    if (!menu) return;
-
-    try {
-      // 선택된 모든 옵션 ID 수집
-      const selectedOptionIds = selectedOptions.flatMap(selection => selection.optionIds);
-
-      // CheckoutService를 사용하여 장바구니에 추가
-      const success = await CartService.addToCart(TEMP_USER_ID, {
-        menuId: menu.id,
-        quantity,
-        selectedOptionIds
-      });
-
-      if (success) {
-        const totalPrice = calculateTotalPrice();
-        alert(`장바구니에 추가되었습니다! (₩${totalPrice.toLocaleString()})`);
-        
-        // 장바구니 페이지로 이동할지 물어보기
-        const goToCart = window.confirm("장바구니로 이동하시겠습니까?");
-        if (goToCart) {
-          router.push("/todayMenu/cart");
-        } else {
-          router.back();
-        }
-      } else {
-        alert("장바구니 추가에 실패했습니다. 다시 시도해주세요.");
-      }
-    } catch (error) {
-      console.error("장바구니 추가 중 오류:", error);
-      alert("오류가 발생했습니다. 다시 시도해주세요.");
-    }
-  };
+  const {
+    menu,
+    options,
+    selectedOptions,
+    quantity,
+    loading,
+    totalPrice,
+    handleOptionSelect,
+    handleQuantityChange,
+    handleAddToCart,
+  } = useMenuDetail(menuId);
 
   const handleBack = () => {
     router.back();
@@ -262,7 +98,7 @@ export default function MenuDetailPage() {
 
         <Footer>
           <PayButton onClick={handleAddToCart}>
-            장바구니 담기 • ₩{calculateTotalPrice().toLocaleString()}
+            장바구니 담기 • ₩{totalPrice.toLocaleString()}
           </PayButton>
         </Footer>
       </Sheet>
@@ -305,12 +141,6 @@ const HeaderTitle = styled.h2`
   font-size: 20px;
   font-weight: 800;
   color: #111827;
-`;
-
-const HeaderSubtitle = styled.p`
-  margin: 4px 0 0 0;
-  font-size: 12px;
-  color: #6b7280;
 `;
 
 const CloseBtn = styled.button`

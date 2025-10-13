@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { PriceCalculator } from "../priceCalculator";
+import { PriceCalculator } from "../utils/priceCalculator";
 
 export interface CartItem {
   id: string;
