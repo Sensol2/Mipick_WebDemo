@@ -11,16 +11,16 @@ export const Page = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 16px;
+  padding: 0;
 `;
 
 export const Sheet = styled.div`
   background: #fff;
   border: 1px solid #fed7aa;
-  border-radius: 20px;
+  border-radius: 0;
   max-width: 420px;
   width: 100%;
-  height: 80vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -29,7 +29,7 @@ export const Sheet = styled.div`
 
 export const Header = styled.div`
   position: relative;
-  padding: 18px 48px;
+  padding: 22px 48px;
   text-align: center;
   border-bottom: 1px solid #ffe4cc;
 `;
@@ -63,26 +63,26 @@ export const Footer = styled.div`
 `;
 
 export const BackButton = styled.button`
-  position: absolute;
+  position: fixed;
+  top: 16px;
   left: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 28px;
-  height: 28px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
+  background: white;
   border: none;
-  background: #fff7ed;
-  color: #f97316;
-  font-size: 18px;
-  font-weight: 800;
+  font-size: 16px;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  z-index: 100;
+  transition: transform 0.2s;
 
   &:hover {
-    background: #fed7aa;
+    transform: scale(1.1);
+  }
+
+  &:active {
+    transform: scale(0.95);
   }
 `;
 

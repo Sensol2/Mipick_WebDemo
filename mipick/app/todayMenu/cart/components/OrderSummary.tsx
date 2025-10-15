@@ -8,7 +8,7 @@ interface OrderSummaryProps {
 }
 
 export default function OrderSummary({ subtotal, deliveryFee, total }: OrderSummaryProps) {
-  const format = (n: number) => `₩${n.toLocaleString()}`;
+  const format = (n: number) => `${n.toLocaleString()}₩`;
 
   return (
     <>
