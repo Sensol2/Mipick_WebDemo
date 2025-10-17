@@ -5,7 +5,7 @@ import { StoreService } from "@/lib/storeService";
 import { Store } from "@/lib/supabase";
 import styled from "styled-components";
 import { useCountdown } from "@/app/hooks/utils";
-import { Page, Sheet, Header, HeaderTitle, HeaderSubtitle, Body } from "./components/ui";
+import { Header, HeaderTitle, HeaderSubtitle, Body } from "./components/ui";
 import { StoreHeader, StoreInfo, ProgressSection, CountdownSection } from "./components/features";
 
 export default function Home() {
@@ -34,55 +34,49 @@ export default function Home() {
   // 로딩 상태
   if (loading) {
     return (
-      <Page>
-        <Sheet>
-          <Header>
-            <HeaderTitle>오늘의 메뉴</HeaderTitle>
-          </Header>
-        </Sheet>
-      </Page>
+      <>
+        <Header>
+          <HeaderTitle>오늘의 메뉴</HeaderTitle>
+        </Header>
+      </>
     );
   }
 
   // 데이터가 없는 경우
   if (!store) {
     return (
-      <Page>
-        <Sheet>
-          <Header>
-            <HeaderTitle>오늘의 메뉴</HeaderTitle>
-            <HeaderSubtitle>준비 중입니다</HeaderSubtitle>
-          </Header>
-        </Sheet>
-      </Page>
+      <>
+        <Header>
+          <HeaderTitle>오늘의 메뉴</HeaderTitle>
+          <HeaderSubtitle>준비 중입니다</HeaderSubtitle>
+        </Header>
+      </>
     );
   }
 
   return (
-    <Page>
-      <Sheet>
-        <Header>
-          <HeaderTitle>오늘의 메뉴</HeaderTitle>
-        </Header>
+    <>
+      <Header>
+        <HeaderTitle>오늘의 메뉴</HeaderTitle>
+      </Header>
 
-        <StoreHeader store={store} />
+      <StoreHeader store={store} />
 
-        <Body>
-          <StoreInfo store={store} />
-          
-          <Section>
-            <ProgressSection currentOrders={currentOrders} />
-            <CountdownSection hours={hours} minutes={minutes} seconds={seconds} />
-          </Section>
-        </Body>
+      <Body>
+        <StoreInfo store={store} />
+        
+        <Section>
+          <ProgressSection currentOrders={currentOrders} />
+          <CountdownSection hours={hours} minutes={minutes} seconds={seconds} />
+        </Section>
+      </Body>
 
-        <Footer>
-          <PayButton href={`/todayMenu/list?storeId=${store.id}`}>
-            주문하고 학교에서 먹기
-          </PayButton>
-        </Footer>
-      </Sheet>
-    </Page>
+      <Footer>
+        <PayButton href={`/todayMenu/list?storeId=${store.id}`}>
+          주문하고 학교에서 먹기
+        </PayButton>
+      </Footer>
+    </>
   );
 }
 

@@ -10,7 +10,7 @@ import {
   PickupInfoCard, 
   PaymentMethodSelector,
 } from "./components";
-import { Page, Sheet, Header, HeaderTitle, Body, Footer, CloseButton } from "../components/ui";
+import { Header, HeaderTitle, Body, Footer, CloseButton } from "../components/ui";
 import { useCart } from "./hooks/useCart";
 import { formatCurrency } from "./utils/formatters";
 
@@ -33,100 +33,94 @@ export default function CheckoutPage() {
   // 로딩 중
   if (loading) {
     return (
-      <Page>
-        <Sheet>
-          <Header>
-            <HeaderTitle>주문하기</HeaderTitle>
-            <CloseButton onClick={() => router.back()}>×</CloseButton>
-          </Header>
-          <Body>
-            <LoadingText>장바구니를 불러오는 중...</LoadingText>
-          </Body>
-        </Sheet>
-      </Page>
+      <>
+        <Header>
+          <HeaderTitle>주문하기</HeaderTitle>
+          <CloseButton onClick={() => router.back()}>×</CloseButton>
+        </Header>
+        <Body>
+          <LoadingText>장바구니를 불러오는 중...</LoadingText>
+        </Body>
+      </>
     );
   }
 
   // 장바구니가 비어있는 경우
   if (items.length === 0) {
     return (
-      <Page>
-        <Sheet>
-          <Header>
-            <HeaderTitle>주문하기</HeaderTitle>
-            <CloseButton onClick={() => router.back()}>×</CloseButton>
-          </Header>
-          <EmptyCart onBack={() => router.back()} />
-        </Sheet>
-      </Page>
-    );
-  }
-
-  return (
-    <Page>
-      <Sheet>
+      <>
         <Header>
           <HeaderTitle>주문하기</HeaderTitle>
           <CloseButton onClick={() => router.back()}>×</CloseButton>
         </Header>
+        <EmptyCart onBack={() => router.back()} />
+      </>
+    );
+  }
 
-        <Body>
-          <Section>
-            <SectionTitle>주문 내역</SectionTitle>
-            <List>
-              {items.map((item) => (
-                <OrderItem
-                  key={item.id}
-                  item={item}
-                  onIncrease={increaseQuantity}
-                  onDecrease={decreaseQuantity}
-                />
-              ))}
-            </List>
+  return (
+    <>
+      <Header>
+        <HeaderTitle>주문하기</HeaderTitle>
+        <CloseButton onClick={() => router.back()}>×</CloseButton>
+      </Header>
 
-            <OrderSummary 
-              subtotal={subtotal}
-              deliveryFee={deliveryFee}
-              total={total}
-            />
-          </Section>
+      <Body>
+        <Section>
+          <SectionTitle>주문 내역</SectionTitle>
+          <List>
+            {items.map((item) => (
+              <OrderItem
+                key={item.id}
+                item={item}
+                onIncrease={increaseQuantity}
+                onDecrease={decreaseQuantity}
+              />
+            ))}
+          </List>
 
-          <Section>
-            <SectionTitle>픽업 장소</SectionTitle>
-            <PickupInfoCard
-              type="location"
-              title="숭실대학교 카페"
-              subtitle={`${selectedPickup} • 서울특별시 동작구 상도로 369`}
-              onChangeClick={() => alert("픽업 장소 변경 (UI)")}
-            />
-          </Section>
+          <OrderSummary 
+            subtotal={subtotal}
+            deliveryFee={deliveryFee}
+            total={total}
+          />
+        </Section>
 
-          <Section>
-            <SectionTitle>픽업 시간</SectionTitle>
-            <PickupInfoCard
-              type="time"
-              title={pickupTime}
-              subtitle="영업시간 내 픽업 가능"
-              onChangeClick={() => setPickupTime("내일 오후 1:00")}
-            />
-          </Section>
+        <Section>
+          <SectionTitle>픽업 장소</SectionTitle>
+          <PickupInfoCard
+            type="location"
+            title="숭실대학교 카페"
+            subtitle={`${selectedPickup} • 서울특별시 동작구 상도로 369`}
+            onChangeClick={() => alert("픽업 장소 변경 (UI)")}
+          />
+        </Section>
 
-          <Section>
-            <SectionTitle>결제 수단</SectionTitle>
-            <PaymentMethodSelector
-              selectedMethod={paymentMethod}
-              onMethodSelect={setPaymentMethod}
-            />
-          </Section>
-        </Body>
+        <Section>
+          <SectionTitle>픽업 시간</SectionTitle>
+          <PickupInfoCard
+            type="time"
+            title={pickupTime}
+            subtitle="영업시간 내 픽업 가능"
+            onChangeClick={() => setPickupTime("내일 오후 1:00")}
+          />
+        </Section>
 
-        <Footer>
-          <PayBtn onClick={handlePay}>
-            {`${formatCurrency(total)} 결제하기`}
-          </PayBtn>
-        </Footer>
-      </Sheet>
-    </Page>
+        <Section>
+          <SectionTitle>결제 수단</SectionTitle>
+          <PaymentMethodSelector
+            selectedMethod={paymentMethod}
+            onMethodSelect={setPaymentMethod}
+          />
+        </Section>
+      </Body>
+
+      <Footer>
+        <PayBtn onClick={handlePay}>
+          {`${formatCurrency(total)} 결제하기`}
+        </PayBtn>
+      </Footer>
+    </>
   );
 }
 
