@@ -91,7 +91,7 @@ export default function ShareSection({ tickets, onComplete, onSkip }: ShareSecti
   return (
     <Container>
       <ProgressBar>
-        <ProgressFill width="66%" />
+        <ProgressFill width="100%" />
       </ProgressBar>
 
       <CongratsBadge>🎉 추첨권 1장 획득!</CongratsBadge>
@@ -123,7 +123,7 @@ export default function ShareSection({ tickets, onComplete, onSkip }: ShareSecti
       </ShareButtons>
 
       <SkipButton onClick={onSkip}>
-        나중에 할게요 →
+        메뉴 보러가기 →
       </SkipButton>
     </Container>
   );

@@ -1,45 +1,51 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import styled from "styled-components";
+import surveyData from "../surveyData.json";
+import RadioGroupField from "./fields/RadioGroupField";
+import CheckboxGroupField from "./fields/CheckboxGroupField";
+import LikertField from "./fields/LikertField";
+import type {
+  SurveyPage,
+  Question,
+  RadioQuestion,
+  CheckboxQuestion,
+  LikertQuestion,
+  TextQuestion,
+  TextareaQuestion,
+} from "./fields/types";
 
 interface SurveySectionProps {
-  formData: {
-    name: string;
-    phone: string;
-    gender: string;
-    affiliation: string;
-    foodType: string;
-    priceRange: string;
-    location: string;
-    frequency: string;
-    knowPath: string;
-    satisfaction: string;
-    improvements: string;
-  };
+  formData: Record<string, string>;
   onFormChange: (field: string, value: string) => void;
   onSubmit: () => void;
 }
 
 export default function SurveySection({ formData, onFormChange, onSubmit }: SurveySectionProps) {
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 3;
+  const pages = surveyData.pages as unknown as SurveyPage[];
+  const totalPages = pages.length;
+
+  type FormDataKeys = keyof SurveySectionProps["formData"];
+
+  const pageConfig = useMemo(() => pages.find((p) => p.id === currentPage), [pages, currentPage]);
+
+  const validateCurrentPage = () => {
+    if (!pageConfig) return true;
+    const missing = pageConfig.questions.filter((q) => {
+      const key = q.id as FormDataKeys;
+      const val = formData[key] as unknown as string | undefined;
+      return q.required && !String(val ?? "").trim();
+    });
+    if (missing.length > 0) {
+      alert("모든 필수 항목을 입력/선택해주세요!");
+      return false;
+    }
+    return true;
+  };
 
   const handleNext = () => {
-    // 현재 페이지 필수 항목 검증
-    if (currentPage === 1) {
-      if (!formData.name || !formData.phone || !formData.gender || !formData.affiliation) {
-        alert("모든 필수 항목을 입력해주세요!");
-        return;
-      }
-    } else if (currentPage === 2) {
-      if (!formData.foodType || !formData.priceRange || !formData.location || !formData.frequency) {
-        alert("모든 필수 항목을 선택해주세요!");
-        return;
-      }
-    }
-    
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
+    if (!validateCurrentPage()) return;
+    if (currentPage < totalPages) setCurrentPage((p) => p + 1);
   };
 
   const handlePrev = () => {
@@ -49,12 +55,51 @@ export default function SurveySection({ formData, onFormChange, onSubmit }: Surv
   };
 
   const handleFinalSubmit = () => {
-    // 마지막 페이지 필수 항목 검증
-    if (!formData.knowPath || !formData.satisfaction) {
-      alert("모든 필수 항목을 입력해주세요!");
-      return;
-    }
+    if (!validateCurrentPage()) return;
     onSubmit();
+  };
+
+  const renderQuestion = (q: Question, value: string, onChange: (v: string) => void) => {
+    if (q.type === "text" || q.type === "tel") {
+      const tq = q as TextQuestion;
+      return (
+        <Input
+          type={q.type}
+          placeholder={tq.placeholder || ""}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+        />
+      );
+    }
+    if (q.type === "radio") {
+      return <RadioGroupField options={(q as RadioQuestion).options || []} value={value} onChange={onChange} />;
+    }
+    if (q.type === "checkbox") {
+      return <CheckboxGroupField options={(q as CheckboxQuestion).options || []} value={value} onChange={onChange} />;
+    }
+    if (q.type === "likert") {
+      const lq = q as LikertQuestion;
+      return (
+        <LikertField
+          scale={lq.scale || 5}
+          anchors={lq.anchors}
+          value={value}
+          onChange={onChange}
+        />
+      );
+    }
+    if (q.type === "textarea") {
+      const taq = q as TextareaQuestion;
+      return (
+        <TextArea
+          placeholder={taq.placeholder || ""}
+          value={value}
+          rows={4}
+          onChange={(e) => onChange(e.target.value)}
+        />
+      );
+    }
+    return null;
   };
 
   return (
@@ -65,187 +110,26 @@ export default function SurveySection({ formData, onFormChange, onSubmit }: Surv
 
       <PageIndicator>{currentPage} / {totalPages}</PageIndicator>
 
-      {/* 페이지 1: 기본 정보 */}
-      {currentPage === 1 && (
+      {/* 현재 페이지 동적 렌더링 */}
+      {pageConfig && (
         <PageContent>
-          <Title>기본 정보를 입력해주세요</Title>
-          <Subtitle>간단한 정보만 입력하면 돼요 ✨</Subtitle>
+          <Title>{pageConfig.title}</Title>
+          {pageConfig.subtitle && <Subtitle>{pageConfig.subtitle}</Subtitle>}
 
           <Form>
-            <FormSection>
-              <Label>이름 *</Label>
-              <Input
-                type="text"
-                placeholder="이름을 입력해주세요"
-                value={formData.name}
-                onChange={(e) => onFormChange("name", e.target.value)}
-              />
-            </FormSection>
+            {pageConfig.questions.map((q) => {
+              const key = q.id as FormDataKeys;
+              const value = (formData[key] as unknown as string) ?? "";
+              const onChange = (val: string) => onFormChange(key, val);
 
-            <FormSection>
-              <Label>전화번호 *</Label>
-              <Input
-                type="tel"
-                placeholder="010-0000-0000"
-                value={formData.phone}
-                onChange={(e) => onFormChange("phone", e.target.value)}
-              />
-            </FormSection>
-
-            <FormSection>
-              <Label>성별 *</Label>
-              <RadioGroup>
-                {["남성", "여성"].map((option) => (
-                  <RadioOption
-                    key={option}
-                    selected={formData.gender === option}
-                    onClick={() => onFormChange("gender", option)}
-                  >
-                    {option}
-                  </RadioOption>
-                ))}
-              </RadioGroup>
-            </FormSection>
-
-            <FormSection>
-              <Label>소속 *</Label>
-              <RadioGroup>
-                {["대학생", "대학원생", "교직원", "일반인"].map((option) => (
-                  <RadioOption
-                    key={option}
-                    selected={formData.affiliation === option}
-                    onClick={() => onFormChange("affiliation", option)}
-                  >
-                    {option}
-                  </RadioOption>
-                ))}
-              </RadioGroup>
-            </FormSection>
+              return (
+                <FormSection key={q.id}>
+                  <Label>{q.label}</Label>
+                  {renderQuestion(q, value, onChange)}
+                </FormSection>
+              );
+            })}
           </Form>
-        </PageContent>
-      )}
-
-      {/* 페이지 2: 식사 선호도 */}
-      {currentPage === 2 && (
-        <PageContent>
-          <Title>평소 점심 식사 패턴을 알려주세요</Title>
-          <Subtitle>선호하는 스타일을 선택해주세요 🍽️</Subtitle>
-
-          <Form>
-            <FormSection>
-              <Label>평소 선호하는 음식 종류는? *</Label>
-              <RadioGroup>
-                {["🍚 한식", "🍝 양식", "🍣 일식", "🥗 기타"].map((option) => (
-                  <RadioOption
-                    key={option}
-                    selected={formData.foodType === option}
-                    onClick={() => onFormChange("foodType", option)}
-                  >
-                    {option}
-                  </RadioOption>
-                ))}
-              </RadioGroup>
-            </FormSection>
-
-            <FormSection>
-              <Label>점심 평균 가격대는? *</Label>
-              <RadioGroup>
-                {["5천원 미만", "5천~7천원", "7천~1만원", "1만원 이상"].map((option) => (
-                  <RadioOption
-                    key={option}
-                    selected={formData.priceRange === option}
-                    onClick={() => onFormChange("priceRange", option)}
-                  >
-                    {option}
-                  </RadioOption>
-                ))}
-              </RadioGroup>
-            </FormSection>
-
-            <FormSection>
-              <Label>점심을 주로 어디서 해결하시나요? *</Label>
-              <RadioGroup>
-                {["학교 식당", "근처 식당", "편의점", "배달"].map((option) => (
-                  <RadioOption
-                    key={option}
-                    selected={formData.location === option}
-                    onClick={() => onFormChange("location", option)}
-                  >
-                    {option}
-                  </RadioOption>
-                ))}
-              </RadioGroup>
-            </FormSection>
-
-            <FormSection>
-              <Label>일주일에 몇 번 외식하시나요? *</Label>
-              <RadioGroup>
-                {["거의 매일", "주 3~4회", "주 1~2회", "거의 안 함"].map((option) => (
-                  <RadioOption
-                    key={option}
-                    selected={formData.frequency === option}
-                    onClick={() => onFormChange("frequency", option)}
-                  >
-                    {option}
-                  </RadioOption>
-                ))}
-              </RadioGroup>
-            </FormSection>
-          </Form>
-        </PageContent>
-      )}
-
-      {/* 페이지 3: 서비스 피드백 */}
-      {currentPage === 3 && (
-        <PageContent>
-          <Title>Mipick 서비스에 대해 알려주세요</Title>
-          <Subtitle>소중한 의견 감사합니다</Subtitle>
-
-          <Form>
-            <FormSection>
-              <Label>Mipick을 어떻게 알게 되셨나요? *</Label>
-              <RadioGroup>
-                {["친구 추천", "SNS", "검색", "광고"].map((option) => (
-                  <RadioOption
-                    key={option}
-                    selected={formData.knowPath === option}
-                    onClick={() => onFormChange("knowPath", option)}
-                  >
-                    {option}
-                  </RadioOption>
-                ))}
-              </RadioGroup>
-            </FormSection>
-
-            <FormSection>
-              <Label>서비스 만족도는? *</Label>
-              <RadioGroup>
-                {["매우 만족", "만족", "보통", "불만족"].map((option) => (
-                  <RadioOption
-                    key={option}
-                    selected={formData.satisfaction === option}
-                    onClick={() => onFormChange("satisfaction", option)}
-                  >
-                    {option}
-                  </RadioOption>
-                ))}
-              </RadioGroup>
-            </FormSection>
-
-            <FormSection>
-              <Label>개선사항이나 의견 (선택)</Label>
-              <TextArea
-                placeholder="자유롭게 의견을 남겨주세요"
-                value={formData.improvements}
-                onChange={(e) => onFormChange("improvements", e.target.value)}
-                rows={4}
-              />
-            </FormSection>
-          </Form>
-
-          <PrivacyNote>
-            🔒 입력하신 개인정보는 본 이벤트 당첨자 발표 및 안내 용도로만 사용됩니다.
-          </PrivacyNote>
         </PageContent>
       )}
 
@@ -253,17 +137,17 @@ export default function SurveySection({ formData, onFormChange, onSubmit }: Surv
       <ButtonGroup>
         {currentPage > 1 && (
           <PrevButton onClick={handlePrev}>
-            ← 이전
+            이전
           </PrevButton>
         )}
         
         {currentPage < totalPages ? (
-          <NextButton onClick={handleNext} fullWidth={currentPage === 1}>
-            다음 →
+          <NextButton onClick={handleNext}>
+            다음
           </NextButton>
         ) : (
           <SubmitButton onClick={handleFinalSubmit}>
-            설문 제출하고 추첨권 받기 🎟️
+            제출
           </SubmitButton>
         )}
       </ButtonGroup>
@@ -339,29 +223,7 @@ const Input = styled.input`
   }
 `;
 
-const RadioGroup = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-`;
-
-const RadioOption = styled.div<{ selected: boolean }>`
-  padding: 14px;
-  border: 2px solid ${(props) => (props.selected ? "#FF6B35" : "#e0e0e0")};
-  border-radius: 10px;
-  text-align: center;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  background: ${(props) => (props.selected ? "#FFF4E6" : "white")};
-  color: ${(props) => (props.selected ? "#FF6B35" : "#666")};
-  transition: all 0.2s;
-
-  &:hover {
-    border-color: #FF6B35;
-    background: #FFF4E6;
-  }
-`;
+// Radio/Checkbox option styles moved into field components
 
 const SubmitButton = styled.button`
   width: 100%;
@@ -373,7 +235,6 @@ const SubmitButton = styled.button`
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;
-  margin-top: 16px;
   box-shadow: 0 4px 16px rgba(255, 107, 53, 0.4);
   transition: transform 0.2s;
 
@@ -384,17 +245,6 @@ const SubmitButton = styled.button`
   &:active {
     transform: translateY(0);
   }
-`;
-
-const PrivacyNote = styled.div`
-  margin-top: 24px;
-  padding: 16px;
-  background: #f8f9fa;
-  border-radius: 10px;
-  font-size: 12px;
-  color: #666;
-  line-height: 1.6;
-  text-align: center;
 `;
 
 const PageIndicator = styled.div`
@@ -443,12 +293,13 @@ const TextArea = styled.textarea`
 
 const ButtonGroup = styled.div`
   display: flex;
+  flex-direction: column;
   gap: 12px;
   margin-top: 32px;
 `;
 
 const PrevButton = styled.button`
-  flex: 1;
+  width: 100%;
   padding: 16px;
   background: white;
   color: #666;
@@ -469,8 +320,8 @@ const PrevButton = styled.button`
   }
 `;
 
-const NextButton = styled.button<{ fullWidth?: boolean }>`
-  flex: ${(props) => (props.fullWidth ? '1' : '2')};
+const NextButton = styled.button`
+  width: 100%;
   padding: 16px;
   background: linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%);
   color: white;

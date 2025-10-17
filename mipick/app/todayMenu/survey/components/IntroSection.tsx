@@ -10,11 +10,11 @@ export default function IntroSection({ onStart }: IntroSectionProps) {
       <EventBadge>🎉 무료 점심 이벤트</EventBadge>
       
       <MainTitle>
-        지금 참여하고<br />
-        <Highlight>추첨권</Highlight>을 받아가세요!
+        1분만 설문 참여하고<br />
+        <Highlight>추첨권</Highlight> 받아가세요!
       </MainTitle>
 
-      <EventPeriod>이벤트 기간: 12월 30일 23시까지</EventPeriod>
+      <EventPeriod>이벤트 기간: 11월 19일 23시 59분까지</EventPeriod>
 
       <BenefitCard>
         <BenefitIcon>🎟️</BenefitIcon>
@@ -26,12 +26,12 @@ export default function IntroSection({ onStart }: IntroSectionProps) {
         <StepItem>
           <StepIcon>📝</StepIcon>
           <StepText>간단한 설문조사 참여</StepText>
-          <StepReward>→ 추첨권 1장</StepReward>
+          <StepReward>🎟️ 1장</StepReward>
         </StepItem>
         <StepItem>
           <StepIcon>📤</StepIcon>
-          <StepText>친구에게 공유하기</StepText>
-          <StepReward>→ 추첨권 1장 추가</StepReward>
+          <StepText>친구가 추천인 입력</StepText>
+          <StepReward>🎟️ 1장</StepReward>
         </StepItem>
       </ParticipationSteps>
 
@@ -40,7 +40,7 @@ export default function IntroSection({ onStart }: IntroSectionProps) {
       </StartButton>
 
       <InfoText>
-        💡 추첨 결과는 12월 31일에 개별 문자로 안내됩니다
+        * 추첨 결과는 11월 7일에 개별 문자로 안내드립니다!
       </InfoText>
     </Container>
   );
@@ -93,19 +93,19 @@ const BenefitCard = styled.div`
 `;
 
 const BenefitIcon = styled.div`
-  font-size: 48px;
+  font-size: 64px;
   margin-bottom: 16px;
 `;
 
 const BenefitTitle = styled.div`
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 24px;
+  font-weight: 800;
   margin-bottom: 8px;
 `;
 
 const BenefitDesc = styled.div`
   font-size: 14px;
-  opacity: 0.9;
+  font-weight: 400;
 `;
 
 const ParticipationSteps = styled.div`
