@@ -1,10 +1,7 @@
 export interface SurveyResponse {
   id?: string;
   responses: Record<string, string>;
-  tickets?: number;
   submittedAt: string;
-  version: string;
-  createdAt?: string;
 }
 
 export async function saveSurveyResponse(surveyResponse: SurveyResponse): Promise<SurveyResponse> {
@@ -20,7 +17,6 @@ export async function saveSurveyResponse(surveyResponse: SurveyResponse): Promis
   const mockResponse: SurveyResponse = {
     ...surveyResponse,
     id: `mock_${Date.now()}`,
-    createdAt: new Date().toISOString()
   };
   
   console.log("✅ 저장 완료 (시뮬레이션):", mockResponse.id);
