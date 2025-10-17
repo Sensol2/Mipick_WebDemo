@@ -1,7 +1,6 @@
 "use client"
 
 import styled from 'styled-components'
-import { useEffect } from 'react'
 import { signInWithKakao } from '@/lib/auth/kakaoService'
 import { signInWithGoogle } from '@/lib/auth/googleService'
 

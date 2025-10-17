@@ -6,7 +6,6 @@ import styled from "styled-components";
 import { Header, HeaderTitle, Body, Footer, CloseButton } from "../components/ui";
 import { MenuImage, OptionGroup, QuantitySelector } from "./components";
 import { useMenuDetail } from "./hooks/useMenuDetail";
-import { Page, Sheet, Header, HeaderTitle, Body, Footer, BackButton } from "../components/ui";
 
 export default function MenuDetailPage() {
   const router = useRouter();
