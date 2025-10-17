@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import styled from "styled-components";
+import surveyData from "../surveyData.json";
 
 interface SurveySectionProps {
   formData: {
@@ -7,6 +8,7 @@ interface SurveySectionProps {
     phone: string;
     gender: string;
     affiliation: string;
+    referrer: string;
     foodType: string;
     priceRange: string;
     location: string;
@@ -21,25 +23,30 @@ interface SurveySectionProps {
 
 export default function SurveySection({ formData, onFormChange, onSubmit }: SurveySectionProps) {
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 3;
+  const pages = surveyData.pages;
+  const totalPages = pages.length;
+
+  type FormDataKeys = keyof SurveySectionProps["formData"];
+
+  const pageConfig = useMemo(() => pages.find((p) => p.id === currentPage), [pages, currentPage]);
+
+  const validateCurrentPage = () => {
+    if (!pageConfig) return true;
+    const missing = pageConfig.questions.filter((q) => {
+      const key = q.id as FormDataKeys;
+      const val = formData[key] as unknown as string | undefined;
+      return q.required && !String(val ?? "").trim();
+    });
+    if (missing.length > 0) {
+      alert("모든 필수 항목을 입력/선택해주세요!");
+      return false;
+    }
+    return true;
+  };
 
   const handleNext = () => {
-    // 현재 페이지 필수 항목 검증
-    if (currentPage === 1) {
-      if (!formData.name || !formData.phone || !formData.gender || !formData.affiliation) {
-        alert("모든 필수 항목을 입력해주세요!");
-        return;
-      }
-    } else if (currentPage === 2) {
-      if (!formData.foodType || !formData.priceRange || !formData.location || !formData.frequency) {
-        alert("모든 필수 항목을 선택해주세요!");
-        return;
-      }
-    }
-    
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
+    if (!validateCurrentPage()) return;
+    if (currentPage < totalPages) setCurrentPage((p) => p + 1);
   };
 
   const handlePrev = () => {
@@ -49,11 +56,7 @@ export default function SurveySection({ formData, onFormChange, onSubmit }: Surv
   };
 
   const handleFinalSubmit = () => {
-    // 마지막 페이지 필수 항목 검증
-    if (!formData.knowPath || !formData.satisfaction) {
-      alert("모든 필수 항목을 입력해주세요!");
-      return;
-    }
+    if (!validateCurrentPage()) return;
     onSubmit();
   };
 
@@ -65,187 +68,56 @@ export default function SurveySection({ formData, onFormChange, onSubmit }: Surv
 
       <PageIndicator>{currentPage} / {totalPages}</PageIndicator>
 
-      {/* 페이지 1: 기본 정보 */}
-      {currentPage === 1 && (
+      {/* 현재 페이지 동적 렌더링 */}
+      {pageConfig && (
         <PageContent>
-          <Title>기본 정보를 입력해주세요</Title>
-          <Subtitle>간단한 정보만 입력하면 돼요 ✨</Subtitle>
+          <Title>{pageConfig.title}</Title>
+          {pageConfig.subtitle && <Subtitle>{pageConfig.subtitle}</Subtitle>}
 
           <Form>
-            <FormSection>
-              <Label>이름 *</Label>
-              <Input
-                type="text"
-                placeholder="이름을 입력해주세요"
-                value={formData.name}
-                onChange={(e) => onFormChange("name", e.target.value)}
-              />
-            </FormSection>
+            {pageConfig.questions.map((q) => {
+              const key = q.id as FormDataKeys;
+              const value = (formData[key] as unknown as string) ?? "";
+              const onChange = (val: string) => onFormChange(key, val);
 
-            <FormSection>
-              <Label>전화번호 *</Label>
-              <Input
-                type="tel"
-                placeholder="010-0000-0000"
-                value={formData.phone}
-                onChange={(e) => onFormChange("phone", e.target.value)}
-              />
-            </FormSection>
-
-            <FormSection>
-              <Label>성별 *</Label>
-              <RadioGroup>
-                {["남성", "여성"].map((option) => (
-                  <RadioOption
-                    key={option}
-                    selected={formData.gender === option}
-                    onClick={() => onFormChange("gender", option)}
-                  >
-                    {option}
-                  </RadioOption>
-                ))}
-              </RadioGroup>
-            </FormSection>
-
-            <FormSection>
-              <Label>소속 *</Label>
-              <RadioGroup>
-                {["대학생", "대학원생", "교직원", "일반인"].map((option) => (
-                  <RadioOption
-                    key={option}
-                    selected={formData.affiliation === option}
-                    onClick={() => onFormChange("affiliation", option)}
-                  >
-                    {option}
-                  </RadioOption>
-                ))}
-              </RadioGroup>
-            </FormSection>
-          </Form>
-        </PageContent>
-      )}
-
-      {/* 페이지 2: 식사 선호도 */}
-      {currentPage === 2 && (
-        <PageContent>
-          <Title>평소 점심 식사 패턴을 알려주세요</Title>
-          <Subtitle>선호하는 스타일을 선택해주세요 🍽️</Subtitle>
-
-          <Form>
-            <FormSection>
-              <Label>평소 선호하는 음식 종류는? *</Label>
-              <RadioGroup>
-                {["🍚 한식", "🍝 양식", "🍣 일식", "🥗 기타"].map((option) => (
-                  <RadioOption
-                    key={option}
-                    selected={formData.foodType === option}
-                    onClick={() => onFormChange("foodType", option)}
-                  >
-                    {option}
-                  </RadioOption>
-                ))}
-              </RadioGroup>
-            </FormSection>
-
-            <FormSection>
-              <Label>점심 평균 가격대는? *</Label>
-              <RadioGroup>
-                {["5천원 미만", "5천~7천원", "7천~1만원", "1만원 이상"].map((option) => (
-                  <RadioOption
-                    key={option}
-                    selected={formData.priceRange === option}
-                    onClick={() => onFormChange("priceRange", option)}
-                  >
-                    {option}
-                  </RadioOption>
-                ))}
-              </RadioGroup>
-            </FormSection>
-
-            <FormSection>
-              <Label>점심을 주로 어디서 해결하시나요? *</Label>
-              <RadioGroup>
-                {["학교 식당", "근처 식당", "편의점", "배달"].map((option) => (
-                  <RadioOption
-                    key={option}
-                    selected={formData.location === option}
-                    onClick={() => onFormChange("location", option)}
-                  >
-                    {option}
-                  </RadioOption>
-                ))}
-              </RadioGroup>
-            </FormSection>
-
-            <FormSection>
-              <Label>일주일에 몇 번 외식하시나요? *</Label>
-              <RadioGroup>
-                {["거의 매일", "주 3~4회", "주 1~2회", "거의 안 함"].map((option) => (
-                  <RadioOption
-                    key={option}
-                    selected={formData.frequency === option}
-                    onClick={() => onFormChange("frequency", option)}
-                  >
-                    {option}
-                  </RadioOption>
-                ))}
-              </RadioGroup>
-            </FormSection>
-          </Form>
-        </PageContent>
-      )}
-
-      {/* 페이지 3: 서비스 피드백 */}
-      {currentPage === 3 && (
-        <PageContent>
-          <Title>Mipick 서비스에 대해 알려주세요</Title>
-          <Subtitle>소중한 의견 감사합니다</Subtitle>
-
-          <Form>
-            <FormSection>
-              <Label>Mipick을 어떻게 알게 되셨나요? *</Label>
-              <RadioGroup>
-                {["친구 추천", "SNS", "검색", "광고"].map((option) => (
-                  <RadioOption
-                    key={option}
-                    selected={formData.knowPath === option}
-                    onClick={() => onFormChange("knowPath", option)}
-                  >
-                    {option}
-                  </RadioOption>
-                ))}
-              </RadioGroup>
-            </FormSection>
-
-            <FormSection>
-              <Label>서비스 만족도는? *</Label>
-              <RadioGroup>
-                {["매우 만족", "만족", "보통", "불만족"].map((option) => (
-                  <RadioOption
-                    key={option}
-                    selected={formData.satisfaction === option}
-                    onClick={() => onFormChange("satisfaction", option)}
-                  >
-                    {option}
-                  </RadioOption>
-                ))}
-              </RadioGroup>
-            </FormSection>
-
-            <FormSection>
-              <Label>개선사항이나 의견 (선택)</Label>
-              <TextArea
-                placeholder="자유롭게 의견을 남겨주세요"
-                value={formData.improvements}
-                onChange={(e) => onFormChange("improvements", e.target.value)}
-                rows={4}
-              />
-            </FormSection>
+              return (
+                <FormSection key={q.id}>
+                  <Label>{q.label}</Label>
+                  {q.type === "text" || q.type === "tel" ? (
+                    <Input
+                      type={q.type}
+                      placeholder={q.placeholder || ""}
+                      value={value}
+                      onChange={(e) => onChange(e.target.value)}
+                    />
+                  ) : q.type === "radio" ? (
+                    <RadioGroup>
+                      {(q.options || []).map((option) => (
+                        <RadioOption
+                          key={option}
+                          selected={value === option}
+                          onClick={() => onChange(option)}
+                        >
+                          {option}
+                        </RadioOption>
+                      ))}
+                    </RadioGroup>
+                  ) : q.type === "textarea" ? (
+                    <TextArea
+                      placeholder={q.placeholder || ""}
+                      value={value}
+                      rows={4}
+                      onChange={(e) => onChange(e.target.value)}
+                    />
+                  ) : null}
+                </FormSection>
+              );
+            })}
           </Form>
 
-          <PrivacyNote>
-            🔒 입력하신 개인정보는 본 이벤트 당첨자 발표 및 안내 용도로만 사용됩니다.
-          </PrivacyNote>
+          {pageConfig.privacyNote && (
+            <PrivacyNote>{pageConfig.privacyNote}</PrivacyNote>
+          )}
         </PageContent>
       )}
 

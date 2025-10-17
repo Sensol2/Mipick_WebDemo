@@ -3,14 +3,12 @@
 import { useState } from "react";
 import styled, { keyframes } from "styled-components";
 import { useRouter } from "next/navigation";
-import { Page as BasePage, Sheet as BaseSheet, BackButton } from "../components/ui";
-import {
-  IntroSection,
-  SurveySection,
-  ShareSection,
-  CompleteSection,
-  TicketAnimation,
-} from "./components";
+import { Sheet as BaseSheet, BackButton } from "../components/ui";
+import IntroSection from "./components/IntroSection";
+import SurveySection from "./components/SurveySection";
+import ShareSection from "./components/ShareSection";
+import CompleteSection from "./components/CompleteSection";
+import TicketAnimation from "./components/TicketAnimation";
 
 export default function SurveyPage() {
   const router = useRouter();
@@ -24,6 +22,7 @@ export default function SurveyPage() {
     phone: "",
     gender: "",
     affiliation: "",
+    referrer: "",
     foodType: "",
     priceRange: "",
     location: "",
@@ -38,14 +37,6 @@ export default function SurveyPage() {
   };
 
   const handleSurveySubmit = () => {
-    // 필수 항목 검증
-    if (!formData.name || !formData.phone || !formData.gender || !formData.affiliation ||
-        !formData.foodType || !formData.priceRange || !formData.location || !formData.frequency ||
-        !formData.knowPath || !formData.satisfaction) {
-      alert("모든 필수 항목을 입력해주세요!");
-      return;
-    }
-    
     setShowTicketAnimation(true);
     setTimeout(() => {
       setTickets(tickets + 1);
@@ -91,7 +82,7 @@ export default function SurveyPage() {
   };
 
   return (
-    <Page>
+    <>
       <BackButton onClick={() => step === "intro" ? router.back() : setStep("intro")}>
         ←
       </BackButton>
@@ -99,7 +90,7 @@ export default function SurveyPage() {
       <AnimatedSheet>{renderContent()}</AnimatedSheet>
 
       <TicketAnimation show={showTicketAnimation} />
-    </Page>
+    </>
   );
 }
 
@@ -107,10 +98,6 @@ export default function SurveyPage() {
 const fadeIn = keyframes`
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
-`;
-
-const Page = styled(BasePage)`
-  background: linear-gradient(180deg, #FFF4E6 0%, #FFE5CC 50%, #FFD6B3 100%);
 `;
 
 const AnimatedSheet = styled(BaseSheet)`
