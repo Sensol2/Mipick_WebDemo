@@ -1,6 +1,5 @@
 "use client"
 
-import type { Metadata } from "next";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyle } from "@/app/styles/GlobalStyle";
 import { theme } from "@/app/styles/theme";

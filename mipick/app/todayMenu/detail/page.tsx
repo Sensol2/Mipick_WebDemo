@@ -3,6 +3,7 @@
 import React from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import styled from "styled-components";
+import { Header, HeaderTitle, Body, Footer, CloseButton } from "../components/ui";
 import { MenuImage, OptionGroup, QuantitySelector } from "./components";
 import { useMenuDetail } from "./hooks/useMenuDetail";
 import { Page, Sheet, Header, HeaderTitle, Body, Footer, BackButton } from "../components/ui";
@@ -30,81 +31,74 @@ export default function MenuDetailPage() {
 
   if (loading) {
     return (
-      <Page>
-        <Sheet>
-          <Header>
-            <HeaderTitle>옵션 선택</HeaderTitle>
-          </Header>
-        </Sheet>
-      </Page>
+      <>
+        <Header>
+          <HeaderTitle>옵션 선택</HeaderTitle>
+        </Header>
+      </>
     );
   }
 
   if (!menu) {
     return (
-      <Page>
-        <Sheet>
-          <Header>
-            <HeaderTitle>오류</HeaderTitle>
-          </Header>
-        </Sheet>
-      </Page>
+      <>
+        <Header>
+          <HeaderTitle>오류</HeaderTitle>
+        </Header>
+      </>
     );
   }
 
   return (
-    <Page>
-      <BackButton onClick={handleBack}>←</BackButton>
-      
-      <Sheet>
-        <Header>
-          <HeaderTitle>옵션 선택</HeaderTitle>
-        </Header>
+    <>
+      <Header>
+        <CloseButton onClick={handleBack}>←</CloseButton>
+        <HeaderTitle>옵션 선택</HeaderTitle>
+      </Header>
 
-        <Body>
-          <Section>
-            <MenuImage menu={menu} />
-          </Section>
+      <Body>
+        <Section>
+          <MenuImage menu={menu} />
+        </Section>
 
-          <Section>
-            <SummaryCard>
-              <SummaryLine>
-                <span>기본 가격</span>
-                <b>₩{menu.price.toLocaleString()}</b>
-              </SummaryLine>
-            </SummaryCard>
-          </Section>
+        <Section>
+          <SummaryCard>
+            <SummaryLine>
+              <span>기본 가격</span>
+              <b>₩{menu.price.toLocaleString()}</b>
+            </SummaryLine>
+          </SummaryCard>
+        </Section>
 
-          {options.map((group) => {
-            const selected = selectedOptions.find(s => s.groupId === group.id);
-            
-            return (
-              <Section key={group.id}>
-                <OptionGroup
-                  group={group}
-                  selectedOptionIds={selected?.optionIds || []}
-                  onOptionSelect={(option) => handleOptionSelect(group.id, option)}
-                />
-              </Section>
-            );
-          })}
+        {options.map((group) => {
+          const selected = selectedOptions.find(s => s.groupId === group.id);
+          
+          return (
+            <Section key={group.id}>
+              <OptionGroup
+                group={group}
+                selectedOptionIds={selected?.optionIds || []}
+                onOptionSelect={(option) => handleOptionSelect(group.id, option)}
+              />
+            </Section>
+          );
+        })}
 
-          <Section>
-            <QuantitySelector
-              quantity={quantity}
-              onIncrease={() => handleQuantityChange(1)}
-              onDecrease={() => handleQuantityChange(-1)}
-            />
-          </Section>
-        </Body>
+        <Section>
+          <QuantitySelector
+            quantity={quantity}
+            onIncrease={() => handleQuantityChange(1)}
+            onDecrease={() => handleQuantityChange(-1)}
+          />
+        </Section>
+      </Body>
 
-        <Footer>
-          <PayButton onClick={handleAddToCart}>
-            장바구니 담기 • ₩{totalPrice.toLocaleString()}
-          </PayButton>
-        </Footer>
-      </Sheet>
-    </Page>
+      <Footer>
+        <PayButton onClick={handleAddToCart}>
+          장바구니 담기 • ₩{totalPrice.toLocaleString()}
+        </PayButton>
+      </Footer>
+    </>
   );
 }
 

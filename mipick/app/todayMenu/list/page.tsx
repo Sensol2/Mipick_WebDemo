@@ -3,7 +3,7 @@
 import React from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import styled from "styled-components";
-import { Page, Sheet, Header, HeaderTitle, HeaderSubtitle, BackButton, Body } from "../components/ui";
+import { Header, HeaderTitle, HeaderSubtitle, BackButton, Body } from "../components/ui";
 import { StoreHeaderImage, MenuListItem } from "./components";
 import { useMenuList } from "./hooks/useMenuList";
 
@@ -20,60 +20,54 @@ export default function MenuListPage() {
 
   if (loading) {
     return (
-      <Page>
-        <Sheet>
-          <Header>
-            <HeaderTitle>주문하기</HeaderTitle>
-          </Header>
-        </Sheet>
-      </Page>
+      <>
+        <Header>
+          <HeaderTitle>주문하기</HeaderTitle>
+        </Header>
+      </>
     );
   }
 
   if (!store) {
     return (
-      <Page>
-        <Sheet>
-          <Header>
-            <HeaderTitle>오류</HeaderTitle>
-            <HeaderSubtitle>매장 정보를 찾을 수 없습니다.</HeaderSubtitle>
-          </Header>
-        </Sheet>
-      </Page>
+      <>
+        <Header>
+          <HeaderTitle>오류</HeaderTitle>
+          <HeaderSubtitle>매장 정보를 찾을 수 없습니다.</HeaderSubtitle>
+        </Header>
+      </>
     );
   }
 
   return (
-    <Page>
-      <Sheet>
-        <Header>
-          <BackButton onClick={handleBack}>←</BackButton>
-          <HeaderTitle>주문하기</HeaderTitle>
-        </Header>
+    <>
+      <Header>
+        <BackButton onClick={handleBack}>←</BackButton>
+        <HeaderTitle>주문하기</HeaderTitle>
+      </Header>
 
-        <StoreHeaderImage store={store} />
+      <StoreHeaderImage store={store} />
 
-        <Body>
-          <Section>
-            <SectionTitle>메뉴 ({menus.length})</SectionTitle>
-            
-            {menus.length === 0 ? (
-              <NoMenus>등록된 메뉴가 없습니다.</NoMenus>
-            ) : (
-              <List>
-                {menus.map((menu) => (
-                  <MenuListItem
-                    key={menu.id}
-                    menu={menu}
-                    onClick={handleMenuClick}
-                  />
-                ))}
-              </List>
-            )}
-          </Section>
-        </Body>
-      </Sheet>
-    </Page>
+      <Body>
+        <Section>
+          <SectionTitle>메뉴 ({menus.length})</SectionTitle>
+          
+          {menus.length === 0 ? (
+            <NoMenus>등록된 메뉴가 없습니다.</NoMenus>
+          ) : (
+            <List>
+              {menus.map((menu) => (
+                <MenuListItem
+                  key={menu.id}
+                  menu={menu}
+                  onClick={handleMenuClick}
+                />
+              ))}
+            </List>
+          )}
+        </Section>
+      </Body>
+    </>
   );
 }
 
