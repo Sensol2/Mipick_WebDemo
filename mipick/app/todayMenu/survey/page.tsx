@@ -54,14 +54,8 @@ export default function SurveyPage() {
     }, 1500);
   };
 
-  const handleShare = (platform: string) => {
-    console.log(`Sharing to ${platform}`);
-    setShowTicketAnimation(true);
-    setTimeout(() => {
-      setTickets(tickets + 1);
-      setShowTicketAnimation(false);
-      setStep("complete");
-    }, 1500);
+  const handleShareComplete = () => {
+    setStep("complete");
   };
 
   const renderContent = () => {
@@ -80,7 +74,7 @@ export default function SurveyPage() {
         return (
           <ShareSection
             tickets={tickets}
-            onShare={handleShare}
+            onComplete={handleShareComplete}
             onSkip={() => setStep("complete")}
           />
         );

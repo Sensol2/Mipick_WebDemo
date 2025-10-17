@@ -199,7 +199,7 @@ export default function SurveySection({ formData, onFormChange, onSubmit }: Surv
       {currentPage === 3 && (
         <PageContent>
           <Title>Mipick 서비스에 대해 알려주세요</Title>
-          <Subtitle>소중한 의견 감사합니다 💚</Subtitle>
+          <Subtitle>소중한 의견 감사합니다</Subtitle>
 
           <Form>
             <FormSection>

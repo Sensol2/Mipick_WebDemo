@@ -1,12 +1,93 @@
 import styled from "styled-components";
+import { useKakaoSDK } from "../hooks/useKakaoSDK";
+import { shareToKakao } from "../utils/kakaoShare";
 
 interface ShareSectionProps {
   tickets: number;
-  onShare: (platform: string) => void;
+  onComplete: () => void;
   onSkip: () => void;
 }
 
-export default function ShareSection({ tickets, onShare, onSkip }: ShareSectionProps) {
+export default function ShareSection({ tickets, onComplete, onSkip }: ShareSectionProps) {
+  const { isInitialized } = useKakaoSDK();
+
+  const handleShare = (platform: string) => {
+    console.log(`Sharing to ${platform}`);
+    // 완료 단계로 이동
+    setTimeout(() => {
+      onComplete();
+    }, 1500);
+  };
+
+  const handleKakaoShare = () => {
+    if (!isInitialized) {
+      alert("카카오톡 공유 준비 중입니다. 잠시 후 다시 시도해주세요.");
+      return;
+    }
+
+    // 카카오톡 공유 실행
+    shareToKakao({
+      title: "Mipick 무료 점심 이벤트",
+      description: "설문 참여하고 무료 점심 받자! 친구도 초대하면 당첨 확률 UP!",
+      imageUrl: "https://your-domain.com/og-image.jpg", // TODO: 실제 이미지 URL로 교체
+      linkUrl: `${window.location.origin}/todayMenu/survey`,
+      buttonText: "참여하기",
+    });
+
+    // 공유 완료 처리
+    handleShare("kakao");
+  };
+
+  const handleSystemShare = async () => {
+    const shareData = {
+      title: "Mipick 무료 점심 이벤트",
+      text: "🍽️ Mipick 무료 점심 이벤트에 참여하세요! 설문 참여하고 무료 점심 받자!",
+      url: `${window.location.origin}/todayMenu/survey`,
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+        handleShare("system");
+      } else {
+        // Web Share API를 지원하지 않는 경우 URL 복사
+        await navigator.clipboard.writeText(shareData.url);
+        alert("이 브라우저는 공유 기능을 지원하지 않아 링크가 복사되었습니다! 📋");
+        handleShare("system");
+      }
+    } catch (error) {
+      // 사용자가 공유를 취소한 경우
+      console.log("Share cancelled:", error);
+    }
+  };
+
+  const handleLinkCopy = async () => {
+    const url = `${window.location.origin}/todayMenu/survey`;
+    
+    try {
+      await navigator.clipboard.writeText(url);
+      alert("링크가 복사되었습니다! 📋");
+      handleShare("link");
+    } catch {
+      // clipboard API 실패 시 fallback
+      const textArea = document.createElement("textarea");
+      textArea.value = url;
+      textArea.style.position = "fixed";
+      textArea.style.opacity = "0";
+      document.body.appendChild(textArea);
+      textArea.select();
+      
+      try {
+        document.execCommand("copy");
+        alert("링크가 복사되었습니다! 📋");
+        handleShare("link");
+      } catch {
+        alert("링크 복사에 실패했습니다.");
+      }
+      
+      document.body.removeChild(textArea);
+    }
+  };
   return (
     <Container>
       <ProgressBar>
@@ -27,15 +108,15 @@ export default function ShareSection({ tickets, onShare, onSkip }: ShareSectionP
       </Description>
 
       <ShareButtons>
-        <ShareButton color="#FEE500" onClick={() => onShare("kakao")}>
+        <ShareButton color="#FEE500" onClick={handleKakaoShare}>
           <ShareIcon>💬</ShareIcon>
           카카오톡 공유
         </ShareButton>
-        <ShareButton color="#E4405F" onClick={() => onShare("instagram")}>
-          <ShareIcon>📷</ShareIcon>
-          인스타 스토리
+        <ShareButton color="#10B981" onClick={handleSystemShare}>
+          <ShareIcon>�</ShareIcon>
+          기타 공유하기
         </ShareButton>
-        <ShareButton color="#4285F4" onClick={() => onShare("link")}>
+        <ShareButton color="#4285F4" onClick={handleLinkCopy}>
           <ShareIcon>🔗</ShareIcon>
           링크 복사
         </ShareButton>
