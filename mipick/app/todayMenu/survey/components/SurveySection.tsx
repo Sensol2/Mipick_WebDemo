@@ -135,17 +135,15 @@ export default function SurveySection({ formData, onFormChange, onSubmit }: Surv
 
       {/* 네비게이션 버튼 */}
       <ButtonGroup>
-        {currentPage > 1 ? (
+        {currentPage > 1 && (
           <PrevButton onClick={handlePrev}>
-            ← 이전
+            이전
           </PrevButton>
-        ) : (
-          <ButtonPlaceholder />
         )}
         
         {currentPage < totalPages ? (
           <NextButton onClick={handleNext}>
-            다음 →
+            다음
           </NextButton>
         ) : (
           <SubmitButton onClick={handleFinalSubmit}>
@@ -228,7 +226,7 @@ const Input = styled.input`
 // Radio/Checkbox option styles moved into field components
 
 const SubmitButton = styled.button`
-  flex: 1;
+  width: 100%;
   padding: 16px;
   background: linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%);
   color: white;
@@ -295,16 +293,13 @@ const TextArea = styled.textarea`
 
 const ButtonGroup = styled.div`
   display: flex;
+  flex-direction: column;
   gap: 12px;
   margin-top: 32px;
 `;
 
-const ButtonPlaceholder = styled.div`
-  flex: 1;
-`;
-
 const PrevButton = styled.button`
-  flex: 1;
+  width: 100%;
   padding: 16px;
   background: white;
   color: #666;
@@ -326,7 +321,7 @@ const PrevButton = styled.button`
 `;
 
 const NextButton = styled.button`
-  flex: 1;
+  width: 100%;
   padding: 16px;
   background: linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%);
   color: white;
