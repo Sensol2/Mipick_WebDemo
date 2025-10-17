@@ -101,4 +101,11 @@ const AnimatedSheet = styled(BaseSheet)`
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
+
+  /* 스크롤 시 버튼 오작동 방지 */
+  touch-action: pan-y;
+
+  button {
+    touch-action: manipulation;
+  }
 `;
