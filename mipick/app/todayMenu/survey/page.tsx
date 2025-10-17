@@ -7,37 +7,39 @@ import { Sheet as BaseSheet, BackButton } from "../components/ui";
 import IntroSection from "./components/IntroSection";
 import SurveySection from "./components/SurveySection";
 import ShareSection from "./components/ShareSection";
-import CompleteSection from "./components/CompleteSection";
 import TicketAnimation from "./components/TicketAnimation";
+import { initializeFormData, validateFormData, createSurveyResponse } from "./utils/surveyUtils";
+import { saveSurveyResponse } from "../../../lib/surveyService";
+import { debugFormData } from "./utils/debugUtils";
 
 export default function SurveyPage() {
   const router = useRouter();
-  const [step, setStep] = useState<"intro" | "survey" | "share" | "complete">("intro");
+  const [step, setStep] = useState<"intro" | "survey" | "share">("intro");
   const [tickets, setTickets] = useState(0);
   const [showTicketAnimation, setShowTicketAnimation] = useState(false);
 
-  const [formData, setFormData] = useState({
-    // 기본 정보
-    name: "",
-    phone: "",
-    gender: "",
-    affiliation: "",
-    referrer: "",
-    foodType: "",
-    priceRange: "",
-    location: "",
-    frequency: "",
-    knowPath: "",
-    satisfaction: "",
-    improvements: "",
-  });
+  const [formData, setFormData] = useState<Record<string, string>>(initializeFormData);
 
+  // 폼 변경 시
   const handleFormChange = (field: string, value: string) => {
     setFormData({ ...formData, [field]: value });
   };
 
-  const handleSurveySubmit = () => {
-    setShowTicketAnimation(true);
+  // 설문 완료 시 처리 함수
+  const handleSurveySubmit = async () => {
+    if (!validateFormData(formData)) {
+      alert("모든 필수 항목을 입력해주세요!");
+      return;
+    }
+
+    setShowTicketAnimation(true);    
+    debugFormData(formData);
+    
+    const surveyResponse = createSurveyResponse(formData);
+    await saveSurveyResponse(surveyResponse);
+    
+    console.log("저장된 설문 응답:", surveyResponse);
+    
     setTimeout(() => {
       setTickets(tickets + 1);
       setShowTicketAnimation(false);
@@ -46,7 +48,6 @@ export default function SurveyPage() {
   };
 
   const handleShareComplete = () => {
-    setStep("complete");
   };
 
   const renderContent = () => {
@@ -66,14 +67,7 @@ export default function SurveyPage() {
           <ShareSection
             tickets={tickets}
             onComplete={handleShareComplete}
-            onSkip={() => setStep("complete")}
-          />
-        );
-      case "complete":
-        return (
-          <CompleteSection
-            tickets={tickets}
-            onGoHome={() => router.push("/todayMenu/list")}
+            onSkip={() => router.push("/todayMenu/")}
           />
         );
       default:
@@ -102,4 +96,9 @@ const fadeIn = keyframes`
 
 const AnimatedSheet = styled(BaseSheet)`
   animation: ${fadeIn} 0.5s ease-out;
+
+  /* 아래 내용이 있어야 스크롤 가능 */
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
 `;

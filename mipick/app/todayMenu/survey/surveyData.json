@@ -6,6 +6,112 @@
       "subtitle": "간단한 정보만 입력하면 돼요 ✨",
       "questions": [
         {
+          "id": "ageRange",
+          "label": "연령대 *",
+          "type": "radio",
+          "options": ["10대", "20대 초반", "20대 후반", "30대 이상"],
+          "required": true
+        },
+        {
+          "id": "gender",
+          "label": "성별 *",
+          "type": "radio",
+          "options": ["남성", "여성", "기타", "응답하지 않음"],
+          "required": true
+        },
+        {
+          "id": "affiliation",
+          "label": "소속 *",
+          "type": "radio",
+          "options": ["대학생", "대학원생", "교직원", "직장인", "기타"],
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "평소 점심 식사 패턴을 알려주세요",
+      "subtitle": "당신의 점심 습관을 알고 싶어요 🍽️",
+      "questions": [
+        {
+          "id": "foodType",
+          "label": "평소 선호하는 음식 종류는? *",
+          "type": "radio",
+          "options": ["🍚 한식", "🍝 양식", "🍣 일식", "🥘 중식", "🥗 기타"],
+          "required": true
+        },
+        {
+          "id": "priceRange",
+          "label": "점심 평균 가격대는? *",
+          "type": "radio",
+          "options": ["5천원 미만", "5천~7천원", "7천~1만원", "1만원 이상"],
+          "required": true
+        },
+        {
+          "id": "frequency",
+          "label": "일주일에 몇 번 외식하시나요? *",
+          "type": "radio",
+          "options": ["거의 매일", "주 3~4회", "주 1~2회", "거의 안 함"],
+          "required": true
+        },
+        {
+          "id": "mealCompanion",
+          "label": "점심은 보통 누구와 드시나요?",
+          "type": "radio",
+          "options": ["혼자", "친구/동료", "팀 단위", "상황에 따라 다름"],
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Mipick 서비스에 관심을 가져주세요",
+      "subtitle": "미픽은 '전날' 미리 결제하면, 관악·신촌·강남 등 서울 곳곳의 음식을 다음날 학교에서 픽업할 수 있는 서비스예요. 줄 설 필요가 없고, 공동 주문으로 배달비도 절약돼요.",
+      "questions": [
+        {
+          "id": "knowPath",
+          "label": "비슷한 서비스(사전 주문·픽업)를 들어본 적이 있나요? *",
+          "type": "radio",
+          "options": ["사용해본 적 있음", "사용해본 적 없음", "들어본 적만 있음"],
+          "required": true
+        },
+        {
+          "id": "interest",
+          "label": "Mipick과 같은 서비스가 출시된다면 얼마나 관심이 있으신가요? *",
+          "type": "likert",
+          "scale": 5,
+          "anchors": ["전혀 관심 없음", "매우 관심 있음"],
+          "required": true
+        },
+        {
+          "id": "useIntent",
+          "label": "출시 시 실제로 이용할 의향이 있으신가요?",
+          "type": "radio",
+          "options": ["예, 꼭 이용할 것 같다", "상황에 따라 이용할 수 있다", "아직 잘 모르겠다", "이용하지 않을 것 같다"],
+          "required": true
+        },
+        {
+          "id": "priorityFactors",
+          "label": "이런 서비스에서 가장 중요하게 생각하는 요소는 무엇인가요? (복수 선택 가능)",
+          "type": "checkbox",
+          "options": ["가격", "메뉴 다양성", "편리성(빠른 수령)", "결제 방식", "할인/이벤트"],
+          "required": true
+        },
+        {
+          "id": "expectations",
+          "label": "Mipick 서비스에서 기대하는 점이나 바라는 기능이 있다면 자유롭게 적어주세요",
+          "type": "textarea",
+          "placeholder": "예: 학교 근처 식당 입점, 단체 주문 할인, 포인트 적립 등",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "개인정보 입력",
+      "subtitle": "추첨권 제공 및 이벤트 당첨 안내에 필요합니다 🔒",
+      "questions": [
+        {
           "id": "name",
           "label": "이름 *",
           "type": "text",
@@ -20,91 +126,13 @@
           "required": true
         },
         {
-          "id": "gender",
-          "label": "성별 *",
-          "type": "radio",
-          "options": ["남성", "여성"],
-          "required": true
-        },
-        {
-          "id": "affiliation",
-          "label": "소속 *",
-          "type": "radio",
-          "options": ["대학생", "대학원생", "교직원", "일반인"],
-          "required": true
-        },
-        {
           "id": "referrer",
           "label": "추천인 (선택)",
           "type": "text",
-          "placeholder": "",
+          "placeholder": "추천인의 이름이나 전화번호를 입력해주세요",
           "required": false
         }
       ]
-    },
-    {
-      "id": 2,
-      "title": "평소 점심 식사 패턴을 알려주세요",
-      "subtitle": "선호하는 스타일을 선택해주세요 🍽️",
-      "questions": [
-        {
-          "id": "foodType",
-          "label": "평소 선호하는 음식 종류는? *",
-          "type": "radio",
-          "options": ["🍚 한식", "🍝 양식", "🍣 일식", "🥗 기타"],
-          "required": true
-        },
-        {
-          "id": "priceRange",
-          "label": "점심 평균 가격대는? *",
-          "type": "radio",
-          "options": ["5천원 미만", "5천~7천원", "7천~1만원", "1만원 이상"],
-          "required": true
-        },
-        {
-          "id": "location",
-          "label": "점심을 주로 어디서 해결하시나요? *",
-          "type": "radio",
-          "options": ["학교 식당", "근처 식당", "편의점", "배달"],
-          "required": true
-        },
-        {
-          "id": "frequency",
-          "label": "일주일에 몇 번 외식하시나요? *",
-          "type": "radio",
-          "options": ["거의 매일", "주 3~4회", "주 1~2회", "거의 안 함"],
-          "required": true
-        }
-      ]
-    },
-    {
-      "id": 3,
-      "title": "Mipick 서비스에 대해 알려주세요",
-      "subtitle": "소중한 의견 감사합니다",
-      "questions": [
-        {
-          "id": "knowPath",
-          "label": "Mipick을 어떻게 알게 되셨나요? *",
-          "type": "radio",
-          "options": ["친구 추천", "SNS", "검색", "광고"],
-          "required": true
-        },
-        {
-          "id": "satisfaction",
-          "label": "서비스 만족도는? *",
-          "type": "radio",
-          "options": ["매우 만족", "만족", "보통", "불만족"],
-          "required": true
-        },
-        {
-          "id": "improvements",
-          "label": "개선사항이나 의견 (선택)",
-          "type": "textarea",
-          "placeholder": "자유롭게 의견을 남겨주세요",
-          "required": false
-        }
-      ],
-      "privacyNote": "🔒 입력하신 개인정보는 본 이벤트 당첨자 발표 및 안내 용도로만 사용됩니다."
     }
   ]
 }
