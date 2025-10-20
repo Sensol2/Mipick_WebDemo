@@ -4,20 +4,11 @@ import { shareToKakao } from "../utils/kakaoShare";
 
 interface ShareSectionProps {
   tickets: number;
-  onComplete: () => void;
   onSkip: () => void;
 }
 
-export default function ShareSection({ tickets, onComplete, onSkip }: ShareSectionProps) {
+export default function ShareSection({ tickets, onSkip }: ShareSectionProps) {
   const { isInitialized } = useKakaoSDK();
-
-  const handleShare = (platform: string) => {
-    console.log(`Sharing to ${platform}`);
-    // 완료 단계로 이동
-    setTimeout(() => {
-      onComplete();
-    }, 1500);
-  };
 
   const handleKakaoShare = () => {
     if (!isInitialized) {
@@ -33,9 +24,6 @@ export default function ShareSection({ tickets, onComplete, onSkip }: ShareSecti
       linkUrl: `${window.location.origin}/todayMenu/survey`,
       buttonText: "참여하기",
     });
-
-    // 공유 완료 처리
-    handleShare("kakao");
   };
 
   const handleSystemShare = async () => {
@@ -48,12 +36,10 @@ export default function ShareSection({ tickets, onComplete, onSkip }: ShareSecti
     try {
       if (navigator.share) {
         await navigator.share(shareData);
-        handleShare("system");
       } else {
         // Web Share API를 지원하지 않는 경우 URL 복사
         await navigator.clipboard.writeText(shareData.url);
         alert("이 브라우저는 공유 기능을 지원하지 않아 링크가 복사되었습니다! 📋");
-        handleShare("system");
       }
     } catch (error) {
       // 사용자가 공유를 취소한 경우
@@ -67,7 +53,6 @@ export default function ShareSection({ tickets, onComplete, onSkip }: ShareSecti
     try {
       await navigator.clipboard.writeText(url);
       alert("링크가 복사되었습니다! 📋");
-      handleShare("link");
     } catch {
       // clipboard API 실패 시 fallback
       const textArea = document.createElement("textarea");
@@ -80,7 +65,6 @@ export default function ShareSection({ tickets, onComplete, onSkip }: ShareSecti
       try {
         document.execCommand("copy");
         alert("링크가 복사되었습니다! 📋");
-        handleShare("link");
       } catch {
         alert("링크 복사에 실패했습니다.");
       }

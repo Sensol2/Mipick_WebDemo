@@ -129,6 +129,27 @@ export default function SurveyPage() {
   function renderCurrentStep() {
     switch (currentStep) {
       case "intro":
+        // 로딩 중일 때
+        if (isCheckingParticipation) {
+          return (
+            <LoadingContainer>
+              <Spinner />
+              <LoadingText>확인 중...</LoadingText>
+            </LoadingContainer>
+          );
+        }
+        
+        // 이미 참여한 사용자는 ShareSection 보여주기
+        if (isParticipated) {
+          return (
+            <ShareSection
+              tickets={ticketCount}
+              onSkip={() => router.push("/todayMenu/")}
+            />
+          );
+        }
+        
+        // 첫 방문자는 IntroSection 보여주기
         return (
           <IntroSection 
             onStart={() => setCurrentStep("survey")} 
@@ -150,7 +171,6 @@ export default function SurveyPage() {
         return (
           <ShareSection
             tickets={ticketCount}
-            onComplete={() => {}}
             onSkip={() => router.push("/todayMenu/")}
           />
         );
@@ -209,4 +229,35 @@ const AnimatedSheet = styled(BaseSheet)`
   button {
     touch-action: manipulation;
   }
+`;
+
+// 로딩 컴포넌트
+const LoadingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  padding: 60px 24px;
+`;
+
+const spin = keyframes`
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+`;
+
+const Spinner = styled.div`
+  width: 48px;
+  height: 48px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #FF6B35;
+  border-radius: 50%;
+  animation: ${spin} 1s linear infinite;
+  margin-bottom: 16px;
+`;
+
+const LoadingText = styled.div`
+  font-size: 16px;
+  color: #666;
+  font-weight: 500;
 `;
