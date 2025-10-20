@@ -46,12 +46,6 @@ export default function IntroSection({ onStart, hasParticipated, isLoading }: In
         }
       </StartButton>
 
-      {hasParticipated && (
-        <ParticipatedNotice>
-          ✅ 설문 참여 완료! 추첨 결과를 기다려주세요
-        </ParticipatedNotice>
-      )}
-
       <InfoText>
         * 추첨 결과는 11월 7일에 개별 문자로 안내드립니다!
       </InfoText>

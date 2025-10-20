@@ -117,12 +117,12 @@ export default function SurveyPage() {
     const surveyResponse = createSurveyResponse(formData);
     await setSurveyResponse(surveyResponse);
     
-    // 1.5초 후 애니메이션 종료 및 공유 페이지로 이동
+    // 0.5초 후 애니메이션 종료 및 공유 페이지로 이동
     setTimeout(() => {
       setTicketCount(prev => prev + 1);
       setIsShowingTicketAnimation(false);
       setCurrentStep("share");
-    }, 1500);
+    }, 500);
   }
 
   // 현재 단계에 따른 컴포넌트 렌더링

@@ -126,7 +126,7 @@
           "required": false
         },
         {
-          "id": "referrer",
+          "id": "invitedCode",
           "label": "추천인 (선택)",
           "type": "text",
           "placeholder": "추천인의 이름이나 전화번호를 입력해주세요",
