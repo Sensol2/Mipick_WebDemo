@@ -1,90 +1,190 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Sheet as BaseSheet, BackButton } from "../components/ui";
 import IntroSection from "./components/IntroSection";
 import SurveySection from "./components/SurveySection";
 import ShareSection from "./components/ShareSection";
 import TicketAnimation from "./components/TicketAnimation";
+import LoginModal from "./components/LoginModal";
 import { initializeFormData, validateFormData, createSurveyResponse } from "./utils/surveyUtils";
-import { setSurveyResponse } from "../../../lib/surveyService";
-import { debugFormData } from "./utils/debugUtils";
+import { setSurveyResponse, hasUserSubmittedSurvey } from "../../../lib/surveyService";
+import { useAuth } from "../../hooks/auth";
 
 export default function SurveyPage() {
   const router = useRouter();
-  const [step, setStep] = useState<"intro" | "survey" | "share">("intro");
-  const [tickets, setTickets] = useState(0);
-  const [showTicketAnimation, setShowTicketAnimation] = useState(false);
+  const searchParams = useSearchParams();
+  const { isAuthenticated, loading: authLoading } = useAuth();
 
+  // 페이지 단계 관리
+  const [currentStep, setCurrentStep] = useState<"intro" | "survey" | "share">("intro");
+  
+  // 설문 데이터 관리
   const [formData, setFormData] = useState<Record<string, string>>(initializeFormData);
+  
+  // 인증 및 참여 상태
+  const [isParticipated, setIsParticipated] = useState(false);
+  const [isCheckingParticipation, setIsCheckingParticipation] = useState(true);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  
+  // UI 상태
+  const [ticketCount, setTicketCount] = useState(0);
+  const [isShowingTicketAnimation, setIsShowingTicketAnimation] = useState(false);
 
-  // 폼 변경 시
-  const handleFormChange = (field: string, value: string) => {
+  // 1. 페이지 로드 시: 사용자의 설문 참여 여부 확인
+  useEffect(() => {
+    async function checkUserParticipation() {
+      // 인증 로딩 중이면 대기
+      if (authLoading) return;
+      
+      // 로그인 상태면 참여 여부 확인
+      if (isAuthenticated) {
+        const participated = await hasUserSubmittedSurvey();
+        setIsParticipated(participated);
+      }
+      
+      setIsCheckingParticipation(false);
+    }
+
+    checkUserParticipation();
+  }, [isAuthenticated, authLoading]);
+
+  // 2. OAuth 로그인 후 자동 제출 처리
+  useEffect(() => {
+    const isPostLogin = searchParams?.get('postLogin') === '1';
+    
+    async function autoSubmitAfterLogin() {
+      if (isPostLogin && isAuthenticated && !isParticipated) {
+        // 티켓 애니메이션 시작
+        setIsShowingTicketAnimation(true);
+        
+        // 서버에 설문 응답 저장
+        const surveyResponse = createSurveyResponse(formData);
+        await setSurveyResponse(surveyResponse);
+        
+        // 1.5초 후 애니메이션 종료 및 공유 페이지로 이동
+        setTimeout(() => {
+          setTicketCount(prev => prev + 1);
+          setIsShowingTicketAnimation(false);
+          setCurrentStep("share");
+        }, 1500);
+      }
+    }
+
+    autoSubmitAfterLogin();
+  }, [searchParams, isAuthenticated, isParticipated, formData]);
+
+  // 폼 입력값 변경 핸들러
+  function handleFormChange(field: string, value: string) {
     setFormData({ ...formData, [field]: value });
-  };
+  }
 
-  // 설문 완료 시 처리 함수
-  const handleSurveySubmit = async () => {
+  // 설문 제출 버튼 클릭 핸들러
+  async function handleSubmitClick() {
+    // 1단계: 필수 항목 검증
     if (!validateFormData(formData)) {
       alert("모든 필수 항목을 입력해주세요!");
       return;
     }
 
-    setShowTicketAnimation(true);    
-    debugFormData(formData);
+    // 2단계: 로그인 확인
+    if (!isAuthenticated) {
+      setIsLoginModalOpen(true);
+      return;
+    }
+
+    // 3단계: 중복 제출 방지
+    const alreadyParticipated = await hasUserSubmittedSurvey();
+    if (alreadyParticipated) {
+      alert("이미 설문에 참여하셨습니다!");
+      setIsParticipated(true);
+      setCurrentStep("intro");
+      return;
+    }
+
+    // 4단계: 설문 제출
+    await handleSurveySubmission();
+  }
+
+  // 실제 설문 제출 처리
+  async function handleSurveySubmission() {
+    // 티켓 애니메이션 시작
+    setIsShowingTicketAnimation(true);
     
-    const TEMP_USER_ID = "558fa1fc-f6b6-452a-9c96-eaf7af8078c5";
-    const surveyResponse = createSurveyResponse(formData, TEMP_USER_ID);
+    // 서버에 설문 응답 저장
+    const surveyResponse = createSurveyResponse(formData);
     await setSurveyResponse(surveyResponse);
-
-    console.log("저장된 설문 응답:", surveyResponse);
     
+    // 1.5초 후 애니메이션 종료 및 공유 페이지로 이동
     setTimeout(() => {
-      setTickets(tickets + 1);
-      setShowTicketAnimation(false);
-      setStep("share");
+      setTicketCount(prev => prev + 1);
+      setIsShowingTicketAnimation(false);
+      setCurrentStep("share");
     }, 1500);
-  };
+  }
 
-  const handleShareComplete = () => {
-  };
-
-  const renderContent = () => {
-    switch (step) {
+  // 현재 단계에 따른 컴포넌트 렌더링
+  function renderCurrentStep() {
+    switch (currentStep) {
       case "intro":
-        return <IntroSection onStart={() => setStep("survey")} />;
+        return (
+          <IntroSection 
+            onStart={() => setCurrentStep("survey")} 
+            hasParticipated={isParticipated}
+            isLoading={isCheckingParticipation}
+          />
+        );
+      
       case "survey":
         return (
           <SurveySection
             formData={formData}
             onFormChange={handleFormChange}
-            onSubmit={handleSurveySubmit}
+            onSubmit={handleSubmitClick}
           />
         );
+      
       case "share":
         return (
           <ShareSection
-            tickets={tickets}
-            onComplete={handleShareComplete}
+            tickets={ticketCount}
+            onComplete={() => {}}
             onSkip={() => router.push("/todayMenu/")}
           />
         );
+      
       default:
         return null;
     }
-  };
+  }
+
+  // 뒤로가기 버튼 핸들러
+  function handleBackClick() {
+    if (currentStep === "intro") {
+      router.back();
+    } else {
+      setCurrentStep("intro");
+    }
+  }
 
   return (
     <>
-      <BackButton onClick={() => step === "intro" ? router.back() : setStep("intro")}>
+      <BackButton onClick={handleBackClick}>
         ←
       </BackButton>
 
-      <AnimatedSheet>{renderContent()}</AnimatedSheet>
+      <AnimatedSheet>
+        {renderCurrentStep()}
+      </AnimatedSheet>
 
-      <TicketAnimation show={showTicketAnimation} />
+      <TicketAnimation show={isShowingTicketAnimation} />
+      
+      <LoginModal 
+        isOpen={isLoginModalOpen} 
+        onClose={() => setIsLoginModalOpen(false)} 
+      />
     </>
   );
 }

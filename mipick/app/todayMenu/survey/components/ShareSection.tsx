@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useKakaoSDK } from "../hooks/useKakaoSDK";
+import { useEffect, useState } from "react";
 import { shareToKakao } from "../utils/kakaoShare";
 
 interface ShareSectionProps {
@@ -9,18 +9,41 @@ interface ShareSectionProps {
 }
 
 export default function ShareSection({ tickets, onComplete, onSkip }: ShareSectionProps) {
-  const { isInitialized } = useKakaoSDK();
+  const [isKakaoInitialized, setIsKakaoInitialized] = useState(false);
+
+  // Kakao SDK 초기화
+  useEffect(() => {
+    const initKakao = () => {
+      if (window.Kakao && !window.Kakao.isInitialized()) {
+        window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_APP_KEY);
+        setIsKakaoInitialized(true);
+      } else if (window.Kakao && window.Kakao.isInitialized()) {
+        setIsKakaoInitialized(true);
+      }
+    };
+
+    // Kakao SDK 스크립트가 로드되었는지 확인
+    if (window.Kakao) {
+      initKakao();
+    } else {
+      // 스크립트 로드 대기
+      const script = document.createElement('script');
+      script.src = 'https://developers.kakao.com/sdk/js/kakao.js';
+      script.async = true;
+      script.onload = initKakao;
+      document.body.appendChild(script);
+    }
+  }, []);
 
   const handleShare = (platform: string) => {
     console.log(`Sharing to ${platform}`);
-    // 완료 단계로 이동
     setTimeout(() => {
       onComplete();
     }, 1500);
   };
 
   const handleKakaoShare = () => {
-    if (!isInitialized) {
+    if (!isKakaoInitialized) {
       alert("카카오톡 공유 준비 중입니다. 잠시 후 다시 시도해주세요.");
       return;
     }

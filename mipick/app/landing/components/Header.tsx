@@ -1,8 +1,9 @@
 "use client"
 
 import styled from "styled-components"
+import { useRouter } from "next/navigation"
 import Container from "@/app/landing/components/ui/Container"
-import { Button } from "@/app/landing/components/ui/Button"
+import { useAuth, signOut } from "@/app/hooks/auth"
 
 const Bar = styled.header`
   position: sticky; top: 0; z-index: 50;
@@ -27,7 +28,41 @@ const Logo = styled.div`
   svg { width: 22px; height: 22px; }
 `
 
+const AuthButton = styled.button`
+  padding: 8px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: ${({ theme }) => theme.colors.textSecondary};
+  background: transparent;
+  border: 1px solid ${({ theme }) => theme.colors.inputBorder};
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background: ${({ theme }) => theme.colors.neutralGray};
+    border-color: ${({ theme }) => theme.colors.textSecondary};
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+`
+
 export default function Header(){
+  const router = useRouter();
+  const { isAuthenticated, loading } = useAuth();
+
+  const handleAuth = async () => {
+    if (isAuthenticated) {
+      await signOut();
+      router.refresh();
+    } else {
+      router.push("/auth");
+    }
+  };
+
   return (
     <Bar>
       <Container>
@@ -45,7 +80,9 @@ export default function Header(){
             <a href="#stations">픽업 스테이션</a>
             <a href="#faq">FAQ</a>
           </Nav>
-          <Button as="a" href="#cta">앱 알림받기</Button>
+          <AuthButton onClick={handleAuth} disabled={loading}>
+            {loading ? "..." : isAuthenticated ? "로그아웃" : "로그인"}
+          </AuthButton>
         </Row>
       </Container>
     </Bar>
