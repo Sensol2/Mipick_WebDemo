@@ -82,3 +82,22 @@ export async function hasUserSubmittedSurvey(): Promise<boolean> {
   if (error) return false;
   return data && data.length > 0;
 }
+
+// 현재 로그인한 사용자의 초대 코드 가져오기
+export async function getMyInviteCode(): Promise<string | null> {
+  const { data: { user }, error: userError } = await supabase.auth.getUser();
+  if (userError || !user) return null;
+
+  const { data, error } = await supabase
+    .from('survey_responses')
+    .select('my_invite_code')
+    .eq('user_id', user.id)
+    .single();
+
+  if (error) {
+    console.error('Error fetching invite code:', error);
+    return null;
+  }
+
+  return data?.my_invite_code || null;
+}
