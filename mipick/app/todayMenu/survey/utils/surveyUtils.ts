@@ -26,9 +26,10 @@ export function validateFormData(formData: Record<string, string>): boolean {
 }
 
 // 최종 저장할 JSON 구조 생성
-export function createSurveyResponse(formData: Record<string, string>) {
+export function createSurveyResponse(formData: Record<string, string>, userId: string): { responses: Record<string, string>; userId: string; submittedAt: string } {
   return {
     responses: formData,
+    userId: userId,
     submittedAt: new Date().toISOString(),
   };
 }

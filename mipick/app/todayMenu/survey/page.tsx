@@ -9,7 +9,7 @@ import SurveySection from "./components/SurveySection";
 import ShareSection from "./components/ShareSection";
 import TicketAnimation from "./components/TicketAnimation";
 import { initializeFormData, validateFormData, createSurveyResponse } from "./utils/surveyUtils";
-import { saveSurveyResponse } from "../../../lib/surveyService";
+import { setSurveyResponse } from "../../../lib/surveyService";
 import { debugFormData } from "./utils/debugUtils";
 
 export default function SurveyPage() {
@@ -35,9 +35,10 @@ export default function SurveyPage() {
     setShowTicketAnimation(true);    
     debugFormData(formData);
     
-    const surveyResponse = createSurveyResponse(formData);
-    await saveSurveyResponse(surveyResponse);
-    
+    const TEMP_USER_ID = "558fa1fc-f6b6-452a-9c96-eaf7af8078c5";
+    const surveyResponse = createSurveyResponse(formData, TEMP_USER_ID);
+    await setSurveyResponse(surveyResponse);
+
     console.log("저장된 설문 응답:", surveyResponse);
     
     setTimeout(() => {

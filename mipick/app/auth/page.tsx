@@ -11,11 +11,6 @@ export default function AuthPage() {
     await signInWithKakao();
   }
 
-  const handleNaverLogin = () => {
-    // 네이버 로그인 로직 구현
-    console.log('네이버 로그인')
-  }
-
   const handleGoogleLogin = async () => {
     // 구글 로그인 로직 구현
     console.log('구글 로그인')
@@ -33,11 +28,6 @@ export default function AuthPage() {
             <KakaoIcon />
             카카오로 로그인
           </KakaoButton>
-          
-          <NaverButton onClick={handleNaverLogin}>
-            <NaverIcon />
-            네이버로 로그인
-          </NaverButton>
           
           <GoogleButton onClick={handleGoogleLogin}>
             <GoogleIcon />
@@ -120,15 +110,6 @@ const KakaoButton = styled(SocialButtonBase)`
   }
 `
 
-const NaverButton = styled(SocialButtonBase)`
-  background-color: #03C75A;
-
-  &:hover {
-    background-color: #02B351;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
-  }
-`
 
 const GoogleButton = styled(SocialButtonBase)`
   background-color: #4285F4;
@@ -163,16 +144,6 @@ const KakaoIcon = () => (
   </IconWrapper>
 )
 
-const NaverIcon = () => (
-  <IconWrapper>
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-      <path
-        d="M16.273 12.845L7.376 0H0V24H7.727V11.155L16.624 24H24V0H16.273V12.845Z"
-        fill="currentColor"
-      />
-    </svg>
-  </IconWrapper>
-)
 
 const GoogleIcon = () => (
   <IconWrapper>
