@@ -22,7 +22,6 @@ export default function SurveyPage() {
 
   const [currentStep, setCurrentStep] = useState<Step>("loading");
   const [formData, setFormData] = useState<Record<string, string>>(initializeFormData);
-  const [ticketCount, setTicketCount] = useState(0);
   const [isShowingTicketAnimation, setIsShowingTicketAnimation] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
@@ -64,7 +63,6 @@ export default function SurveyPage() {
     await setSurveyResponse(surveyResponse);
 
     setTimeout(() => {
-      setTicketCount(prev => prev + 1);
       setIsShowingTicketAnimation(false);
       setCurrentStep("share");
     }, delay);
@@ -125,13 +123,12 @@ export default function SurveyPage() {
       ),
       share: (
         <ShareSection
-          tickets={ticketCount}
           onSkip={() => router.push("/todayMenu/")}
         />
       ),
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [formData, ticketCount]
+    [formData]
   );
 
   return (

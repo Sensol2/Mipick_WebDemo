@@ -1,16 +1,17 @@
 import styled from "styled-components";
 import { useKakaoSDK } from "../hooks/useKakaoSDK";
 import { useMyInviteCode } from "../hooks/useMyInviteCode";
+import { useMyTicketCount } from "../hooks/useMyTicketCount";
 import { shareToKakao } from "../utils/kakaoShare";
 
 interface ShareSectionProps {
-  tickets: number;
   onSkip: () => void;
 }
 
-export default function ShareSection({ tickets, onSkip }: ShareSectionProps) {
+export default function ShareSection({ onSkip }: ShareSectionProps) {
   const { isInitialized } = useKakaoSDK();
-  const { inviteCode, loading } = useMyInviteCode();
+  const { inviteCode, loading: inviteCodeLoading } = useMyInviteCode();
+  const { ticketCount, loading: ticketLoading } = useMyTicketCount();
 
   const handleKakaoShare = () => {
     if (!isInitialized) {
@@ -18,17 +19,11 @@ export default function ShareSection({ tickets, onSkip }: ShareSectionProps) {
       return;
     }
 
-    // 이미지 URL: 배포 환경에서는 실제 도메인, 개발 환경에서는 대체 이미지
-    const isDev = window.location.hostname === 'localhost';
-    const imageUrl = isDev 
-      ? 'https://via.placeholder.com/800x400.png?text=Mipick' // 개발용 임시 이미지
-      : `${window.location.origin}/character.png`; // 배포용 실제 이미지
-
     // 카카오톡 공유 실행
     shareToKakao({
       title: "Mipick 무료 점심 이벤트",
       description: `설문 참여하고 무료 점심 받자! 추천인 코드: ${inviteCode}`,
-      imageUrl: imageUrl,
+      imageUrl: `${window.location.origin}/character.png`,
       linkUrl: `${window.location.origin}/todayMenu/survey?ref=${inviteCode}`,
       buttonText: "참여하기",
     });
@@ -95,30 +90,24 @@ export default function ShareSection({ tickets, onSkip }: ShareSectionProps) {
       
       <TicketDisplay>
         <TicketIcon>🎟️</TicketIcon>
-        <TicketCount>현재 보유 추첨권: {tickets}장</TicketCount>
+        <TicketCount>현재 보유 추첨권: {ticketLoading ? "-" : ticketCount}장</TicketCount>
       </TicketDisplay>
 
 
       <ReferralCodeSection>
         <ReferralCodeLabel>내 추천인 코드</ReferralCodeLabel>
-        {loading ? (
-          <ReferralCodeBox>
-            <ReferralCode>-</ReferralCode>
-          </ReferralCodeBox>
-        ) : inviteCode ? (
-          <ReferralCodeBox
-            onClick={() => {
+        <ReferralCodeBox
+          onClick={() => {
+            if (inviteCode) {
               navigator.clipboard.writeText(inviteCode);
               alert("추천인 코드가 복사되었습니다!");
-            }}
-          >
-            <ReferralCode>{inviteCode}</ReferralCode>
-          </ReferralCodeBox>
-        ) : (
-          <ReferralCodeBox>
-            <ReferralCode style={{ fontSize: '16px', color: '#999' }}>코드를 불러올 수 없습니다</ReferralCode>
-          </ReferralCodeBox>
-        )}
+            }
+          }}
+        >
+          <ReferralCode>
+            {inviteCodeLoading ? "-" : inviteCode || "코드 없음"}
+          </ReferralCode>
+        </ReferralCodeBox>
         <ReferralCodeHint>
           코드를 클릭하면 복사돼요!
         </ReferralCodeHint>
