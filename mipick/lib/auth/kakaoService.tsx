@@ -1,9 +1,10 @@
 import { supabase } from "../supabase";
 
-// 인증 후 기본 URL(Site URL)로 리다이렉트
-export async function signInWithKakao() {
+// 인증 후 redirectTo 지정 가능 (미지정 시 Supabase Site URL 사용)
+export async function signInWithKakao(redirectTo?: string) {
   const response = await supabase.auth.signInWithOAuth({
     provider: 'kakao',
+    options: redirectTo ? { redirectTo } : undefined,
   });
   return response;
 }

@@ -2,9 +2,11 @@ import styled from "styled-components";
 
 interface IntroSectionProps {
   onStart: () => void;
+  hasParticipated: boolean;
+  isLoading: boolean;
 }
 
-export default function IntroSection({ onStart }: IntroSectionProps) {
+export default function IntroSection({ onStart, hasParticipated, isLoading }: IntroSectionProps) {
   return (
     <Container>
       <EventBadge>🎉 무료 점심 이벤트</EventBadge>
@@ -35,8 +37,13 @@ export default function IntroSection({ onStart }: IntroSectionProps) {
         </StepItem>
       </ParticipationSteps>
 
-      <StartButton onClick={onStart}>
-        지금 바로 시작하기 🚀
+      <StartButton onClick={onStart} disabled={hasParticipated || isLoading}>
+        {isLoading 
+          ? "확인 중..." 
+          : hasParticipated 
+            ? "이미 설문에 참여하셨습니다" 
+            : "지금 바로 시작하기 🚀"
+        }
       </StartButton>
 
       <InfoText>
@@ -160,14 +167,33 @@ const StartButton = styled.button`
   box-shadow: 0 4px 16px rgba(255, 107, 53, 0.4);
   transition: transform 0.2s, box-shadow 0.2s;
 
-  &:hover {
+  &:hover:not(:disabled) {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(255, 107, 53, 0.5);
   }
 
-  &:active {
+  &:active:not(:disabled) {
     transform: translateY(0);
   }
+
+  &:disabled {
+    background: #ddd;
+    color: #999;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+`;
+
+const ParticipatedNotice = styled.div`
+  background: #f0fdf4;
+  border: 1px solid #86efac;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  color: #166534;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
 `;
 
 const InfoText = styled.div`

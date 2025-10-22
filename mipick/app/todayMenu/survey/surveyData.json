@@ -10,21 +10,21 @@
           "label": "연령대 *",
           "type": "radio",
           "options": ["10대", "20대 초반", "20대 후반", "30대 이상"],
-          "required": true
+          "required": false
         },
         {
           "id": "gender",
           "label": "성별 *",
           "type": "radio",
           "options": ["남성", "여성", "기타", "응답하지 않음"],
-          "required": true
+          "required": false
         },
         {
           "id": "affiliation",
           "label": "소속 *",
           "type": "radio",
           "options": ["대학생", "대학원생", "교직원", "직장인", "기타"],
-          "required": true
+          "required": false
         }
       ]
     },
@@ -38,21 +38,21 @@
           "label": "평소 선호하는 음식 종류는? *",
           "type": "radio",
           "options": ["🍚 한식", "🍝 양식", "🍣 일식", "🥘 중식", "🥗 기타"],
-          "required": true
+          "required": false
         },
         {
           "id": "priceRange",
           "label": "점심 평균 가격대는? *",
           "type": "radio",
           "options": ["5천원 미만", "5천~7천원", "7천~1만원", "1만원 이상"],
-          "required": true
+          "required": false
         },
         {
           "id": "frequency",
           "label": "일주일에 몇 번 외식하시나요? *",
           "type": "radio",
           "options": ["거의 매일", "주 3~4회", "주 1~2회", "거의 안 함"],
-          "required": true
+          "required": false
         },
         {
           "id": "mealCompanion",
@@ -73,7 +73,7 @@
           "label": "비슷한 서비스(사전 주문·픽업)를 들어본 적이 있나요? *",
           "type": "radio",
           "options": ["사용해본 적 있음", "사용해본 적 없음", "들어본 적만 있음"],
-          "required": true
+          "required": false
         },
         {
           "id": "interest",
@@ -81,21 +81,21 @@
           "type": "likert",
           "scale": 5,
           "anchors": ["전혀 관심 없음", "매우 관심 있음"],
-          "required": true
+          "required": false
         },
         {
           "id": "useIntent",
           "label": "출시 시 실제로 이용할 의향이 있으신가요?",
           "type": "radio",
           "options": ["예, 꼭 이용할 것 같다", "상황에 따라 이용할 수 있다", "아직 잘 모르겠다", "이용하지 않을 것 같다"],
-          "required": true
+          "required": false
         },
         {
           "id": "priorityFactors",
           "label": "이런 서비스에서 가장 중요하게 생각하는 요소는 무엇인가요? (복수 선택 가능)",
           "type": "checkbox",
           "options": ["가격", "메뉴 다양성", "편리성(빠른 수령)", "결제 방식", "할인/이벤트"],
-          "required": true
+          "required": false
         },
         {
           "id": "expectations",
@@ -116,17 +116,17 @@
           "label": "이름 *",
           "type": "text",
           "placeholder": "이름을 입력해주세요",
-          "required": true
+          "required": false
         },
         {
           "id": "phone",
           "label": "전화번호 *",
           "type": "tel",
           "placeholder": "010-0000-0000",
-          "required": true
+          "required": false
         },
         {
-          "id": "referrer",
+          "id": "invitedCode",
           "label": "추천인 (선택)",
           "type": "text",
           "placeholder": "추천인의 이름이나 전화번호를 입력해주세요",

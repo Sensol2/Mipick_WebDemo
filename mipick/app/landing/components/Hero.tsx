@@ -56,7 +56,7 @@ export default function Hero(){
           
           <ButtonGroup>
             <Button as="a" href="/todayMenu">오늘 메뉴 보러가기</Button>
-            <Button as="a" href="#cta" variant="secondary">파트너 입점 문의</Button>
+            <Button as="a" href="/todayMenu/survey" variant="secondary">설문 참여하기</Button>
           </ButtonGroup>
         </ContentWrapper>
       </Container>

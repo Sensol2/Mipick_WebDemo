@@ -25,8 +25,8 @@ export function validateFormData(formData: Record<string, string>): boolean {
   );
 }
 
-// 최종 저장할 JSON 구조 생성
-export function createSurveyResponse(formData: Record<string, string>) {
+// 최종 저장할 JSON 구조 생성 (userId는 setSurveyResponse 내부에서 자동 처리)
+export function createSurveyResponse(formData: Record<string, string>): { responses: Record<string, string>; submittedAt: string } {
   return {
     responses: formData,
     submittedAt: new Date().toISOString(),

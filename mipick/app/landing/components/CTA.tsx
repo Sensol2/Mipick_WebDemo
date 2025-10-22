@@ -24,6 +24,11 @@ const Row = styled.form`
   @media (max-width: 520px) { grid-template-columns: 1fr; }
 `
 
+const SurveyButton = styled(Button)`
+  margin-top: 16px;
+  width: 100%;
+`
+
 export default function CTA(){
   const onSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault()
@@ -42,6 +47,9 @@ export default function CTA(){
             <Input name="email" type="email" placeholder="010-xxxx-xxxx" required />
             <Button type="submit">알림 신청</Button>
           </Row>
+          <SurveyButton as="a" href="/todayMenu/survey" variant="secondary">
+            🎟️ 설문 참여하고 무료 점심 받기
+          </SurveyButton>
         </Box>
       </Container>
     </Wrap>
