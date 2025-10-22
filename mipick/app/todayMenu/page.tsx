@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { StoreService } from "@/lib/storeService";
-import { Store } from "@/lib/supabase";
+import { StoreService } from "@/lib/api/storeService";
+import { Store } from "@/lib/api/supabase";
 import styled from "styled-components";
 import { useCountdown } from "@/app/hooks/utils";
 import { Header, HeaderTitle, HeaderSubtitle, Body } from "./components/ui";

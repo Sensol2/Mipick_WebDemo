@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { type Store } from "@/lib/supabase";
+import { type Store } from "@/lib/api/supabase";
 
 interface StoreHeaderImageProps {
   store: Store;

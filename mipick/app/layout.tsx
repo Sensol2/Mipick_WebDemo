@@ -3,6 +3,7 @@
 import { ThemeProvider } from "styled-components";
 import { GlobalStyle } from "@/app/styles/GlobalStyle";
 import { theme } from "@/app/styles/theme";
+import InAppBrowserDetector from "@/lib/utils/InAppBrowserDetector";
 
 export default function RootLayout({
   children,
@@ -18,6 +19,7 @@ export default function RootLayout({
       <body>
         <ThemeProvider theme={theme}>
           <GlobalStyle />
+          <InAppBrowserDetector />
           {children}
         </ThemeProvider>
       </body>

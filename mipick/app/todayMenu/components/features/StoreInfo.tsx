@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { MapPin, Coffee } from "lucide-react";
-import { Store } from "@/lib/supabase";
+import { Store } from "@/lib/api/supabase";
 
 interface StoreInfoProps {
   store: Store;

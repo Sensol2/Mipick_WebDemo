@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getMyInviteCode } from '../../../../lib/surveyService';
+import { getMyInviteCode } from '../../../../lib/api/surveyService';
 
 export function useMyInviteCode() {
   const [inviteCode, setInviteCode] = useState<string | null>(null);

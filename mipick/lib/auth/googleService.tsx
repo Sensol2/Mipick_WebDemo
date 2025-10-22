@@ -1,4 +1,4 @@
-import { supabase } from "../supabase";
+import { supabase } from "../api/supabase";
 
 export async function signInWithGoogle(redirectTo?: string) {
   const response = await supabase.auth.signInWithOAuth({

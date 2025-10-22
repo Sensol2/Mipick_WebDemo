@@ -1,4 +1,4 @@
-import type { MenuOption } from '@/lib/supabase';
+import type { MenuOption } from '@/lib/api/supabase';
 
 /**
  * 가격 계산 유틸리티 클래스

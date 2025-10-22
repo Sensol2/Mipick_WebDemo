@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { type MenuOptionGroup, type MenuOption } from "@/lib/menuService";
+import { type MenuOptionGroup, type MenuOption } from "@/lib/api/menuService";
 
 interface OptionGroupProps {
   group: MenuOptionGroup;

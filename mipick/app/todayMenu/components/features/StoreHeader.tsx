@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Store } from "@/lib/supabase";
+import { Store } from "@/lib/api/supabase";
 
 interface StoreHeaderProps {
   store: Store;
