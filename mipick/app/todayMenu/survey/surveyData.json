@@ -2,29 +2,76 @@
   "pages": [
     {
       "id": 1,
-      "title": "기본 정보를 입력해주세요",
+      "title": "인적 사항을 입력해주세요",
       "subtitle": "간단한 정보만 입력하면 돼요 ✨",
       "questions": [
         {
+          "id": "affiliation",
+          "label": "소속 *",
+          "type": "single",
+          "options": ["대학생", "대학원생", "교직원", "직장인", "기타"],
+          "required": true,
+          "children": [
+            {
+              "parentOption": "대학생",
+              "id": "collegeName_student",
+              "label": "단과대를 선택해주세요 *",
+              "type": "single",
+              "options": [
+                "인문대학",
+                "자연과학대학",
+                "법과대학",
+                "사회과학대학",
+                "경제통상대학",
+                "경영대학",
+                "공과대학",
+                "IT대학",
+                "자유전공학부",
+                "기타"
+              ],
+              "required": true
+            },
+            {
+              "parentOption": "대학원생",
+              "id": "collegeName_grad",
+              "label": "단과대를 선택해주세요 *",
+              "type": "single",
+              "options": [
+                "인문대학",
+                "자연과학대학",
+                "법과대학",
+                "사회과학대학",
+                "경제통상대학",
+                "경영대학",
+                "공과대학",
+                "IT대학",
+                "자유전공학부",
+                "기타"
+              ],
+              "required": true
+            }
+          ]
+        },
+        {
           "id": "ageRange",
           "label": "연령대 *",
-          "type": "radio",
-          "options": ["10대", "20대 초반", "20대 후반", "30대 이상"],
-          "required": false
+          "type": "single",
+          "options": [
+            "만 18세 미만",
+            "만 18-22세",
+            "만 23-27세",
+            "만 28-32세",
+            "만 33-37세",
+            "만 38세 이상"
+          ],
+          "required": true
         },
         {
           "id": "gender",
           "label": "성별 *",
-          "type": "radio",
-          "options": ["남성", "여성", "기타", "응답하지 않음"],
-          "required": false
-        },
-        {
-          "id": "affiliation",
-          "label": "소속 *",
-          "type": "radio",
-          "options": ["대학생", "대학원생", "교직원", "직장인", "기타"],
-          "required": false
+          "type": "single",
+          "options": ["남성", "여성"],
+          "required": true
         }
       ]
     },
@@ -34,32 +81,387 @@
       "subtitle": "당신의 점심 습관을 알고 싶어요 🍽️",
       "questions": [
         {
-          "id": "foodType",
-          "label": "평소 선호하는 음식 종류는? *",
-          "type": "radio",
-          "options": ["🍚 한식", "🍝 양식", "🍣 일식", "🥘 중식", "🥗 기타"],
-          "required": false
+          "id": "lunchDays",
+          "label": "주 5일(월~금) 중 학교에서 점심을 먹는 요일/날짜를 모두 선택해 주세요. *",
+          "type": "multiple",
+          "options": ["월", "화", "수", "목", "금"],
+          "required": true
         },
         {
-          "id": "priceRange",
-          "label": "점심 평균 가격대는? *",
-          "type": "radio",
-          "options": ["5천원 미만", "5천~7천원", "7천~1만원", "1만원 이상"],
-          "required": false
+          "id": "averagePrice",
+          "label": "평균 점심 식사 가격대는 얼마인가요? *",
+          "type": "single",
+          "options": [
+            "5,000원 미만",
+            "5,000원 이상 ~ 7,000원 미만",
+            "7,000원 이상 ~ 9,000원 미만",
+            "9,000원 이상 ~ 11,000원 미만",
+            "11,000원 이상 ~ 13,000원 미만",
+            "13,000원 이상"
+          ],
+          "required": true
         },
         {
-          "id": "frequency",
-          "label": "일주일에 몇 번 외식하시나요? *",
-          "type": "radio",
-          "options": ["거의 매일", "주 3~4회", "주 1~2회", "거의 안 함"],
-          "required": false
+          "id": "importantFactors",
+          "label": "점심 식사 시 가장 중요하게 고려하는 요소 3가지를 선택해 주세요. *",
+          "type": "multiple",
+          "options": [
+            "가격",
+            "맛",
+            "양",
+            "시간 (신속성)",
+            "영양 / 건강",
+            "편의성 / 접근성",
+            "분위기 / 쾌적함",
+            "기타"
+          ],
+          "required": true
         },
         {
-          "id": "mealCompanion",
-          "label": "점심은 보통 누구와 드시나요?",
-          "type": "radio",
-          "options": ["혼자", "친구/동료", "팀 단위", "상황에 따라 다름"],
-          "required": false
+          "id": "mealType",
+          "label": "평소 점심을 먹는 형태를 모두 골라주세요. (복수 응답 가능) *",
+          "type": "multiple",
+          "options": [
+            "학생식당 / 구내식당 이용",
+            "학교 주변 외부 음식점 이용",
+            "편의점 이용 (간편식 / 도시락 등)",
+            "미리 준비한 도시락 혹은 집밥 이용",
+            "배달 서비스 이용",
+            "카페/베이커리 이용",
+            "간단한 요기거리 이용 (음료, 과자 등)",
+            "점심식사를 하지 않음",
+            "기타"
+          ],
+          "required": true,
+          "children": [
+            {
+              "parentOption": "학생식당 / 구내식당 이용",
+              "label": "학생식당 / 구내식당을 이용한다면 아래 항목을 평가해주세요.",
+              "id": "cafeteriaHeader",
+              "type": "",
+              "required": false
+            },
+            {
+              "parentOption": "학생식당 / 구내식당 이용",
+              "id": "cafeteriaTaste",
+              "label": "맛",
+              "type": "likert",
+              "scale": 5,
+              "anchors": ["매우 나쁨", "매우 좋음"],
+              "required": false
+            },
+            {
+              "parentOption": "학생식당 / 구내식당 이용",
+              "id": "cafeteriaQuantity",
+              "label": "양",
+              "type": "likert",
+              "scale": 5,
+              "anchors": ["매우 나쁨", "매우 좋음"],
+              "required": false
+            },
+            {
+              "parentOption": "학생식당 / 구내식당 이용",
+              "id": "cafeteriaValue",
+              "label": "가격 대비 만족도",
+              "type": "likert",
+              "scale": 5,
+              "anchors": ["매우 나쁨", "매우 좋음"],
+              "required": false
+            },
+            {
+              "parentOption": "학생식당 / 구내식당 이용",
+              "id": "cafeteriaTime",
+              "label": "대기 시간",
+              "type": "likert",
+              "scale": 5,
+              "anchors": ["매우 나쁨", "매우 좋음"],
+              "required": false
+            },
+            {
+              "parentOption": "학생식당 / 구내식당 이용",
+              "id": "cafeteriaNutrition",
+              "label": "영양 균형",
+              "type": "likert",
+              "scale": 5,
+              "anchors": ["매우 나쁨", "매우 좋음"],
+              "required": false
+            },
+            {
+              "parentOption": "학교 주변 외부 음식점 이용",
+              "label": "학교 주변 외부 음식점을 이용한다면 아래 항목을 평가해주세요.",
+              "id": "restaurantHeader",
+              "type": "",
+              "required": false
+            },
+            {
+              "parentOption": "학교 주변 외부 음식점 이용",
+              "id": "restaurantTaste",
+              "label": "맛",
+              "type": "likert",
+              "scale": 5,
+              "anchors": ["매우 나쁨", "매우 좋음"],
+              "required": false
+            },
+            {
+              "parentOption": "학교 주변 외부 음식점 이용",
+              "id": "restaurantQuantity",
+              "label": "양",
+              "type": "likert",
+              "scale": 5,
+              "anchors": ["매우 나쁨", "매우 좋음"],
+              "required": false
+            },
+            {
+              "parentOption": "학교 주변 외부 음식점 이용",
+              "id": "restaurantValue",
+              "label": "가격 대비 만족도",
+              "type": "likert",
+              "scale": 5,
+              "anchors": ["매우 나쁨", "매우 좋음"],
+              "required": false
+            },
+            {
+              "parentOption": "학교 주변 외부 음식점 이용",
+              "id": "restaurantTime",
+              "label": "대기 시간",
+              "type": "likert",
+              "scale": 5,
+              "anchors": ["매우 나쁨", "매우 좋음"],
+              "required": false
+            },
+            {
+              "parentOption": "학교 주변 외부 음식점 이용",
+              "id": "restaurantNutrition",
+              "label": "영양 균형",
+              "type": "likert",
+              "scale": 5,
+              "anchors": ["매우 나쁨", "매우 좋음"],
+              "required": false
+            },
+            {
+              "parentOption": "편의점 이용 (간편식 / 도시락 등)",
+              "label": "편의점을 이용한다면 아래 항목을 평가해주세요.",
+              "id": "convenienceHeader",
+              "type": "",
+              "required": false
+            },
+            {
+              "parentOption": "편의점 이용 (간편식 / 도시락 등)",
+              "id": "convenienceTaste",
+              "label": "맛",
+              "type": "likert",
+              "scale": 5,
+              "anchors": ["매우 나쁨", "매우 좋음"],
+              "required": false
+            },
+            {
+              "parentOption": "편의점 이용 (간편식 / 도시락 등)",
+              "id": "convenienceQuantity",
+              "label": "양",
+              "type": "likert",
+              "scale": 5,
+              "anchors": ["매우 나쁨", "매우 좋음"],
+              "required": false
+            },
+            {
+              "parentOption": "편의점 이용 (간편식 / 도시락 등)",
+              "id": "convenienceValue",
+              "label": "가격 대비 만족도",
+              "type": "likert",
+              "scale": 5,
+              "anchors": ["매우 나쁨", "매우 좋음"],
+              "required": false
+            },
+            {
+              "parentOption": "편의점 이용 (간편식 / 도시락 등)",
+              "id": "convenienceTime",
+              "label": "대기 시간",
+              "type": "likert",
+              "scale": 5,
+              "anchors": ["매우 나쁨", "매우 좋음"],
+              "required": false
+            },
+            {
+              "parentOption": "편의점 이용 (간편식 / 도시락 등)",
+              "id": "convenienceNutrition",
+              "label": "영양 균형",
+              "type": "likert",
+              "scale": 5,
+              "anchors": ["매우 나쁨", "매우 좋음"],
+              "required": false
+            },
+            {
+              "parentOption": "미리 준비한 도시락 혹은 집밥 이용",
+              "label": "도시락/집밥을 이용한다면 아래 항목을 평가해주세요.",
+              "id": "lunchboxHeader",
+              "type": "",
+              "required": false
+            },
+            {
+              "parentOption": "미리 준비한 도시락 혹은 집밥 이용",
+              "id": "lunchboxTaste",
+              "label": "맛",
+              "type": "likert",
+              "scale": 5,
+              "anchors": ["매우 나쁨", "매우 좋음"],
+              "required": false
+            },
+            {
+              "parentOption": "미리 준비한 도시락 혹은 집밥 이용",
+              "id": "lunchboxQuantity",
+              "label": "양",
+              "type": "likert",
+              "scale": 5,
+              "anchors": ["매우 나쁨", "매우 좋음"],
+              "required": false
+            },
+            {
+              "parentOption": "미리 준비한 도시락 혹은 집밥 이용",
+              "id": "lunchboxValue",
+              "label": "가격 대비 만족도",
+              "type": "likert",
+              "scale": 5,
+              "anchors": ["매우 나쁨", "매우 좋음"],
+              "required": false
+            },
+            {
+              "parentOption": "미리 준비한 도시락 혹은 집밥 이용",
+              "id": "lunchboxTime",
+              "label": "대기 시간",
+              "type": "likert",
+              "scale": 5,
+              "anchors": ["매우 나쁨", "매우 좋음"],
+              "required": false
+            },
+            {
+              "parentOption": "미리 준비한 도시락 혹은 집밥 이용",
+              "id": "lunchboxNutrition",
+              "label": "영양 균형",
+              "type": "likert",
+              "scale": 5,
+              "anchors": ["매우 나쁨", "매우 좋음"],
+              "required": false
+            },
+            {
+              "parentOption": "배달 서비스 이용",
+              "label": "배달 서비스를 이용한다면 아래 항목을 평가해주세요.",
+              "id": "deliveryHeader",
+              "type": "text",
+              "required": false
+            },
+            {
+              "parentOption": "배달 서비스 이용",
+              "id": "deliveryTaste",
+              "label": "맛",
+              "type": "likert",
+              "scale": 5,
+              "anchors": ["매우 나쁨", "매우 좋음"],
+              "required": false
+            },
+            {
+              "parentOption": "배달 서비스 이용",
+              "id": "deliveryQuantity",
+              "label": "양",
+              "type": "likert",
+              "scale": 5,
+              "anchors": ["매우 나쁨", "매우 좋음"],
+              "required": false
+            },
+            {
+              "parentOption": "배달 서비스 이용",
+              "id": "deliveryValue",
+              "label": "가격 대비 만족도",
+              "type": "likert",
+              "scale": 5,
+              "anchors": ["매우 나쁨", "매우 좋음"],
+              "required": false
+            },
+            {
+              "parentOption": "배달 서비스 이용",
+              "id": "deliveryTime",
+              "label": "대기 시간",
+              "type": "likert",
+              "scale": 5,
+              "anchors": ["매우 나쁨", "매우 좋음"],
+              "required": false
+            },
+            {
+              "parentOption": "배달 서비스 이용",
+              "id": "deliveryNutrition",
+              "label": "영양 균형",
+              "type": "likert",
+              "scale": 5,
+              "anchors": ["매우 나쁨", "매우 좋음"],
+              "required": false
+            },
+            {
+              "parentOption": "카페/베이커리 이용",
+              "label": "카페/베이커리를 이용한다면 아래 항목을 평가해주세요.",
+              "id": "cafeHeader",
+              "type": "",
+              "required": false
+            },
+            {
+              "parentOption": "카페/베이커리 이용",
+              "id": "cafeTaste",
+              "label": "맛",
+              "type": "likert",
+              "scale": 5,
+              "anchors": ["매우 나쁨", "매우 좋음"],
+              "required": false
+            },
+            {
+              "parentOption": "카페/베이커리 이용",
+              "id": "cafeQuantity",
+              "label": "양",
+              "type": "likert",
+              "scale": 5,
+              "anchors": ["매우 나쁨", "매우 좋음"],
+              "required": false
+            },
+            {
+              "parentOption": "카페/베이커리 이용",
+              "id": "cafeValue",
+              "label": "가격 대비 만족도",
+              "type": "likert",
+              "scale": 5,
+              "anchors": ["매우 나쁨", "매우 좋음"],
+              "required": false
+            },
+            {
+              "parentOption": "카페/베이커리 이용",
+              "id": "cafeTime",
+              "label": "대기 시간",
+              "type": "likert",
+              "scale": 5,
+              "anchors": ["매우 나쁨", "매우 좋음"],
+              "required": false
+            },
+            {
+              "parentOption": "카페/베이커리 이용",
+              "id": "cafeNutrition",
+              "label": "영양 균형",
+              "type": "likert",
+              "scale": 5,
+              "anchors": ["매우 나쁨", "매우 좋음"],
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "lunchDifficulties",
+          "label": "점심시간에 겪는 어려움이 있다면 모두 골라주세요. (복수 응답 가능) *",
+          "type": "multiple",
+          "options": [
+            "높은 식사 비용",
+            "긴 식사 대기 시간",
+            "짧은 점심시간 (시간 부족)",
+            "메뉴의 다양성 부족",
+            "함께 식사할 사람 없음 (혼밥의 어려움)",
+            "마땅한 식사 장소 부족",
+            "기타"
+          ],
+          "required": true
         }
       ]
     },
@@ -71,9 +473,9 @@
         {
           "id": "knowPath",
           "label": "비슷한 서비스(사전 주문·픽업)를 들어본 적이 있나요? *",
-          "type": "radio",
+          "type": "single",
           "options": ["사용해본 적 있음", "사용해본 적 없음", "들어본 적만 있음"],
-          "required": false
+          "required": true
         },
         {
           "id": "interest",
@@ -81,21 +483,26 @@
           "type": "likert",
           "scale": 5,
           "anchors": ["전혀 관심 없음", "매우 관심 있음"],
-          "required": false
+          "required": true
         },
         {
           "id": "useIntent",
           "label": "출시 시 실제로 이용할 의향이 있으신가요?",
-          "type": "radio",
-          "options": ["예, 꼭 이용할 것 같다", "상황에 따라 이용할 수 있다", "아직 잘 모르겠다", "이용하지 않을 것 같다"],
-          "required": false
+          "type": "single",
+          "options": [
+            "예, 꼭 이용할 것 같다",
+            "상황에 따라 이용할 수 있다",
+            "아직 잘 모르겠다",
+            "이용하지 않을 것 같다"
+          ],
+          "required": true
         },
         {
           "id": "priorityFactors",
           "label": "이런 서비스에서 가장 중요하게 생각하는 요소는 무엇인가요? (복수 선택 가능)",
-          "type": "checkbox",
+          "type": "multiple",
           "options": ["가격", "메뉴 다양성", "편리성(빠른 수령)", "결제 방식", "할인/이벤트"],
-          "required": false
+          "required": true
         },
         {
           "id": "expectations",
@@ -116,17 +523,17 @@
           "label": "이름 *",
           "type": "text",
           "placeholder": "이름을 입력해주세요",
-          "required": false
+          "required": true
         },
         {
           "id": "phone",
           "label": "전화번호 *",
           "type": "tel",
           "placeholder": "010-0000-0000",
-          "required": false
+          "required": true
         },
         {
-          "id": "invitedCode",
+          "id": "referrer",
           "label": "추천인 (선택)",
           "type": "text",
           "placeholder": "추천인의 이름이나 전화번호를 입력해주세요",

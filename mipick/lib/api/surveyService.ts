@@ -63,7 +63,7 @@ export async function setSurveyResponse(surveyInput: CreateSurveyInput): Promise
     }
   }
 
-  // 3완료 후 새로 삽입된 데이터 반환
+  // 완료 후 새로 삽입된 데이터 반환
   return data;
 }
 

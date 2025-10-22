@@ -42,7 +42,7 @@ export default function ShareSection({ onSkip }: ShareSectionProps) {
       } else {
         // Web Share API를 지원하지 않는 경우 URL 복사
         await navigator.clipboard.writeText(shareData.url);
-        alert("이 브라우저는 공유 기능을 지원하지 않아 링크가 복사되었습니다! 📋");
+        alert("이 브라우저는 공유 기능을 지원하지 않아 링크가 복사되었습니다!");
       }
     } catch (error) {
       // 사용자가 공유를 취소한 경우
@@ -55,7 +55,7 @@ export default function ShareSection({ onSkip }: ShareSectionProps) {
     
     try {
       await navigator.clipboard.writeText(url);
-      alert("추천인 코드가 포함된 링크가 복사되었습니다! 📋");
+      alert("추천인 코드가 포함된 링크가 복사되었습니다!");
     } catch {
       // clipboard API 실패 시 fallback
       const textArea = document.createElement("textarea");
@@ -67,7 +67,7 @@ export default function ShareSection({ onSkip }: ShareSectionProps) {
       
       try {
         document.execCommand("copy");
-        alert("추천인 코드가 포함된 링크가 복사되었습니다! 📋");
+        alert("추천인 코드가 포함된 링크가 복사되었습니다!");
       } catch {
         alert("링크 복사에 실패했습니다.");
       }
