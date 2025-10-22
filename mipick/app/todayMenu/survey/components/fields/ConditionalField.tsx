@@ -24,11 +24,6 @@ export default function ChildrenRenderer({
     ? parentValue.split("|||").map((v) => v.trim()).filter(Boolean)
     : [];
 
-  // 디버깅용 로그
-  console.log("ChildrenRenderer - parentValue:", parentValue);
-  console.log("ChildrenRenderer - parentValues:", parentValues);
-  console.log("ChildrenRenderer - childQuestions:", childQuestions);
-
   const renderChildQuestion = (child: ChildQuestion): React.ReactNode => {
     const value = child.id ? (formData[child.id] || "") : "";
     const onChange = (val: string) => {
@@ -104,8 +99,6 @@ export default function ChildrenRenderer({
         const shouldShow =
           parentValue === child.parentOption || // single 케이스
           parentValues.includes(child.parentOption); // multiple 케이스
-
-        console.log(`Child ${index} - parentOption: "${child.parentOption}", shouldShow:`, shouldShow);
 
         if (!shouldShow) return null;
 

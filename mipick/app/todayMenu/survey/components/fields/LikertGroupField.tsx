@@ -87,7 +87,7 @@ const Scale = styled.div.attrs<{ $columns: number }>(() => ({}))<{ $columns: num
 
 const ScaleButton = styled.button.attrs<{ $selected: boolean }>(() => ({}))<{ $selected: boolean }>`
   height: 40px;
-  border-radius: 999px;
+  border-radius: 10px;
   border: 2px solid ${(p) => (p.$selected ? "#FF6B35" : "#e0e0e0")};
   background: ${(p) => (p.$selected ? "#FFF4E6" : "#fff")};
   color: ${(p) => (p.$selected ? "#FF6B35" : "#666")};

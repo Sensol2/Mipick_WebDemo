@@ -10,7 +10,7 @@ import ShareSection from "./components/ShareSection";
 import TicketAnimation from "./components/TicketAnimation";
 import LoginModal from "./components/LoginModal";
 import { initializeFormData, validateFormData, createSurveyResponse } from "./utils/surveyUtils";
-import { setSurveyResponse, hasUserSubmittedSurvey } from "../../../lib/api/surveyService";
+import { setSurveyResponse, hasUserSubmittedSurvey } from "../../../lib/surveyService";
 import { useAuth } from "../../hooks/auth";
 
 type Step = "loading" | "intro" | "survey" | "share";

@@ -136,7 +136,7 @@
           "children": [
             {
               "parentOption": "학생식당 / 구내식당 이용",
-              "label": "학생식당 / 구내식당을 이용한다면 아래 항목을 평가해주세요.",
+              "label": "학생식당 / 구내식당 이용 시 만족도는 어떠한가요?",
               "id": "cafeteriaGroup",
               "type": "likertGroup",
               "scale": 5,
@@ -152,7 +152,7 @@
             },
             {
               "parentOption": "학교 주변 외부 음식점 이용",
-              "label": "학교 주변 외부 음식점을 이용한다면 아래 항목을 평가해주세요.",
+              "label": "학교 주변 외부 음식점 이용 시 만족도는 어떠한가요?",
               "id": "restaurantGroup",
               "type": "likertGroup",
               "scale": 5,
@@ -168,7 +168,7 @@
             },
             {
               "parentOption": "편의점 이용 (간편식 / 도시락 등)",
-              "label": "편의점을 이용한다면 아래 항목을 평가해주세요.",
+              "label": "편의점 이용 시 만족도는 어떠한가요?",
               "id": "convenienceGroup",
               "type": "likertGroup",
               "scale": 5,
@@ -184,7 +184,7 @@
             },
             {
               "parentOption": "미리 준비한 도시락 혹은 집밥 이용",
-              "label": "도시락/집밥을 이용한다면 아래 항목을 평가해주세요.",
+              "label": "도시락/집밥 이용 시 만족도는 어떠한가요?",
               "id": "lunchboxGroup",
               "type": "likertGroup",
               "scale": 5,
@@ -200,7 +200,7 @@
             },
             {
               "parentOption": "배달 서비스 이용",
-              "label": "배달 서비스를 이용한다면 아래 항목을 평가해주세요.",
+              "label": "배달 서비스를  이용 시 만족도는 어떠한가요?",
               "id": "deliveryGroup",
               "type": "likertGroup",
               "scale": 5,
@@ -216,7 +216,7 @@
             },
             {
               "parentOption": "카페/베이커리 이용",
-              "label": "카페/베이커리를 이용한다면 아래 항목을 평가해주세요.",
+              "label": "카페/베이커리를  이용 시 만족도는 어떠한가요?",
               "id": "cafeGroup",
               "type": "likertGroup",
               "scale": 5,
@@ -251,6 +251,77 @@
     },
     {
       "id": 3,
+      "title": "메뉴 가격 피드백",
+      "subtitle": "다음 메뉴를 학교에서 사먹을 의향이 있는지 알려주세요 🍽️",
+      "questions": [
+        {
+          "id": "menuFeedback1",
+          "label": "",
+          "type": "imageRating",
+          "imageUrl": "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=800",
+          "questionText": "이 메뉴가 8,900원이라면?",
+            "title": "돼지국밥",
+            "subtitle": "부산국밥집",
+            "address": "서울시 관악구 신림로 123",
+            "options": [
+              { "id": "preference", "label": "선호도", "min": 1, "max": 5 },
+              { "id": "amount", "label": "양", "min": 1, "max": 5 },
+              { "id": "value", "label": "값", "min": 1, "max": 5 }
+            ],
+          "required": false
+        }
+      ]
+    },
+    {
+      "id":4, 
+      "title": "Mipick 서비스 소개 1",
+      "subtitle": ".",
+      "questions": [
+                {
+            "id": "introService",
+            "label": "",
+            "type": "imageWithDescription",
+            "imageUrl": "/survey/temp1.jpg",
+            "title": "Mipick 서비스 소개",
+            "subtitle": "Mipick은 전날 주문·결제하면, 학교 내 픽업스테이션에서 음식을 간편하게 수령할 수 있는 서비스입니다.",
+            "required": false
+          }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Mipick 서비스 소개 2",
+      "subtitle": ".",
+      "questions": [
+                {
+            "id": "introService",
+            "label": "",
+            "type": "imageWithDescription",
+            "imageUrl": "/survey/temp2.jpg",
+            "title": "어떻게 이용하나요?",
+            "subtitle": "원하는 메뉴를 앱에서 전 날 주문·결제하고, 다음날 지정된 픽업스테이션에서 줄 서지 않고 바로 수령할 수 있습니다.",
+            "required": false
+          }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Mipick 서비스 소개 3",
+      "subtitle": ".",
+      "questions": [
+                {
+            "id": "introService",
+            "label": "",
+            "type": "imageWithDescription",
+            "imageUrl": "/survey/temp3.jpg",
+            "title": "무엇이 좋나요?",
+            "subtitle": "서울 곳곳의 맛집 음식을 학교에서 편리하게 받아볼 수 있습니다. 또한, 공동 주문이기 때문에 배달비가 절약됩니다.",
+            "required": false
+          }
+      ]
+    },
+    {
+      "id": 7,
       "title": "Mipick 서비스에 관심을 가져주세요",
       "subtitle": "미픽은 '전날' 미리 결제하면, 관악·신촌·강남 등 서울 곳곳의 음식을 다음날 학교에서 픽업할 수 있는 서비스예요. 줄 설 필요가 없고, 공동 주문으로 배달비도 절약돼요.",
       "questions": [
@@ -298,7 +369,7 @@
       ]
     },
     {
-      "id": 4,
+      "id": 8,
       "title": "개인정보 입력",
       "subtitle": "추첨권 제공 및 이벤트 당첨 안내에 필요합니다 🔒",
       "questions": [

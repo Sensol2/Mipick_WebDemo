@@ -238,13 +238,7 @@ export default function SurveySection({ formData, onFormChange, onSubmit }: Surv
       )}
 
       {/* 네비게이션 버튼 */}
-      <ButtonGroup>
-        {currentPage > 1 && (
-          <PrevButton onClick={handlePrev}>
-            이전
-          </PrevButton>
-        )}
-        
+      <ButtonGroup>        
         {currentPage < totalPages ? (
           <NextButton onClick={handleNext}>
             다음
