@@ -1,4 +1,4 @@
-import { CartItemWithOption, supabase, Menu, MenuOption } from './supabase';
+import { CartItemWithOption, supabase, Menu, MenuOption } from '../supabase';
 import { PriceCalculator } from '@/app/todayMenu/cart/utils/priceCalculator';
 
 export interface AddToCartData {

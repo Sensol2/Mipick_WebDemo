@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { MenuService } from "@/lib/menuService";
-import { StoreService } from "@/lib/storeService";
-import { type Menu, type Store } from "@/lib/supabase";
+import { MenuService } from "@/lib/api/menuService";
+import { StoreService } from "@/lib/api/storeService";
+import { type Menu, type Store } from "@/lib/api/supabase";
 
 export function useMenuList(storeId: string | null) {
   const router = useRouter();

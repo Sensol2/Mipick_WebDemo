@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
-import { CartService } from "@/lib/cartService";
-import type { CartItemWithOption } from "@/lib/supabase";
+import { CartService } from "@/lib/api/cartService";
+import type { CartItemWithOption } from "@/lib/api/supabase";
 import { PriceCalculator } from "../utils/priceCalculator";
 import type { CartItem } from "../components";
 

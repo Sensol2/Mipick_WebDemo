@@ -1,5 +1,5 @@
 import { generateRandomCode } from '@/app/todayMenu/survey/utils/codeGenerator';
-import { supabase } from './api/supabase';
+import { supabase } from './supabase';
 
 
 export interface CreateSurveyInput {

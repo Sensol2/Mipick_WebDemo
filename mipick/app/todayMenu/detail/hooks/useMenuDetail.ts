@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { MenuService, type MenuOptionGroup, type MenuOption } from "@/lib/menuService";
-import { CartService } from "@/lib/cartService";
-import { type Menu } from "@/lib/supabase";
+import { MenuService, type MenuOptionGroup, type MenuOption } from "@/lib/api/menuService";
+import { CartService } from "@/lib/api/cartService";
+import { type Menu } from "@/lib/api/supabase";
 
 const TEMP_USER_ID = "558fa1fc-f6b6-452a-9c96-eaf7af8078c5";
 

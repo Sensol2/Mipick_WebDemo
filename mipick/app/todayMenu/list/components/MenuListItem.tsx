@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { type Menu } from "@/lib/supabase";
+import { type Menu } from "@/lib/api/supabase";
 
 interface MenuListItemProps {
   menu: Menu;
