@@ -1,4 +1,4 @@
-import { CartItemWithOption, supabase, Menu, MenuOption } from '../supabase';
+import { CartItemWithOption, supabase, Menu, MenuOption } from './supabase';
 import { PriceCalculator } from '@/app/todayMenu/cart/utils/priceCalculator';
 
 export interface AddToCartData {
@@ -238,7 +238,7 @@ export class CartService {
         return true; // 이미 비어있음
       }
 
-      const cartItemIds = cartItems.map(item => item.id);
+      const cartItemIds = cartItems.map((item: { id: string }) => item.id);
 
       // cart_item_options 먼저 삭제
       const { error: optionsError } = await supabase
