@@ -3,6 +3,7 @@ import type { ChildQuestion } from "./types";
 import SingleChoiceField from "./SingleChoiceField";
 import MultipleChoiceField from "./MultipleChoiceField";
 import LikertField from "./LikertField";
+import LikertGroupField from "./LikertGroupField";
 
 export interface ChildrenRendererProps {
   childQuestions: ChildQuestion[];
@@ -18,10 +19,15 @@ export default function ChildrenRenderer({
   onFormChange,
 }: ChildrenRendererProps) {
   // parentValue가 multiple인 경우 배열로 변환
-  const SEPARATOR = "|||";
+  // MultipleChoiceField에서 사용하는 구분자에 맞춰 split
   const parentValues = parentValue
-    ? parentValue.split(SEPARATOR).filter(Boolean)
+    ? parentValue.split("|||").map((v) => v.trim()).filter(Boolean)
     : [];
+
+  // 디버깅용 로그
+  console.log("ChildrenRenderer - parentValue:", parentValue);
+  console.log("ChildrenRenderer - parentValues:", parentValues);
+  console.log("ChildrenRenderer - childQuestions:", childQuestions);
 
   const renderChildQuestion = (child: ChildQuestion): React.ReactNode => {
     const value = child.id ? (formData[child.id] || "") : "";
@@ -57,6 +63,16 @@ export default function ChildrenRenderer({
             onChange={onChange}
           />
         );
+      case "likertGroup":
+        return (
+          <LikertGroupField
+            items={child.items || []}
+            scale={child.scale || 5}
+            anchors={child.anchors}
+            formData={formData}
+            onChange={onFormChange}
+          />
+        );
       case "text":
       case "tel":
         return (
@@ -89,11 +105,17 @@ export default function ChildrenRenderer({
           parentValue === child.parentOption || // single 케이스
           parentValues.includes(child.parentOption); // multiple 케이스
 
+        console.log(`Child ${index} - parentOption: "${child.parentOption}", shouldShow:`, shouldShow);
+
         if (!shouldShow) return null;
 
+        // 고유한 키 생성 (id가 있으면 사용, 없으면 index 사용)
+        const uniqueKey = child.id || `${child.parentOption}-${index}`;
+
         return (
-          <ChildContainer key={child.parentOption + index}>
-            {child.label && <ChildLabel>{child.label}</ChildLabel>}
+          <ChildContainer key={uniqueKey}>
+            {child.label && child.type !== "likertGroup" && <ChildLabel>{child.label}</ChildLabel>}
+            {child.type === "likertGroup" && child.label && <GroupHeader>{child.label}</GroupHeader>}
             {renderChildQuestion(child)}
 
             {/* 재귀: 하위 children이 있으면 다시 렌더링 */}
@@ -113,7 +135,7 @@ export default function ChildrenRenderer({
 }
 
 const ChildContainer = styled.div`
-  margin-top: 16px;
+  margin: 30px 0;
   padding-left: 20px;
   border-left: 3px solid #FF6B35;
   animation: slideIn 0.3s ease-out;
@@ -135,6 +157,15 @@ const ChildLabel = styled.div`
   font-weight: 600;
   color: #333;
   margin-bottom: 12px;
+`;
+
+const GroupHeader = styled.div`
+  font-size: 16px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #e0e0e0;
 `;
 
 const Input = styled.input`

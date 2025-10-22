@@ -137,313 +137,97 @@
             {
               "parentOption": "학생식당 / 구내식당 이용",
               "label": "학생식당 / 구내식당을 이용한다면 아래 항목을 평가해주세요.",
-              "id": "cafeteriaHeader",
-              "type": "",
-              "required": false
-            },
-            {
-              "parentOption": "학생식당 / 구내식당 이용",
-              "id": "cafeteriaTaste",
-              "label": "맛",
-              "type": "likert",
+              "id": "cafeteriaGroup",
+              "type": "likertGroup",
               "scale": 5,
               "anchors": ["매우 나쁨", "매우 좋음"],
-              "required": false
-            },
-            {
-              "parentOption": "학생식당 / 구내식당 이용",
-              "id": "cafeteriaQuantity",
-              "label": "양",
-              "type": "likert",
-              "scale": 5,
-              "anchors": ["매우 나쁨", "매우 좋음"],
-              "required": false
-            },
-            {
-              "parentOption": "학생식당 / 구내식당 이용",
-              "id": "cafeteriaValue",
-              "label": "가격 대비 만족도",
-              "type": "likert",
-              "scale": 5,
-              "anchors": ["매우 나쁨", "매우 좋음"],
-              "required": false
-            },
-            {
-              "parentOption": "학생식당 / 구내식당 이용",
-              "id": "cafeteriaTime",
-              "label": "대기 시간",
-              "type": "likert",
-              "scale": 5,
-              "anchors": ["매우 나쁨", "매우 좋음"],
-              "required": false
-            },
-            {
-              "parentOption": "학생식당 / 구내식당 이용",
-              "id": "cafeteriaNutrition",
-              "label": "영양 균형",
-              "type": "likert",
-              "scale": 5,
-              "anchors": ["매우 나쁨", "매우 좋음"],
+              "items": [
+                { "id": "cafeteriaTaste", "label": "맛" },
+                { "id": "cafeteriaQuantity", "label": "양" },
+                { "id": "cafeteriaValue", "label": "가격 대비 만족도" },
+                { "id": "cafeteriaTime", "label": "대기 시간" },
+                { "id": "cafeteriaNutrition", "label": "영양 균형" }
+              ],
               "required": false
             },
             {
               "parentOption": "학교 주변 외부 음식점 이용",
               "label": "학교 주변 외부 음식점을 이용한다면 아래 항목을 평가해주세요.",
-              "id": "restaurantHeader",
-              "type": "",
-              "required": false
-            },
-            {
-              "parentOption": "학교 주변 외부 음식점 이용",
-              "id": "restaurantTaste",
-              "label": "맛",
-              "type": "likert",
+              "id": "restaurantGroup",
+              "type": "likertGroup",
               "scale": 5,
               "anchors": ["매우 나쁨", "매우 좋음"],
-              "required": false
-            },
-            {
-              "parentOption": "학교 주변 외부 음식점 이용",
-              "id": "restaurantQuantity",
-              "label": "양",
-              "type": "likert",
-              "scale": 5,
-              "anchors": ["매우 나쁨", "매우 좋음"],
-              "required": false
-            },
-            {
-              "parentOption": "학교 주변 외부 음식점 이용",
-              "id": "restaurantValue",
-              "label": "가격 대비 만족도",
-              "type": "likert",
-              "scale": 5,
-              "anchors": ["매우 나쁨", "매우 좋음"],
-              "required": false
-            },
-            {
-              "parentOption": "학교 주변 외부 음식점 이용",
-              "id": "restaurantTime",
-              "label": "대기 시간",
-              "type": "likert",
-              "scale": 5,
-              "anchors": ["매우 나쁨", "매우 좋음"],
-              "required": false
-            },
-            {
-              "parentOption": "학교 주변 외부 음식점 이용",
-              "id": "restaurantNutrition",
-              "label": "영양 균형",
-              "type": "likert",
-              "scale": 5,
-              "anchors": ["매우 나쁨", "매우 좋음"],
+              "items": [
+                { "id": "restaurantTaste", "label": "맛" },
+                { "id": "restaurantQuantity", "label": "양" },
+                { "id": "restaurantValue", "label": "가격 대비 만족도" },
+                { "id": "restaurantTime", "label": "대기 시간" },
+                { "id": "restaurantNutrition", "label": "영양 균형" }
+              ],
               "required": false
             },
             {
               "parentOption": "편의점 이용 (간편식 / 도시락 등)",
               "label": "편의점을 이용한다면 아래 항목을 평가해주세요.",
-              "id": "convenienceHeader",
-              "type": "",
-              "required": false
-            },
-            {
-              "parentOption": "편의점 이용 (간편식 / 도시락 등)",
-              "id": "convenienceTaste",
-              "label": "맛",
-              "type": "likert",
+              "id": "convenienceGroup",
+              "type": "likertGroup",
               "scale": 5,
               "anchors": ["매우 나쁨", "매우 좋음"],
-              "required": false
-            },
-            {
-              "parentOption": "편의점 이용 (간편식 / 도시락 등)",
-              "id": "convenienceQuantity",
-              "label": "양",
-              "type": "likert",
-              "scale": 5,
-              "anchors": ["매우 나쁨", "매우 좋음"],
-              "required": false
-            },
-            {
-              "parentOption": "편의점 이용 (간편식 / 도시락 등)",
-              "id": "convenienceValue",
-              "label": "가격 대비 만족도",
-              "type": "likert",
-              "scale": 5,
-              "anchors": ["매우 나쁨", "매우 좋음"],
-              "required": false
-            },
-            {
-              "parentOption": "편의점 이용 (간편식 / 도시락 등)",
-              "id": "convenienceTime",
-              "label": "대기 시간",
-              "type": "likert",
-              "scale": 5,
-              "anchors": ["매우 나쁨", "매우 좋음"],
-              "required": false
-            },
-            {
-              "parentOption": "편의점 이용 (간편식 / 도시락 등)",
-              "id": "convenienceNutrition",
-              "label": "영양 균형",
-              "type": "likert",
-              "scale": 5,
-              "anchors": ["매우 나쁨", "매우 좋음"],
+              "items": [
+                { "id": "convenienceTaste", "label": "맛" },
+                { "id": "convenienceQuantity", "label": "양" },
+                { "id": "convenienceValue", "label": "가격 대비 만족도" },
+                { "id": "convenienceTime", "label": "대기 시간" },
+                { "id": "convenienceNutrition", "label": "영양 균형" }
+              ],
               "required": false
             },
             {
               "parentOption": "미리 준비한 도시락 혹은 집밥 이용",
               "label": "도시락/집밥을 이용한다면 아래 항목을 평가해주세요.",
-              "id": "lunchboxHeader",
-              "type": "",
-              "required": false
-            },
-            {
-              "parentOption": "미리 준비한 도시락 혹은 집밥 이용",
-              "id": "lunchboxTaste",
-              "label": "맛",
-              "type": "likert",
+              "id": "lunchboxGroup",
+              "type": "likertGroup",
               "scale": 5,
               "anchors": ["매우 나쁨", "매우 좋음"],
-              "required": false
-            },
-            {
-              "parentOption": "미리 준비한 도시락 혹은 집밥 이용",
-              "id": "lunchboxQuantity",
-              "label": "양",
-              "type": "likert",
-              "scale": 5,
-              "anchors": ["매우 나쁨", "매우 좋음"],
-              "required": false
-            },
-            {
-              "parentOption": "미리 준비한 도시락 혹은 집밥 이용",
-              "id": "lunchboxValue",
-              "label": "가격 대비 만족도",
-              "type": "likert",
-              "scale": 5,
-              "anchors": ["매우 나쁨", "매우 좋음"],
-              "required": false
-            },
-            {
-              "parentOption": "미리 준비한 도시락 혹은 집밥 이용",
-              "id": "lunchboxTime",
-              "label": "대기 시간",
-              "type": "likert",
-              "scale": 5,
-              "anchors": ["매우 나쁨", "매우 좋음"],
-              "required": false
-            },
-            {
-              "parentOption": "미리 준비한 도시락 혹은 집밥 이용",
-              "id": "lunchboxNutrition",
-              "label": "영양 균형",
-              "type": "likert",
-              "scale": 5,
-              "anchors": ["매우 나쁨", "매우 좋음"],
+              "items": [
+                { "id": "lunchboxTaste", "label": "맛" },
+                { "id": "lunchboxQuantity", "label": "양" },
+                { "id": "lunchboxValue", "label": "가격 대비 만족도" },
+                { "id": "lunchboxTime", "label": "대기 시간" },
+                { "id": "lunchboxNutrition", "label": "영양 균형" }
+              ],
               "required": false
             },
             {
               "parentOption": "배달 서비스 이용",
               "label": "배달 서비스를 이용한다면 아래 항목을 평가해주세요.",
-              "id": "deliveryHeader",
-              "type": "text",
-              "required": false
-            },
-            {
-              "parentOption": "배달 서비스 이용",
-              "id": "deliveryTaste",
-              "label": "맛",
-              "type": "likert",
+              "id": "deliveryGroup",
+              "type": "likertGroup",
               "scale": 5,
               "anchors": ["매우 나쁨", "매우 좋음"],
-              "required": false
-            },
-            {
-              "parentOption": "배달 서비스 이용",
-              "id": "deliveryQuantity",
-              "label": "양",
-              "type": "likert",
-              "scale": 5,
-              "anchors": ["매우 나쁨", "매우 좋음"],
-              "required": false
-            },
-            {
-              "parentOption": "배달 서비스 이용",
-              "id": "deliveryValue",
-              "label": "가격 대비 만족도",
-              "type": "likert",
-              "scale": 5,
-              "anchors": ["매우 나쁨", "매우 좋음"],
-              "required": false
-            },
-            {
-              "parentOption": "배달 서비스 이용",
-              "id": "deliveryTime",
-              "label": "대기 시간",
-              "type": "likert",
-              "scale": 5,
-              "anchors": ["매우 나쁨", "매우 좋음"],
-              "required": false
-            },
-            {
-              "parentOption": "배달 서비스 이용",
-              "id": "deliveryNutrition",
-              "label": "영양 균형",
-              "type": "likert",
-              "scale": 5,
-              "anchors": ["매우 나쁨", "매우 좋음"],
+              "items": [
+                { "id": "deliveryTaste", "label": "맛" },
+                { "id": "deliveryQuantity", "label": "양" },
+                { "id": "deliveryValue", "label": "가격 대비 만족도" },
+                { "id": "deliveryTime", "label": "대기 시간" },
+                { "id": "deliveryNutrition", "label": "영양 균형" }
+              ],
               "required": false
             },
             {
               "parentOption": "카페/베이커리 이용",
               "label": "카페/베이커리를 이용한다면 아래 항목을 평가해주세요.",
-              "id": "cafeHeader",
-              "type": "",
-              "required": false
-            },
-            {
-              "parentOption": "카페/베이커리 이용",
-              "id": "cafeTaste",
-              "label": "맛",
-              "type": "likert",
+              "id": "cafeGroup",
+              "type": "likertGroup",
               "scale": 5,
               "anchors": ["매우 나쁨", "매우 좋음"],
-              "required": false
-            },
-            {
-              "parentOption": "카페/베이커리 이용",
-              "id": "cafeQuantity",
-              "label": "양",
-              "type": "likert",
-              "scale": 5,
-              "anchors": ["매우 나쁨", "매우 좋음"],
-              "required": false
-            },
-            {
-              "parentOption": "카페/베이커리 이용",
-              "id": "cafeValue",
-              "label": "가격 대비 만족도",
-              "type": "likert",
-              "scale": 5,
-              "anchors": ["매우 나쁨", "매우 좋음"],
-              "required": false
-            },
-            {
-              "parentOption": "카페/베이커리 이용",
-              "id": "cafeTime",
-              "label": "대기 시간",
-              "type": "likert",
-              "scale": 5,
-              "anchors": ["매우 나쁨", "매우 좋음"],
-              "required": false
-            },
-            {
-              "parentOption": "카페/베이커리 이용",
-              "id": "cafeNutrition",
-              "label": "영양 균형",
-              "type": "likert",
-              "scale": 5,
-              "anchors": ["매우 나쁨", "매우 좋음"],
+              "items": [
+                { "id": "cafeTaste", "label": "맛" },
+                { "id": "cafeQuantity", "label": "양" },
+                { "id": "cafeValue", "label": "가격 대비 만족도" },
+                { "id": "cafeTime", "label": "대기 시간" },
+                { "id": "cafeNutrition", "label": "영양 균형" }
+              ],
               "required": false
             }
           ]

@@ -4,6 +4,7 @@ import surveyData from "../surveyData.json";
 import SingleChoiceField from "./fields/SingleChoiceField";
 import MultipleChoiceField from "./fields/MultipleChoiceField";
 import LikertField from "./fields/LikertField";
+import LikertGroupField from "./fields/LikertGroupField";
 import ImageRatingField from "./fields/ImageRatingField";
 import ImageWithDescriptionField from "./fields/ImageWithDescriptionField";
 import DescriptionField from "./fields/DescriptionField";
@@ -14,6 +15,7 @@ import type {
   SingleChoiceQuestion,
   MultipleChoiceQuestion,
   LikertQuestion,
+  LikertGroupQuestion,
   TextQuestion,
   TextareaQuestion,
   ImageRatingQuestion,
@@ -140,6 +142,18 @@ export default function SurveySection({ formData, onFormChange, onSubmit }: Surv
           anchors={lq.anchors}
           value={value}
           onChange={onChange}
+        />
+      );
+    }
+    if (q.type === "likertGroup") {
+      const lgq = q as LikertGroupQuestion;
+      return (
+        <LikertGroupField
+          items={lgq.items}
+          scale={lgq.scale || 5}
+          anchors={lgq.anchors}
+          formData={formData}
+          onChange={onFormChange}
         />
       );
     }
