@@ -4,6 +4,7 @@ import { ThemeProvider } from "styled-components";
 import { GlobalStyle } from "@/app/styles/GlobalStyle";
 import { theme } from "@/app/styles/theme";
 import InAppBrowserDetector from "@/lib/utils/InAppBrowserDetector";
+import StyledComponentsProvider from "@/lib/providers/StyledComponentsProvider";
 
 export default function RootLayout({
   children,
@@ -17,11 +18,13 @@ export default function RootLayout({
         <meta name="description" content="대학가/오피스 근처 테마 박스 사전 주문·픽업 서비스" />
       </head>
       <body>
-        <ThemeProvider theme={theme}>
-          <GlobalStyle />
-          <InAppBrowserDetector />
-          {children}
-        </ThemeProvider>
+        <StyledComponentsProvider>
+          <ThemeProvider theme={theme}>
+            <GlobalStyle />
+            <InAppBrowserDetector />
+            {children}
+          </ThemeProvider>
+        </StyledComponentsProvider>
       </body>
     </html>
   );
