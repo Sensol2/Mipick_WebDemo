@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import styled, { keyframes } from "styled-components";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Sheet as BaseSheet, BackButton } from "../components/ui";
@@ -13,198 +13,135 @@ import { initializeFormData, validateFormData, createSurveyResponse } from "./ut
 import { setSurveyResponse, hasUserSubmittedSurvey } from "../../../lib/surveyService";
 import { useAuth } from "../../hooks/auth";
 
+type Step = "loading" | "intro" | "survey" | "share";
+
 export default function SurveyPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { isAuthenticated, loading: authLoading } = useAuth();
 
-  // 페이지 단계 관리
-  const [currentStep, setCurrentStep] = useState<"intro" | "survey" | "share">("intro");
-  
-  // 설문 데이터 관리
+  const [currentStep, setCurrentStep] = useState<Step>("loading");
   const [formData, setFormData] = useState<Record<string, string>>(initializeFormData);
-  
-  // 인증 및 참여 상태
-  const [isParticipated, setIsParticipated] = useState(false);
-  const [isCheckingParticipation, setIsCheckingParticipation] = useState(true);
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  
-  // UI 상태
   const [ticketCount, setTicketCount] = useState(0);
   const [isShowingTicketAnimation, setIsShowingTicketAnimation] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
-  // 1. 페이지 로드 시: 사용자의 설문 참여 여부 확인
+  // 참여 여부 확인 및 초기 화면 설정
   useEffect(() => {
-    async function checkUserParticipation() {
-      // 인증 로딩 중이면 대기
-      if (authLoading) return;
-      
-      // 로그인 상태면 참여 여부 확인
+    if (authLoading) return;
+
+    (async () => {
       if (isAuthenticated) {
         const participated = await hasUserSubmittedSurvey();
-        setIsParticipated(participated);
+        setCurrentStep(participated ? "share" : "intro");
+      } else {
+        setCurrentStep("intro");
       }
-      
-      setIsCheckingParticipation(false);
-    }
-
-    checkUserParticipation();
+    })();
   }, [isAuthenticated, authLoading]);
 
-  // 2. OAuth 로그인 후 자동 제출 처리
+  // OAuth 로그인 후 자동 제출
   useEffect(() => {
-    const isPostLogin = searchParams?.get('postLogin') === '1';
-    
-    async function autoSubmitAfterLogin() {
-      if (isPostLogin && isAuthenticated && !isParticipated) {
-        // 티켓 애니메이션 시작
-        setIsShowingTicketAnimation(true);
-        
-        // 서버에 설문 응답 저장
-        const surveyResponse = createSurveyResponse(formData);
-        await setSurveyResponse(surveyResponse);
-        
-        // 1.5초 후 애니메이션 종료 및 공유 페이지로 이동
-        setTimeout(() => {
-          setTicketCount(prev => prev + 1);
-          setIsShowingTicketAnimation(false);
-          setCurrentStep("share");
-        }, 1500);
+    const isPostLogin = searchParams?.get("postLogin");
+    if (!isPostLogin || !isAuthenticated) return;
+
+    (async () => {
+      const participated = await hasUserSubmittedSurvey();
+      if (participated) {
+        setCurrentStep("share");
+        return;
       }
-    }
+      await submitSurveyAndAnimate(1500);
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams, isAuthenticated]);
 
-    autoSubmitAfterLogin();
-  }, [searchParams, isAuthenticated, isParticipated, formData]);
+  // 공통: 설문 제출 & 애니메이션 처리
+  async function submitSurveyAndAnimate(delay = 1000) {
+    setIsShowingTicketAnimation(true);
+    
+    const surveyResponse = createSurveyResponse(formData);
+    await setSurveyResponse(surveyResponse);
 
-  // 폼 입력값 변경 핸들러
-  function handleFormChange(field: string, value: string) {
-    setFormData({ ...formData, [field]: value });
+    setTimeout(() => {
+      setTicketCount(prev => prev + 1);
+      setIsShowingTicketAnimation(false);
+      setCurrentStep("share");
+    }, delay);
   }
 
-  // 설문 제출 버튼 클릭 핸들러
-  async function handleSubmitClick() {
-    // 1단계: 필수 항목 검증
+  // 폼 입력 핸들러
+  const handleFormChange = (field: string, value: string) =>
+    setFormData(prev => ({ ...prev, [field]: value }));
+
+  // 설문 제출 핸들러
+  const handleSubmitClick = async () => {
     if (!validateFormData(formData)) {
       alert("모든 필수 항목을 입력해주세요!");
       return;
     }
 
-    // 2단계: 로그인 확인
     if (!isAuthenticated) {
       setIsLoginModalOpen(true);
       return;
     }
 
-    // 3단계: 중복 제출 방지
-    const alreadyParticipated = await hasUserSubmittedSurvey();
-    if (alreadyParticipated) {
+    const participated = await hasUserSubmittedSurvey();
+    if (participated) {
       alert("이미 설문에 참여하셨습니다!");
-      setIsParticipated(true);
-      setCurrentStep("intro");
+      setCurrentStep("share");
       return;
     }
 
-    // 4단계: 설문 제출
-    await handleSurveySubmission();
-  }
+    await submitSurveyAndAnimate();
+  };
 
-  // 실제 설문 제출 처리
-  async function handleSurveySubmission() {
-    // 티켓 애니메이션 시작
-    setIsShowingTicketAnimation(true);
-    
-    // 서버에 설문 응답 저장
-    const surveyResponse = createSurveyResponse(formData);
-    await setSurveyResponse(surveyResponse);
-    
-    // 0.5초 후 애니메이션 종료 및 공유 페이지로 이동
-    setTimeout(() => {
-      setTicketCount(prev => prev + 1);
-      setIsShowingTicketAnimation(false);
-      setCurrentStep("share");
-    }, 500);
-  }
+  // 뒤로가기
+  const handleBackClick = () =>
+    currentStep === "intro" || currentStep === "loading" ? router.back() : setCurrentStep("intro");
 
-  // 현재 단계에 따른 컴포넌트 렌더링
-  function renderCurrentStep() {
-    switch (currentStep) {
-      case "intro":
-        // 로딩 중일 때
-        if (isCheckingParticipation) {
-          return (
-            <LoadingContainer>
-              <Spinner />
-              <LoadingText>확인 중...</LoadingText>
-            </LoadingContainer>
-          );
-        }
-        
-        // 이미 참여한 사용자는 ShareSection 보여주기
-        if (isParticipated) {
-          return (
-            <ShareSection
-              tickets={ticketCount}
-              onSkip={() => router.push("/todayMenu/")}
-            />
-          );
-        }
-        
-        // 첫 방문자는 IntroSection 보여주기
-        return (
-          <IntroSection 
-            onStart={() => setCurrentStep("survey")} 
-            hasParticipated={isParticipated}
-            isLoading={isCheckingParticipation}
-          />
-        );
-      
-      case "survey":
-        return (
-          <SurveySection
-            formData={formData}
-            onFormChange={handleFormChange}
-            onSubmit={handleSubmitClick}
-          />
-        );
-      
-      case "share":
-        return (
-          <ShareSection
-            tickets={ticketCount}
-            onSkip={() => router.push("/todayMenu/")}
-          />
-        );
-      
-      default:
-        return null;
-    }
-  }
-
-  // 뒤로가기 버튼 핸들러
-  function handleBackClick() {
-    if (currentStep === "intro") {
-      router.back();
-    } else {
-      setCurrentStep("intro");
-    }
-  }
+  // 단계별 컴포넌트 매핑
+  const stepComponents: Record<Step, React.ReactElement> = useMemo(
+    () => ({
+      loading: (
+        <LoadingContainer>
+          <Spinner />
+          <LoadingText>확인 중...</LoadingText>
+        </LoadingContainer>
+      ),
+      intro: (
+        <IntroSection 
+          onStart={() => setCurrentStep("survey")} 
+          hasParticipated={false}
+          isLoading={false}
+        />
+      ),
+      survey: (
+        <SurveySection
+          formData={formData}
+          onFormChange={handleFormChange}
+          onSubmit={handleSubmitClick}
+        />
+      ),
+      share: (
+        <ShareSection
+          tickets={ticketCount}
+          onSkip={() => router.push("/todayMenu/")}
+        />
+      ),
+    }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [formData, ticketCount]
+  );
 
   return (
     <>
-      <BackButton onClick={handleBackClick}>
-        ←
-      </BackButton>
+      <BackButton onClick={handleBackClick}>←</BackButton>
 
-      <AnimatedSheet>
-        {renderCurrentStep()}
-      </AnimatedSheet>
+      <AnimatedSheet>{stepComponents[currentStep]}</AnimatedSheet>
 
       <TicketAnimation show={isShowingTicketAnimation} />
-      
-      <LoginModal 
-        isOpen={isLoginModalOpen} 
-        onClose={() => setIsLoginModalOpen(false)} 
-      />
+      <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
     </>
   );
 }
