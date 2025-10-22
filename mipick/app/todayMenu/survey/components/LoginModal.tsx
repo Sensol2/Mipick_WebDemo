@@ -50,7 +50,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
           </GoogleButton>
 
           <SkipButton onClick={onClose}>
-            나중에 하기
+            취소
           </SkipButton>
         </ButtonGroup>
       </ModalContent>
