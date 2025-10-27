@@ -5,13 +5,23 @@ export interface MultipleChoiceFieldProps {
   value: string; // comma separated values
   onChange: (value: string) => void;
   label?: string;
+  maximum?: number; // 최대 선택 개수
 }
 
-export default function MultipleChoiceField({ options, value, onChange }: MultipleChoiceFieldProps) {
+export default function MultipleChoiceField({ options, value, onChange, maximum }: MultipleChoiceFieldProps) {
   const SEPARATOR = "|||";
   const selected = new Set((value || "").split(SEPARATOR).filter(Boolean));
+  
   const toggle = (opt: string) => {
-    if (selected.has(opt)) selected.delete(opt); else selected.add(opt);
+    if (selected.has(opt)) {
+      selected.delete(opt);
+    } else {
+      // 최대 개수 제한 체크
+      if (maximum && selected.size >= maximum) {
+        return;
+      }
+      selected.add(opt);
+    }
     onChange(Array.from(selected).join(SEPARATOR));
   };
   

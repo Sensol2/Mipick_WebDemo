@@ -72,7 +72,7 @@ export default function IntroSection({ onStart, hasParticipated, isLoading }: In
               <CardHeader>
                 <IconWrapper><BiSolidGift /></IconWrapper>
                 <CardContent>
-                  <CardTitle>베타 테스터 선정</CardTitle>
+                  <CardTitle>베타 테스터 신청</CardTitle>
                   <CardReward>무료 점심 제공</CardReward>
                 </CardContent>
                 <ToggleIcon $expanded={expandedCard === 'beta'}>

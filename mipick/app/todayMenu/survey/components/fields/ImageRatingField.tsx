@@ -61,7 +61,9 @@ export default function ImageRatingField({
         <Address>{address}</Address>
       </MenuInfo>
       
-      <QuestionText>{questionText}</QuestionText>
+      <QuestionWrapper>
+        <QuestionText>{questionText}</QuestionText>
+      </QuestionWrapper>
       
       <RatingGroups>
         {options.map((option) => (
@@ -137,12 +139,20 @@ const Address = styled.div`
   line-height: 1.5;
 `;
 
+const QuestionWrapper = styled.div`
+  padding: 20px;
+  background: linear-gradient(135deg, #FFF5F0 0%, #FFF8F5 100%);
+  border-radius: 12px;
+  border: 1px solid #FFE8DD;
+`;
+
 const QuestionText = styled.div`
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 400;
   color: #333;
   line-height: 1.6;
   text-align: center;
+  white-space: pre-line;
 `;
 
 const RatingGroups = styled.div`

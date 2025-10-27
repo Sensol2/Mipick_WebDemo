@@ -8,11 +8,13 @@ import LikertGroupField from "./fields/LikertGroupField";
 import ImageRatingField from "./fields/ImageRatingField";
 import ImageWithDescriptionField from "./fields/ImageWithDescriptionField";
 import DescriptionField from "./fields/DescriptionField";
+import DropdownField from "./fields/DropdownField";
 import ChildrenRenderer from "./fields/ConditionalField";
 import type {
   SurveyPage,
   Question,
   SingleChoiceQuestion,
+  DropdownQuestion,
   MultipleChoiceQuestion,
   LikertQuestion,
   LikertGroupQuestion,
@@ -32,7 +34,13 @@ interface SurveySectionProps {
 export default function SurveySection({ formData, onFormChange, onSubmit }: SurveySectionProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const pages = surveyData.pages as unknown as SurveyPage[];
-  const totalPages = pages.length;
+  
+  // imageRating 페이지가 아닌 것만 카운트
+  const totalPages = useMemo(() => {
+    return pages.filter(page => 
+      !page.questions.every(q => q.type === 'imageRating')
+    ).length;
+  }, [pages]);
 
   type FormDataKeys = keyof SurveySectionProps["formData"];
 
@@ -93,7 +101,7 @@ export default function SurveySection({ formData, onFormChange, onSubmit }: Surv
 
   const handleNext = () => {
     if (!validateCurrentPage()) return;
-    if (currentPage < totalPages) setCurrentPage((p) => p + 1);
+    if (currentPage < pages.length) setCurrentPage((p) => p + 1);
   };
 
   const handlePrev = () => {
@@ -131,8 +139,28 @@ export default function SurveySection({ formData, onFormChange, onSubmit }: Surv
     if (q.type === "single") {
       return <SingleChoiceField options={(q as SingleChoiceQuestion).options || []} value={value} onChange={onChange} />;
     }
+    if (q.type === "dropdown") {
+      return (
+        <DropdownField
+          id={q.id}
+          label={q.label}
+          options={(q as DropdownQuestion).options || []}
+          value={value}
+          onChange={onChange}
+          required={q.required}
+        />
+      );
+    }
     if (q.type === "multiple") {
-      return <MultipleChoiceField options={(q as MultipleChoiceQuestion).options || []} value={value} onChange={onChange} />;
+      const mq = q as MultipleChoiceQuestion;
+      return (
+        <MultipleChoiceField
+          options={mq.options || []}
+          value={value}
+          onChange={onChange}
+          maximum={mq.maximum}
+        />
+      );
     }
     if (q.type === "likert") {
       const lq = q as LikertQuestion;
@@ -199,10 +227,17 @@ export default function SurveySection({ formData, onFormChange, onSubmit }: Surv
   return (
     <Container>
       <ProgressBar>
-        <ProgressFill width={`${(currentPage / totalPages) * 100}%`} />
+        <ProgressFill width={`${
+          (pages.slice(0, currentPage).filter(p => !p.questions.every(q => q.type === 'imageRating')).length / totalPages) * 100
+        }%`} />
       </ProgressBar>
 
-      <PageIndicator>{currentPage} / {totalPages}</PageIndicator>
+      {/* imageRating 페이지가 아닐 때만 페이지 인디케이터 표시 */}
+      {pageConfig && !pageConfig.questions.every(q => q.type === 'imageRating') && (
+        <PageIndicator>
+          {pages.slice(0, currentPage).filter(p => !p.questions.every(q => q.type === 'imageRating')).length} / {totalPages}
+        </PageIndicator>
+      )}
 
       {/* 현재 페이지 동적 렌더링 */}
       {pageConfig && (
@@ -239,7 +274,7 @@ export default function SurveySection({ formData, onFormChange, onSubmit }: Surv
 
       {/* 네비게이션 버튼 */}
       <ButtonGroup>        
-        {currentPage < totalPages ? (
+        {currentPage < pages.length ? (
           <NextButton onClick={handleNext}>
             다음
           </NextButton>

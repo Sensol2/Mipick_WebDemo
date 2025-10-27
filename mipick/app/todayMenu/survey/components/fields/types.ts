@@ -5,8 +5,8 @@ export type ChildQuestion = {
   parentOption: string; // 부모의 어떤 옵션이 선택됐을 때 표시할지
   id?: string;
   label?: string; // 하위 질문 레이블
-  type: "single" | "multiple" | "likert" | "likertGroup" | "text" | "tel" | "textarea" | "description";
-  options?: string[]; // single/multiple용
+  type: "single" | "multiple" | "dropdown" | "likert" | "likertGroup" | "text" | "tel" | "textarea" | "description";
+  options?: string[]; // single/multiple/dropdown용
   scale?: number; // likert용
   anchors?: [string, string]; // likert용
   items?: Array<{ id: string; label: string }>; // likertGroup용 - 평가할 항목들
@@ -30,9 +30,15 @@ export type SingleChoiceQuestion = BaseQuestion & {
   options: string[];
 };
 
+export type DropdownQuestion = BaseQuestion & {
+  type: "dropdown";
+  options: string[];
+};
+
 export type MultipleChoiceQuestion = BaseQuestion & {
   type: "multiple";
   options: string[];
+  maximum?: number; // 최대 선택 개수 제한
 };
 
 export type TextQuestion = BaseQuestion & {
@@ -87,6 +93,7 @@ export type DescriptionQuestion = BaseQuestion & {
 
 export type Question =
   | SingleChoiceQuestion
+  | DropdownQuestion
   | MultipleChoiceQuestion
   | TextQuestion
   | TextareaQuestion

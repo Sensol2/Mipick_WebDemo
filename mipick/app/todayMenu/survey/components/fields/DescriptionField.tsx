@@ -8,7 +8,6 @@ interface DescriptionFieldProps {
 export default function DescriptionField({ content, label }: DescriptionFieldProps) {
   return (
     <Container>
-      {label && <Text>{label}</Text>}
       {content && <Text>{content}</Text>}
     </Container>
   );
@@ -25,6 +24,7 @@ const Text = styled.p`
   font-size: 14px;
   color: #555;
   line-height: 1.6;
+  white-space: pre-line;
   margin: 0;
   
   &:not(:last-child) {

@@ -143,6 +143,7 @@
             "분위기 / 쾌적함",
             "기타"
           ],
+          "maximum": 3,
           "required": true
         },
         {
@@ -279,77 +280,284 @@
     },
     {
       "id": 4,
-      "title": "메뉴 가격 피드백",
-      "subtitle": "다음 메뉴를 학교에서 사먹을 의향이 있는지 알려주세요 🍽️",
+      "title": "메뉴 피드백",
+      "subtitle": "이 메뉴에 대해서 평가해주세요 🍽️",
       "questions": [
         {
           "id": "menuFeedback1",
           "label": "",
           "type": "imageRating",
-          "imageUrl": "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=800",
-          "questionText": "이 메뉴가 8,900원이라면?",
-            "title": "돼지국밥",
-            "subtitle": "부산국밥집",
-            "address": "서울시 관악구 신림로 123",
-            "options": [
-              { "id": "preference", "label": "선호도", "min": 1, "max": 5 },
-              { "id": "amount", "label": "양", "min": 1, "max": 5 },
-              { "id": "value", "label": "값", "min": 1, "max": 5 }
-            ],
+          "imageUrl": "https://ldb-phinf.pstatic.net/20250421_283/1745204118426LSpUo_JPEG/13_%B0%A8%C0%DA%C4%A1%C1%EE.jpeg",
+          "questionText": "오픈 유명세가 아닌 맛으로도 인정받은 핫플레이스,\n런던베이글뮤지엄의 시그니처 인기 메뉴\n매쉬드 포테이토와 치즈가 올라간 베이글",
+          "title": "감자치즈베이글 (5,500원)",
+          "subtitle": "런던베이글뮤지엄 여의도 (베이글 전문 베이커리)",
+          "address": "서울특별시 영등포구 여의대로 108 지하1층",
+          "options": [
+            { "id": "preference", "label": "선호도", "min": 1, "max": 5 },
+            { "id": "amount", "label": "양", "min": 1, "max": 5 },
+            { "id": "value", "label": "값", "min": 1, "max": 5 }
+          ],
           "required": false
         }
       ]
     },
     {
-      "id": 5, 
-      "title": "Mipick 서비스 소개 1",
-      "subtitle": ".",
+      "id": 5,
+      "title": "메뉴 피드백",
+      "subtitle": "이 메뉴에 대해서 평가해주세요 🍽️",
       "questions": [
-                {
-            "id": "introService",
-            "label": "",
-            "type": "imageWithDescription",
-            "imageUrl": "/survey/temp1.jpg",
-            "title": "Mipick 서비스 소개",
-            "subtitle": "Mipick은 전날 주문·결제하면, 학교 내 픽업스테이션에서 음식을 간편하게 수령할 수 있는 서비스입니다.",
-            "required": false
-          }
+        {
+          "id": "menuFeedback2",
+          "label": "",
+          "type": "imageRating",
+          "imageUrl": "https://ldb-phinf.pstatic.net/20250810_291/1754825691334KgN4e_PNG/%B0%ED%B1%E2%B1%B9%BC%F6%B8%DE%B4%BA.png",
+          "questionText": "제주의 맛을 서울에서 느낄 수 있는 음식,\n합리적인 가격에 든든한 한 끼 식사 가능,\n푸짐한 고기와 깊은 육수가 특징",
+          "title": "고기국수 (9,000원)",
+          "subtitle": "제주상회 (제주요리 전문점)",
+          "address": "서울 관악구 관악로12길 108 지하1층",
+          "options": [
+            { "id": "preference", "label": "선호도", "min": 1, "max": 5 },
+            { "id": "amount", "label": "양", "min": 1, "max": 5 },
+            { "id": "value", "label": "값", "min": 1, "max": 5 }
+          ],
+          "required": false
+        }
       ]
     },
     {
       "id": 6,
-      "title": "Mipick 서비스 소개 2",
-      "subtitle": ".",
+      "title": "메뉴 피드백",
+      "subtitle": "이 메뉴에 대해서 평가해주세요 🍽️",
       "questions": [
-                {
-            "id": "introService",
-            "label": "",
-            "type": "imageWithDescription",
-            "imageUrl": "/survey/temp2.jpg",
-            "title": "어떻게 이용하나요?",
-            "subtitle": "원하는 메뉴를 앱에서 전 날 주문·결제하고, 다음날 지정된 픽업스테이션에서 줄 서지 않고 바로 수령할 수 있습니다.",
-            "required": false
-          }
+        {
+          "id": "menuFeedback3",
+          "label": "",
+          "type": "imageRating",
+          "imageUrl": "https://file.notion.so/f/f/6d7cc596-d2db-45ec-b8c4-1cf2e6604e9a/266f95e3-e673-45e1-91c8-6ae0dea57941/d31abfa3-a303-4ed9-a5d7-e2f419bc49e7.png?table=block&id=2990be5e-fd61-8097-830e-d4664f2abede&spaceId=6d7cc596-d2db-45ec-b8c4-1cf2e6604e9a&expirationTimestamp=1761573600000&signature=pVG4ptMKF882cyQzLwPURV8UuNKp_hwV44IpYTTQngU&downloadName=IMG_1800.JPG.png",
+          "questionText": "동경제과학교출신 제빵사님이 만드는 일본식 빵,\n커피와 잘 어울리는 귀여운 일본식 빵을 가성비있게,\n고소한 버터향과 쫄깃한 빵식감이 특징",
+          "title": "메롬팡과 시오바타 (4,000원)",
+          "subtitle": "모리노팡 (일본식 베이커리)",
+          "address": "서울 마포구 연남로5길 42 1층",
+          "options": [
+            { "id": "preference", "label": "선호도", "min": 1, "max": 5 },
+            { "id": "amount", "label": "양", "min": 1, "max": 5 },
+            { "id": "value", "label": "값", "min": 1, "max": 5 }
+          ],
+          "required": false
+        }
       ]
     },
     {
       "id": 7,
-      "title": "Mipick 서비스 소개 3",
-      "subtitle": ".",
+      "title": "메뉴 피드백",
+      "subtitle": "이 메뉴에 대해서 평가해주세요 🍽️",
       "questions": [
-                {
-            "id": "introService",
-            "label": "",
-            "type": "imageWithDescription",
-            "imageUrl": "/survey/temp3.jpg",
-            "title": "무엇이 좋나요?",
-            "subtitle": "서울 곳곳의 맛집 음식을 학교에서 편리하게 받아볼 수 있습니다. 또한, 공동 주문이기 때문에 배달비가 절약됩니다.",
-            "required": false
-          }
+        {
+          "id": "menuFeedback4",
+          "label": "",
+          "type": "imageRating",
+          "imageUrl": "https://ldb-phinf.pstatic.net/20241128_204/1732796066721uItQt_JPEG/WY_01865.jpg",
+          "questionText": "노량진 가성비 1등 돈까스 맛집\n저렴한 가격에 돈까스 3장을 즐길수 있는 푸짐한 양\n가마솥에 튀겨 배달로 먹어도 바삭한 튀김옷이 특징",
+          "title": "삼삼돈까스(3조각) (8,900원)",
+          "subtitle": "삼삼가마솥돈까스 (돈까스 전문점)",
+          "address": "서울 동작구 만양로 90-1 1층",
+          "options": [
+            { "id": "preference", "label": "선호도", "min": 1, "max": 5 },
+            { "id": "amount", "label": "양", "min": 1, "max": 5 },
+            { "id": "value", "label": "값", "min": 1, "max": 5 }
+          ],
+          "required": false
+        }
       ]
     },
     {
       "id": 8,
+      "title": "메뉴 피드백",
+      "subtitle": "이 메뉴에 대해서 평가해주세요 🍽️",
+      "questions": [
+        {
+          "id": "menuFeedback5",
+          "label": "",
+          "type": "imageRating",
+          "imageUrl": "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTA3MDNfMzAg%2FMDAxNjI1Mjg3MTAwMTIw.PwgIZyFHSfpm0mhbABAklbfXYgdP-MZeDcvNO19Q9Ecg.nGSdJTroqg0hGMz4DriEFT9TpLAC0dckUuJmtNiwVAQg.JPEG.jjeung8%2FIMG_0206.JPG&type=sc960_832",
+          "questionText": "인도인 요리사가 직접 만드는 인도식 커리\n부드럽고 맛있는 커리 스프 + 밥 + 난을 한번에",
+          "title": "치킨에그마살라도시락 (12,500원)",
+          "subtitle": "베나레스 숙대점 (인도음식 전문점)",
+          "address": "서울 용산구 청파로45길 32 2층",
+          "options": [
+            { "id": "preference", "label": "선호도", "min": 1, "max": 5 },
+            { "id": "amount", "label": "양", "min": 1, "max": 5 },
+            { "id": "value", "label": "값", "min": 1, "max": 5 }
+          ],
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "title": "메뉴 피드백",
+      "subtitle": "이 메뉴에 대해서 평가해주세요 🍽️",
+      "questions": [
+        {
+          "id": "menuFeedback6",
+          "label": "",
+          "type": "imageRating",
+          "imageUrl": "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNTA3MjVfMTAw%2FMDAxNzUzNDQ1NDM4Nzk0.uZWAqluazx7pvI4I6ZVxE5orh0F0Sx_xRiXQzTN0oz8g.ks-6oj6BvvRYookcu8n0dPIU4AMTOnY_0uMcIZ_gbLIg.JPEG%2FKakaoTalk_20250725_193133608_06.jpg&type=sc960_832",
+          "questionText": "24만 김밥 인플루언서가 추천한 낙성대 대표 김밥집,\n기존 김밥 대비 1.5배 양으로 간편하고 든든하게,\n밥 사이 꽉찬 계란으로 폭신한 식감이 특징",
+          "title": "밥도둑김밥 (6,300원)",
+          "subtitle": "오월의김밥 (김밥 전문점)",
+          "address": "서울 관악구 봉천로 605 102호",
+          "options": [
+            { "id": "preference", "label": "선호도", "min": 1, "max": 5 },
+            { "id": "amount", "label": "양", "min": 1, "max": 5 },
+            { "id": "value", "label": "값", "min": 1, "max": 5 }
+          ],
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "title": "메뉴 피드백",
+      "subtitle": "이 메뉴에 대해서 평가해주세요 🍽️",
+      "questions": [
+        {
+          "id": "menuFeedback7",
+          "label": "",
+          "type": "imageRating",
+          "imageUrl": "https://ldb-phinf.pstatic.net/20211230_31/16408701269793HRO2_JPEG/1540171049087.jpg",
+          "questionText": "서울대입구 연어롤&마제루롤 맛집,\n연어회,새우튀김, 크림치즈가 곁들여진 롤,\n다양한 재료의 조합으로 만들어진 맛있는 한입",
+          "title": "사케롤 정식 런치 (15,000원)",
+          "subtitle": "동경산책 (일식 전문점)",
+          "address": "서울 관악구 관악로14길 30 2층",
+          "options": [
+            { "id": "preference", "label": "선호도", "min": 1, "max": 5 },
+            { "id": "amount", "label": "양", "min": 1, "max": 5 },
+            { "id": "value", "label": "값", "min": 1, "max": 5 }
+          ],
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "title": "메뉴 피드백",
+      "subtitle": "이 메뉴에 대해서 평가해주세요 🍽️",
+      "questions": [
+        {
+          "id": "menuFeedback8",
+          "label": "",
+          "type": "imageRating",
+          "imageUrl": "https://ldb-phinf.pstatic.net/20220623_113/1655910734397iRF3Q_JPEG/IMG_4711.JPG",
+          "questionText": "미쉐린가이드에 선정된 인증 맛집\n먹어보지 못했던 이색적인 중식요리\n삼겹살에 특제 소스를 발라 숯불화덕에 구운 요리",
+          "title": "광둥 챠슈 라이스 (런치) (12,800원)",
+          "subtitle": "원 디그리 노스 강남점 (광둥지방 중식 전문점)",
+          "address": "서울 강남구 학동로43길 8",
+          "options": [
+            { "id": "preference", "label": "선호도", "min": 1, "max": 5 },
+            { "id": "amount", "label": "양", "min": 1, "max": 5 },
+            { "id": "value", "label": "값", "min": 1, "max": 5 }
+          ],
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "title": "메뉴 피드백",
+      "subtitle": "이 메뉴에 대해서 평가해주세요 🍽️",
+      "questions": [
+        {
+          "id": "menuFeedback9",
+          "label": "",
+          "type": "imageRating",
+          "imageUrl": "https://file.notion.so/f/f/6d7cc596-d2db-45ec-b8c4-1cf2e6604e9a/b7b77a72-ce6a-4fde-9710-99211455814d/IMG_1757.jpg?table=block&id=2880be5e-fd61-8037-958b-c4e55f4a46bc&spaceId=6d7cc596-d2db-45ec-b8c4-1cf2e6604e9a&expirationTimestamp=1761573600000&signature=pofVl-ZqW1_v0_w-TVrm7Sk31VRtM3R17iWHFAsicIc&downloadName=IMG_1757.JPG.jpg",
+          "questionText": "숙대생들의 인정을 받은 두툼한 샌드위치 가게\n꽉찬 에그마요와 햄치즈가 들어 있는 샌드위치,\n커피와 함께 즐기는 든든한 한끼 식사",
+          "title": "에그마요 or 햄치즈 샌드위치 (6,900원)",
+          "subtitle": "ASAP 샌드위치 (샌드위치 전문점)",
+          "address": "서울 용산구 청파로49길 54 1층",
+          "options": [
+            { "id": "preference", "label": "선호도", "min": 1, "max": 5 },
+            { "id": "amount", "label": "양", "min": 1, "max": 5 },
+            { "id": "value", "label": "값", "min": 1, "max": 5 }
+          ],
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "title": "메뉴 피드백",
+      "subtitle": "이 메뉴에 대해서 평가해주세요 🍽️",
+      "questions": [
+        {
+          "id": "menuFeedback10",
+          "label": "",
+          "type": "imageRating",
+          "imageUrl": "https://naverbooking-phinf.pstatic.net/20250828_178/1756360851409rXhiE_JPEG/%BF%C0%B8%AE%C1%F6%B3%CE%C2%F7%BF%C0%B9%CC%BF%A3.jpg?type=f459_345_60_sharpen",
+          "questionText": "미국식 아메리칸 차이니즈 누들을 체험할 수 있는 곳\n한국인의 입맛에 맞춘 메뉴\n야채를 담백하게 볶아낸 깔끔한 맛",
+          "title": "오리지널 차오미엔 (10,000원)",
+          "subtitle": "웍스터 연남 (퓨전중식 전문점)",
+          "address": "서울 마포구 동교로27길 71 1층 102호",
+          "options": [
+            { "id": "preference", "label": "선호도", "min": 1, "max": 5 },
+            { "id": "amount", "label": "양", "min": 1, "max": 5 },
+            { "id": "value", "label": "값", "min": 1, "max": 5 }
+          ],
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "title": "Mipick 서비스 소개 1",
+      "subtitle": ".",
+      "questions": [
+        {
+          "id": "introService",
+          "label": "",
+          "type": "imageWithDescription",
+          "imageUrl": "/survey/temp1.jpg",
+          "title": "Mipick 서비스 소개",
+          "subtitle": "Mipick은 전날 주문·결제하면, 학교 내 픽업스테이션에서 \n음식을 간편하게 수령할 수 있는 서비스입니다.",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "title": "Mipick 서비스 소개 2",
+      "subtitle": ".",
+      "questions": [
+        {
+          "id": "introService",
+          "label": "",
+          "type": "imageWithDescription",
+          "imageUrl": "/survey/temp2.jpg",
+          "title": "어떻게 이용하나요?",
+          "subtitle": "원하는 메뉴를 앱에서 전 날 주문·결제하고, 다음날 지정된 픽업스테이션에서 줄 서지 않고 바로 수령할 수 있습니다.",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "title": "Mipick 서비스 소개 3",
+      "subtitle": ".",
+      "questions": [
+        {
+          "id": "introService",
+          "label": "",
+          "type": "imageWithDescription",
+          "imageUrl": "/survey/temp3.jpg",
+          "title": "무엇이 좋나요?",
+          "subtitle": "서울 곳곳의 맛집 음식을 학교에서 편리하게 받아볼 수 있습니다. 또한, 공동 주문이기 때문에 배달비가 절약됩니다.",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": 17,
       "title": "Mipick 서비스에 관심을 가져주세요",
       "subtitle": "미픽은 '전날' 미리 결제하면, 관악·신촌·강남 등 서울 곳곳의 음식을 다음날 학교에서 픽업할 수 있는 서비스예요. 줄 설 필요가 없고, 공동 주문으로 배달비도 절약돼요.",
       "questions": [
@@ -397,30 +605,41 @@
       ]
     },
     {
-      "id": 9,
+      "id": 18,
       "title": "개인정보 입력",
       "subtitle": "추첨권 제공 및 이벤트 당첨 안내에 필요합니다 🔒",
       "questions": [
         {
-          "id": "name",
-          "label": "이름 *",
-          "type": "text",
-          "placeholder": "이름을 입력해주세요",
-          "required": true
-        },
-        {
-          "id": "phone",
-          "label": "전화번호 *",
-          "type": "tel",
-          "placeholder": "010-0000-0000",
-          "required": true
-        },
-        {
-          "id": "referrer",
-          "label": "추천인 (선택)",
-          "type": "text",
-          "placeholder": "추천인의 이름이나 전화번호를 입력해주세요",
+          "id": "privacyAgreement",
+          "label": "개인정보 수집 및 이용 동의 *",
+          "type": "description",
+          "content": "귀하는 개인정보 수집 및 이용에 동의를 거부할 권리가 있으나, 동의 거부 시 경품 추첨 및 지급 대상에서 제외됩니다.\n\n수집하는 개인정보 항목\n이름 및 연락처\n\n수집 및 이용 목적\n이벤트 진행 및 당첨자 안내\n\n보유 및 이용기간\n당첨자 발표 후 1개월 보관",
           "required": false
+        },
+        {
+          "id": "privacyConsent2",
+          "label": "위 개인정보 수집 및 이용에 동의하십니까? *",
+          "type": "single",
+          "options": ["동의합니다", "동의하지 않습니다"],
+          "required": true,
+          "children": [
+            {
+              "parentOption": "동의합니다",
+              "id": "name",
+              "label": "이름 *",
+              "type": "text",
+              "placeholder": "이름을 입력해주세요",
+              "required": true
+            },
+            {
+              "parentOption": "동의합니다",
+              "id": "phone",
+              "label": "전화번호 *",
+              "type": "tel",
+              "placeholder": "010-0000-0000",
+              "required": true
+            }
+          ]
         }
       ]
     }

@@ -53,11 +53,15 @@ const Title = styled.h3`
   margin: 0;
 `;
 
-const Subtitle = styled.p`
-  font-size: 15px;
-  font-weight: 400;
-  color: #666;
-  line-height: 1.7;
-  margin: 0;
+const Subtitle = styled.div`
+  width: 100%;
+  padding: 16px;
+  background: #f8f8f8;
+  border-radius: 8px;
+  border-left: 4px solid #FF6B35;
+  font-size: 14px;
+  color: #555;
+  line-height: 1.6;
   white-space: pre-line;
+  text-align: left;
 `;
