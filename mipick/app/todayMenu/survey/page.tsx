@@ -7,7 +7,6 @@ import { Sheet as BaseSheet, BackButton } from "../components/ui";
 import IntroSection from "./components/IntroSection";
 import SurveySection from "./components/SurveySection";
 import ShareSection from "./components/ShareSection";
-import TicketAnimation from "./components/TicketAnimation";
 import LoginModal from "./components/LoginModal";
 import { initializeFormData, validateFormData, createSurveyResponse } from "./utils/surveyUtils";
 import { setSurveyResponse, hasUserSubmittedSurvey } from "../../../lib/surveyService";
@@ -22,7 +21,6 @@ export default function SurveyPage() {
 
   const [currentStep, setCurrentStep] = useState<Step>("loading");
   const [formData, setFormData] = useState<Record<string, string>>(initializeFormData);
-  const [isShowingTicketAnimation, setIsShowingTicketAnimation] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
   // 참여 여부 확인 및 초기 화면 설정
@@ -55,15 +53,12 @@ export default function SurveyPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams, isAuthenticated]);
 
-  // 공통: 설문 제출 & 애니메이션 처리
+  // 공통: 설문 제출 처리
   async function submitSurveyAndAnimate(delay = 1000) {
-    setIsShowingTicketAnimation(true);
-    
     const surveyResponse = createSurveyResponse(formData);
     await setSurveyResponse(surveyResponse);
 
     setTimeout(() => {
-      setIsShowingTicketAnimation(false);
       setCurrentStep("share");
     }, delay);
   }
@@ -135,7 +130,6 @@ export default function SurveyPage() {
 
       <AnimatedSheet>{stepComponents[currentStep]}</AnimatedSheet>
 
-      <TicketAnimation show={isShowingTicketAnimation} />
       <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
     </>
   );
