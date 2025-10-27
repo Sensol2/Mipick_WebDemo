@@ -122,9 +122,7 @@ export default function SurveyPage() {
         />
       ),
       share: (
-        <ShareSection
-          onSkip={() => router.push("/todayMenu/")}
-        />
+        <ShareSection />
       ),
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps

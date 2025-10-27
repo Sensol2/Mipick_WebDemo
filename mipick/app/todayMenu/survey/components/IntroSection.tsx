@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
+import { MdAccessTime } from "react-icons/md";
+import { BiSolidCoffee, BiSolidGift } from "react-icons/bi";
 
 interface IntroSectionProps {
   onStart: () => void;
@@ -28,7 +30,7 @@ export default function IntroSection({ onStart, hasParticipated, isLoading }: In
           </MainTitle>
 
           <EventPeriod>
-            <ClockIcon>⏰</ClockIcon>
+            <ClockIcon><MdAccessTime /></ClockIcon>
             <span>이벤트 기간: 11월 19일 23시 59분까지</span>
           </EventPeriod>
         </HeaderSection>
@@ -48,7 +50,7 @@ export default function IntroSection({ onStart, hasParticipated, isLoading }: In
               onClick={() => toggleCard('survey')}
             >
               <CardHeader>
-                <IconWrapper>☕</IconWrapper>
+                <IconWrapper><BiSolidCoffee /></IconWrapper>
                 <CardContent>
                   <CardTitle>설문 참여</CardTitle>
                   <CardReward>커피 기프티콘</CardReward>
@@ -68,7 +70,7 @@ export default function IntroSection({ onStart, hasParticipated, isLoading }: In
               onClick={() => toggleCard('beta')}
             >
               <CardHeader>
-                <IconWrapper>🍱</IconWrapper>
+                <IconWrapper><BiSolidGift /></IconWrapper>
                 <CardContent>
                   <CardTitle>베타 테스터 선정</CardTitle>
                   <CardReward>무료 점심 제공</CardReward>
@@ -187,7 +189,14 @@ const EventPeriod = styled.div`
 `;
 
 const ClockIcon = styled.span`
-  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  svg {
+    font-size: 16px;
+    color: #FF6B35;
+  }
 `;
 
 // ==================== Visual Section ====================
@@ -287,9 +296,13 @@ const IconWrapper = styled.div`
   height: 48px;
   background: white;
   border-radius: 12px;
-  font-size: 24px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   flex-shrink: 0;
+  
+  svg {
+    font-size: 24px;
+    color: #FF6B35;
+  }
 `;
 
 const CardContent = styled.div`

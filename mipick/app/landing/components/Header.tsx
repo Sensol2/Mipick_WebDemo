@@ -4,6 +4,7 @@ import styled from "styled-components"
 import { useRouter } from "next/navigation"
 import Container from "@/app/landing/components/ui/Container"
 import { useAuth, signOut } from "@/app/hooks/auth"
+import { MdFastfood } from "react-icons/md"
 
 const Bar = styled.header`
   position: sticky; top: 0; z-index: 50;
@@ -68,10 +69,7 @@ export default function Header(){
       <Container>
         <Row>
           <Logo>
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="3" y="6" width="18" height="12" rx="3" stroke="#FF6B35" strokeWidth="2"/>
-              <path d="M3 10h18" stroke="#FF6B35" strokeWidth="2"/>
-            </svg>
+            <MdFastfood size={22} color="#FF6B35" />
             MiPick
           </Logo>
           <Nav>

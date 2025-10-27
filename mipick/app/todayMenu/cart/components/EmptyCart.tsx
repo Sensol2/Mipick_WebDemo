@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { BsCart3 } from "react-icons/bs";
 
 /**
  * todayMenu - 장바구니가 비어있을 때 표시되는 Empty State 컴포넌트
@@ -12,7 +13,9 @@ interface EmptyCartProps {
 export default function EmptyCart({ onBack }: EmptyCartProps) {
   return (
     <EmptyContainer>
-      <EmptyIcon>🛒</EmptyIcon>
+      <EmptyIcon>
+        <BsCart3 />
+      </EmptyIcon>
       <EmptyTitle>장바구니가 비어있습니다</EmptyTitle>
       <EmptyDescription>
         메뉴를 추가하고 주문을 시작해보세요!
@@ -37,6 +40,14 @@ const EmptyIcon = styled.div`
   font-size: 64px;
   margin-bottom: 16px;
   opacity: 0.5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  svg {
+    font-size: 64px;
+    color: #9ca3af;
+  }
 `;
 
 const EmptyTitle = styled.h3`
