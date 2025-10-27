@@ -2,6 +2,34 @@
   "pages": [
     {
       "id": 1,
+      "title": "조사 안내",
+      "subtitle": "설문 시작 전 안내사항을 확인해주세요",
+      "questions": [
+        {
+          "id": "surveyNotice",
+          "label": "",
+          "type": "description",
+          "content": "본 조사는 ‘미픽’(대학교 맛집 픽업 서비스) 개발 전 수요 조사를 위해 진행됩니다.\n\n응답해 주신 자료는 오직 기획 제안서 작성에 필요한 기초 데이터로만 활용되며, 그 외 다른 목적으로는 사용되지 않습니다.",
+          "required": false
+        },
+        {
+          "id": "surveyNotice2",
+          "label": "",
+          "type": "description",
+          "content": "여러분의 소중한 의견은 이번 기획 및 전략 제안 수립에 소중한 참고 자료로 활용될 예정입니다.\n\n응답 과정에서 수집된 개인정보는 조사 목적 달성 후 즉시 폐기됩니다.",
+          "required": false
+        },
+        {
+          "id": "privacyConsent",
+          "label": "모든 응답은 익명으로 처리됩니다. 안심하시고 성실히 응답해주시길 부탁드리겠습니다. *",
+          "type": "single",
+          "options": ["확인했습니다"],
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": 2,
       "title": "인적 사항을 입력해주세요",
       "subtitle": "간단한 정보만 입력하면 돼요 ✨",
       "questions": [
@@ -76,7 +104,7 @@
       ]
     },
     {
-      "id": 2,
+      "id": 3,
       "title": "평소 점심 식사 패턴을 알려주세요",
       "subtitle": "당신의 점심 습관을 알고 싶어요 🍽️",
       "questions": [
@@ -250,7 +278,7 @@
       ]
     },
     {
-      "id": 3,
+      "id": 4,
       "title": "메뉴 가격 피드백",
       "subtitle": "다음 메뉴를 학교에서 사먹을 의향이 있는지 알려주세요 🍽️",
       "questions": [
@@ -273,7 +301,7 @@
       ]
     },
     {
-      "id":4, 
+      "id": 5, 
       "title": "Mipick 서비스 소개 1",
       "subtitle": ".",
       "questions": [
@@ -289,7 +317,7 @@
       ]
     },
     {
-      "id": 5,
+      "id": 6,
       "title": "Mipick 서비스 소개 2",
       "subtitle": ".",
       "questions": [
@@ -305,7 +333,7 @@
       ]
     },
     {
-      "id": 6,
+      "id": 7,
       "title": "Mipick 서비스 소개 3",
       "subtitle": ".",
       "questions": [
@@ -321,7 +349,7 @@
       ]
     },
     {
-      "id": 7,
+      "id": 8,
       "title": "Mipick 서비스에 관심을 가져주세요",
       "subtitle": "미픽은 '전날' 미리 결제하면, 관악·신촌·강남 등 서울 곳곳의 음식을 다음날 학교에서 픽업할 수 있는 서비스예요. 줄 설 필요가 없고, 공동 주문으로 배달비도 절약돼요.",
       "questions": [
@@ -369,7 +397,7 @@
       ]
     },
     {
-      "id": 8,
+      "id": 9,
       "title": "개인정보 입력",
       "subtitle": "추첨권 제공 및 이벤트 당첨 안내에 필요합니다 🔒",
       "questions": [
