@@ -664,6 +664,21 @@
               "required": true
             },
             {
+              "parentOption": "동의합니다",
+              "id": "testerDescription",
+              "label": "체험단 선정 시 정해진 기간 동안 학교에서 무료 점심을 받아볼 수 있습니다.",
+              "type": "",
+              "required": false
+            },
+            {
+              "parentOption": "동의합니다",
+              "id": "applyTester",
+              "label": "체험단 신청 여부 *",
+              "type": "single",
+              "options": ["신청합니다", "신청하지 않습니다"],
+              "required": true
+            },
+            {
               "parentOption": "동의하지 않습니다.",
               "id": "privacyDeclineConfirm",
               "label": "동의하지 않을 경우 경품 추첨에서 제외됩니다.*",

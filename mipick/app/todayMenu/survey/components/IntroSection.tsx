@@ -72,7 +72,7 @@ export default function IntroSection({ onStart, hasParticipated, isLoading }: In
               <CardHeader>
                 <IconWrapper><BiSolidGift /></IconWrapper>
                 <CardContent>
-                  <CardTitle>베타 테스터 신청</CardTitle>
+                  <CardTitle>점심 체험단 신청</CardTitle>
                   <CardReward>무료 점심 제공</CardReward>
                 </CardContent>
                 <ToggleIcon $expanded={expandedCard === 'beta'}>
@@ -81,7 +81,7 @@ export default function IntroSection({ onStart, hasParticipated, isLoading }: In
               </CardHeader>
               
               <CardDescription $expanded={expandedCard === 'beta'}>
-                사전알림 신청한 분들 중 추첨을 통해 선발, 테스터 선정 시 테스트 기간동안 무료 점심 제공
+                추첨을 통해 선발, 선정 시 테스트 기간동안 무료 점심 제공
               </CardDescription>
             </AccordionCard>
           </BenefitCards>
