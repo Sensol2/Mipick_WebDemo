@@ -9,7 +9,7 @@ import SurveySection from "./components/SurveySection";
 import ShareSection from "./components/ShareSection";
 import LoginModal from "./components/LoginModal";
 import { initializeFormData } from "./utils/surveyUtils";
-import { hasUserSubmittedSurvey } from "../../../lib/surveyService";
+import { hasUserSubmittedSurvey } from "../../../lib/api/surveyService";
 import { useAuth } from "../../hooks/auth";
 import { useSurveySubmit } from "./hooks/useSurveySubmit";
 import { useSurveyAutoSubmit } from "./hooks/useSurveyAutoSubmit";

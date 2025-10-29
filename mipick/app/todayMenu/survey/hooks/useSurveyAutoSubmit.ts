@@ -5,7 +5,7 @@ import {
   clearSurveyFromLocalStorage,
   isPendingSurveySubmit 
 } from '../utils/surveyUtils';
-import { setSurveyResponse } from '../../../../lib/surveyService';
+import { setSurveyResponse } from '../../../../lib/api/surveyService';
 import { createSurveyResponse } from '../utils/surveyUtils';
 
 interface UseSurveyAutoSubmitOptions {

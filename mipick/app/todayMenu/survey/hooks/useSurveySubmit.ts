@@ -6,7 +6,7 @@ import {
   saveSurveyToLocalStorage,
   clearSurveyFromLocalStorage
 } from '../utils/surveyUtils';
-import { setSurveyResponse, hasUserSubmittedSurvey } from '../../../../lib/surveyService';
+import { setSurveyResponse, hasUserSubmittedSurvey } from '../../../../lib/api/surveyService';
 
 interface UseSurveySubmitOptions {
   formData: Record<string, string>;
