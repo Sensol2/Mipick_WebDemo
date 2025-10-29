@@ -189,7 +189,6 @@ const ScaleButton = styled.button<{ $isSelected: boolean }>`
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.1s ease;
 
   &:active {
     transform: translateY(0);

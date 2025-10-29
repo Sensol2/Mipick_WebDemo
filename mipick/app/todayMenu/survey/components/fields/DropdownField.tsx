@@ -81,14 +81,9 @@ const Select = styled.select<{ $hasValue: boolean }>`
   border-radius: 12px;
   outline: none;
   cursor: pointer;
-  transition: all 0.2s ease;
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-
-  &:hover {
-    border-color: #d1d5db;
-  }
 
   &:focus {
     border-color: #ff6b35;

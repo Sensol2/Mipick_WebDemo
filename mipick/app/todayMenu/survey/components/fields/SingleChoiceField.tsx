@@ -50,11 +50,6 @@ const RadioLabel = styled.label`
   cursor: pointer;
   padding: 12px;
   border-radius: 8px;
-  transition: background-color 0.2s;
-
-  &:hover {
-    background-color: #f8f8f8;
-  }
 `;
 
 const CheckboxInput = styled.input`
@@ -74,7 +69,6 @@ const CheckboxBox = styled.div<{ checked: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s;
 `;
 
 const OptionText = styled.span`

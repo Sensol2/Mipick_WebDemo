@@ -58,5 +58,4 @@ const Item = styled.button<{ selected: boolean }>`
   color: ${(p) => (p.selected ? "#FF6B35" : "#666")};
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.1s;
 `;

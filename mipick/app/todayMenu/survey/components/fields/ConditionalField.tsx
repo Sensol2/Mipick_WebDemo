@@ -167,7 +167,6 @@ const Input = styled.input`
   border: 2px solid #e0e0e0;
   border-radius: 10px;
   font-size: 15px;
-  transition: border-color 0.2s;
   box-sizing: border-box;
 
   &:focus {
@@ -187,7 +186,6 @@ const TextArea = styled.textarea`
   border-radius: 10px;
   font-size: 15px;
   font-family: inherit;
-  transition: border-color 0.2s;
   box-sizing: border-box;
   resize: vertical;
 

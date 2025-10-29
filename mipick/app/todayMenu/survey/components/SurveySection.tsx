@@ -101,7 +101,11 @@ export default function SurveySection({ formData, onFormChange, onSubmit }: Surv
 
   const handleNext = () => {
     if (!validateCurrentPage()) return;
-    if (currentPage < pages.length) setCurrentPage((p) => p + 1);
+    if (currentPage < pages.length) {
+      setCurrentPage((p) => p + 1);
+      // 페이지 변경 후 스크롤을 최상단으로 이동
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   const handlePrev = () => {
@@ -331,8 +335,8 @@ const FormSection = styled.div``;
 
 const Label = styled.label`
   display: block;
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 800;
   color: #333;
   margin-bottom: 12px;
 `;
