@@ -53,6 +53,31 @@ export default function SurveySection({ formData, onFormChange, onSubmit }: Surv
       const missing: Question[] = [];
       
       for (const q of questions) {
+        // imageRating 타입의 경우 모든 옵션이 선택되었는지 확인
+        if (q.type === "imageRating" && q.required) {
+          const key = q.id as FormDataKeys;
+          const val = formData[key] as unknown as string | undefined;
+          
+          if (!val || !val.trim()) {
+            missing.push(q);
+          } else {
+            try {
+              const ratings = JSON.parse(val);
+              const irq = q as ImageRatingQuestion;
+              const allOptionsFilled = irq.options.every(opt => 
+                ratings[opt.id] && ratings[opt.id].trim() !== ""
+              );
+              
+              if (!allOptionsFilled) {
+                missing.push(q);
+              }
+            } catch {
+              missing.push(q);
+            }
+          }
+          continue;
+        }
+        
         // 일반 질문 검증
         const key = q.id as FormDataKeys;
         const val = formData[key] as unknown as string | undefined;
