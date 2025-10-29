@@ -24,7 +24,7 @@
           "label": "답변은 연구 및 조사 목적으로만 활용됩니다. 안심하시고 성실히 응답해주시길 부탁드리겠습니다. *",
           "type": "single",
           "options": ["확인했습니다"],
-          "required": true
+          "required": false
         }
       ]
     },
@@ -38,7 +38,7 @@
           "label": "소속 *",
           "type": "single",
           "options": ["대학생", "대학원생", "교직원", "직장인", "기타"],
-          "required": true,
+          "required": false,
           "children": [
             {
               "parentOption": "대학생",
@@ -57,7 +57,7 @@
                 "자유전공학부",
                 "기타"
               ],
-              "required": true
+              "required": false
             },
             {
               "parentOption": "대학원생",
@@ -76,7 +76,7 @@
                 "자유전공학부",
                 "기타"
               ],
-              "required": true
+              "required": false
             }
           ]
         },
@@ -92,14 +92,14 @@
             "만 33-37세",
             "만 38세 이상"
           ],
-          "required": true
+          "required": false
         },
         {
           "id": "gender",
           "label": "성별 *",
           "type": "single",
           "options": ["남성", "여성"],
-          "required": true
+          "required": false
         }
       ]
     },
@@ -113,7 +113,7 @@
           "label": "주 5일(월~금) 중 학교에서 점심을 먹는 요일/날짜를 모두 선택해 주세요. *",
           "type": "multiple",
           "options": ["월", "화", "수", "목", "금"],
-          "required": true
+          "required": false
         },
         {
           "id": "averagePrice",
@@ -127,7 +127,7 @@
             "11,000원 이상 ~ 13,000원 미만",
             "13,000원 이상"
           ],
-          "required": true
+          "required": false
         },
         {
           "id": "importantFactors",
@@ -145,7 +145,7 @@
           ],
           "minimum": 3,
           "maximum": 3,
-          "required": true
+          "required": false
         },
         {
           "id": "mealType",
@@ -162,7 +162,7 @@
             "점심식사를 하지 않음",
             "기타"
           ],
-          "required": true,
+          "required": false,
           "children": [
             {
               "parentOption": "학생식당 / 구내식당 이용",
@@ -305,7 +305,7 @@
             "마땅한 식사 장소 부족",
             "기타"
           ],
-          "required": true
+          "required": false
         }
       ]
     },
@@ -328,7 +328,7 @@
             { "id": "amount", "label": "양", "min": 1, "max": 5 },
             { "id": "value", "label": "값", "min": 1, "max": 5 }
           ],
-          "required": true
+          "required": false
         }
       ]
     },
@@ -351,7 +351,7 @@
             { "id": "amount", "label": "양", "min": 1, "max": 5 },
             { "id": "value", "label": "값", "min": 1, "max": 5 }
           ],
-          "required": true
+          "required": false
         }
       ]
     },
@@ -374,7 +374,7 @@
             { "id": "amount", "label": "양", "min": 1, "max": 5 },
             { "id": "value", "label": "값", "min": 1, "max": 5 }
           ],
-          "required": true
+          "required": false
         }
       ]
     },
@@ -397,7 +397,7 @@
             { "id": "amount", "label": "양", "min": 1, "max": 5 },
             { "id": "value", "label": "값", "min": 1, "max": 5 }
           ],
-          "required": true
+          "required": false
         }
       ]
     },
@@ -420,7 +420,7 @@
             { "id": "amount", "label": "양", "min": 1, "max": 5 },
             { "id": "value", "label": "값", "min": 1, "max": 5 }
           ],
-          "required": true
+          "required": false
         }
       ]
     },
@@ -443,7 +443,7 @@
             { "id": "amount", "label": "양", "min": 1, "max": 5 },
             { "id": "value", "label": "값", "min": 1, "max": 5 }
           ],
-          "required": true
+          "required": false
         }
       ]
     },
@@ -466,7 +466,7 @@
             { "id": "amount", "label": "양", "min": 1, "max": 5 },
             { "id": "value", "label": "값", "min": 1, "max": 5 }
           ],
-          "required": true
+          "required": false
         }
       ]
     },
@@ -489,7 +489,7 @@
             { "id": "amount", "label": "양", "min": 1, "max": 5 },
             { "id": "value", "label": "값", "min": 1, "max": 5 }
           ],
-          "required": true
+          "required": false
         }
       ]
     },
@@ -512,7 +512,7 @@
             { "id": "amount", "label": "양", "min": 1, "max": 5 },
             { "id": "value", "label": "값", "min": 1, "max": 5 }
           ],
-          "required": true
+          "required": false
         }
       ]
     },
@@ -574,7 +574,7 @@
           "label": "비슷한 서비스를 접해본 적이 있나요? *",
           "type": "single",
           "options": ["사용해본 적 있음", "들어본 적만 있음", "사용해본 적 없음"],
-          "required": true
+          "required": false
         },
         {
           "id": "q2_interestLevel",
@@ -589,7 +589,7 @@
           "type": "likert",
           "scale": 5,
           "anchors": ["전혀 관심 없음", "매우 관심 있음"],
-          "required": true
+          "required": false
         },
         {
           "id": "q3_intentToUse",
@@ -601,7 +601,7 @@
             "아직 잘 모르겠다",
             "이용하지 않을 것 같다"
           ],
-          "required": true
+          "required": false
         },
         {
           "id": "q4_importantFactors",
@@ -617,7 +617,7 @@
             "할인/이벤트",
             "기타"
           ],
-          "required": true
+          "required": false
         },
         {
           "id": "q5_feedback",
@@ -645,7 +645,7 @@
           "label": "위 개인정보 수집 및 이용에 동의하십니까? *",
           "type": "single",
           "options": ["동의합니다", "동의하지 않습니다."],
-          "required": true,
+          "required": false,
           "children": [
             {
               "parentOption": "동의합니다",
@@ -653,7 +653,7 @@
               "label": "이름 *",
               "type": "text",
               "placeholder": "이름을 입력해주세요",
-              "required": true
+              "required": false
             },
             {
               "parentOption": "동의합니다",
@@ -661,7 +661,7 @@
               "label": "전화번호 *",
               "type": "tel",
               "placeholder": "010-0000-0000",
-              "required": true
+              "required": false
             },
             {
               "parentOption": "동의하지 않습니다.",
@@ -669,7 +669,7 @@
               "label": "동의하지 않을 경우 경품 추첨에서 제외됩니다.*",
               "type": "single",
               "options": ["확인했습니다"],
-              "required": true
+              "required": false
             }
           ]
         }

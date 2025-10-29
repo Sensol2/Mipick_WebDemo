@@ -197,6 +197,7 @@ export default function SurveySection({ formData, onFormChange, onSubmit }: Surv
           options={mq.options || []}
           value={value}
           onChange={onChange}
+          minimum={mq.minimum}
           maximum={mq.maximum}
         />
       );

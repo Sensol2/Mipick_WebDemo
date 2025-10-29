@@ -5,10 +5,11 @@ export interface MultipleChoiceFieldProps {
   value: string; // comma separated values
   onChange: (value: string) => void;
   label?: string;
+  minimum?: number; // 최소 선택 개수
   maximum?: number; // 최대 선택 개수
 }
 
-export default function MultipleChoiceField({ options, value, onChange, maximum }: MultipleChoiceFieldProps) {
+export default function MultipleChoiceField({ options, value, onChange, minimum, maximum }: MultipleChoiceFieldProps) {
   const SEPARATOR = "|||";
   const selected = new Set((value || "").split(SEPARATOR).filter(Boolean));
   
@@ -24,10 +25,16 @@ export default function MultipleChoiceField({ options, value, onChange, maximum 
     }
     onChange(Array.from(selected).join(SEPARATOR));
   };
+
+  // 선택 개수 검증
+  const selectedCount = selected.size;
+  const showMinimumWarning = minimum && selectedCount > 0 && selectedCount < minimum;
+  const showMaximumWarning = maximum && selectedCount > maximum;
   
   return (
-    <Group role="group">
-      {options.map((option) => {
+    <>
+      <Group role="group">
+        {options.map((option) => {
         const isOn = selected.has(option);
         return (
           <CheckboxLabel key={option}>
@@ -53,7 +60,17 @@ export default function MultipleChoiceField({ options, value, onChange, maximum 
           </CheckboxLabel>
         );
       })}
-    </Group>
+      </Group>
+      {(showMinimumWarning || showMaximumWarning) && (
+        <WarningText>
+          {minimum && maximum && minimum === maximum
+            ? `정확히 ${minimum}개를 선택해주세요. (현재 ${selectedCount}개 선택됨)`
+            : showMinimumWarning
+            ? `최소 ${minimum}개를 선택해주세요. (현재 ${selectedCount}개 선택됨)`
+            : `최대 ${maximum}개까지 선택 가능합니다.`}
+        </WarningText>
+      )}
+    </>
   );
 }
 
@@ -95,4 +112,11 @@ const OptionText = styled.span`
   font-size: 15px;
   color: #333;
   line-height: 1.5;
+`;
+
+const WarningText = styled.div`
+  margin-top: 8px;
+  font-size: 13px;
+  color: #FF6B35;
+  font-weight: 500;
 `;

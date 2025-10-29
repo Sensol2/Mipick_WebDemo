@@ -39,6 +39,7 @@ export type DropdownQuestion = BaseQuestion & {
 export type MultipleChoiceQuestion = BaseQuestion & {
   type: "multiple";
   options: string[];
+  minimum?: number; // 최소 선택 개수 제한
   maximum?: number; // 최대 선택 개수 제한
 };
 

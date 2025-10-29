@@ -2,26 +2,51 @@
 
 import { useState, useEffect, useMemo } from "react";
 import styled, { keyframes } from "styled-components";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Sheet as BaseSheet, BackButton } from "../components/ui";
 import IntroSection from "./components/IntroSection";
 import SurveySection from "./components/SurveySection";
 import ShareSection from "./components/ShareSection";
 import LoginModal from "./components/LoginModal";
-import { initializeFormData, validateFormData, createSurveyResponse } from "./utils/surveyUtils";
-import { setSurveyResponse, hasUserSubmittedSurvey } from "../../../lib/surveyService";
+import { initializeFormData } from "./utils/surveyUtils";
+import { hasUserSubmittedSurvey } from "../../../lib/surveyService";
 import { useAuth } from "../../hooks/auth";
+import { useSurveySubmit } from "./hooks/useSurveySubmit";
+import { useSurveyAutoSubmit } from "./hooks/useSurveyAutoSubmit";
 
 type Step = "loading" | "intro" | "survey" | "share";
 
 export default function SurveyPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const { isAuthenticated, loading: authLoading } = useAuth();
 
   const [currentStep, setCurrentStep] = useState<Step>("loading");
   const [formData, setFormData] = useState<Record<string, string>>(initializeFormData);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+
+  // 설문 제출 훅
+  const { submitSurvey, isSubmitting } = useSurveySubmit({
+    formData,
+    onLoginRequired: () => setIsLoginModalOpen(true),
+    onSuccess: () => {
+      setTimeout(() => setCurrentStep("share"), 1000);
+    },
+    onAlreadySubmitted: () => {
+      setCurrentStep("share");
+    },
+  });
+
+  // 로그인 후 자동 제출 훅
+  useSurveyAutoSubmit({
+    onSuccess: () => {
+      console.log('✅ Auto-submit completed, redirecting to share page...');
+      setTimeout(() => setCurrentStep("share"), 1500);
+    },
+    onError: (error) => {
+      console.error('Auto-submit failed:', error);
+      alert('설문 제출에 실패했습니다. 다시 시도해주세요.');
+    },
+  });
 
   // 참여 여부 확인 및 초기 화면 설정
   useEffect(() => {
@@ -37,56 +62,13 @@ export default function SurveyPage() {
     })();
   }, [isAuthenticated, authLoading]);
 
-  // OAuth 로그인 후 자동 제출
-  useEffect(() => {
-    const isPostLogin = searchParams?.get("postLogin");
-    if (!isPostLogin || !isAuthenticated) return;
-
-    (async () => {
-      const participated = await hasUserSubmittedSurvey();
-      if (participated) {
-        setCurrentStep("share");
-        return;
-      }
-      await submitSurveyAndAnimate(1500);
-    })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams, isAuthenticated]);
-
-  // 공통: 설문 제출 처리
-  async function submitSurveyAndAnimate(delay = 1000) {
-    const surveyResponse = createSurveyResponse(formData);
-    await setSurveyResponse(surveyResponse);
-
-    setTimeout(() => {
-      setCurrentStep("share");
-    }, delay);
-  }
-
   // 폼 입력 핸들러
   const handleFormChange = (field: string, value: string) =>
     setFormData(prev => ({ ...prev, [field]: value }));
 
   // 설문 제출 핸들러
   const handleSubmitClick = async () => {
-    if (!validateFormData(formData)) {
-      alert("모든 필수 항목을 입력해주세요!");
-      return;
-    }
-
-    if (!isAuthenticated) {
-      setIsLoginModalOpen(true);
-      return;
-    }
-
-    const participated = await hasUserSubmittedSurvey();
-    if (participated) {
-      alert("이미 설문에 참여하셨습니다!");
-      setCurrentStep("share");
-      return;
-    }
-
-    await submitSurveyAndAnimate();
+    await submitSurvey();
   };
 
   // 뒤로가기
@@ -121,7 +103,7 @@ export default function SurveyPage() {
       ),
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [formData]
+    [formData, isSubmitting]
   );
 
   return (
