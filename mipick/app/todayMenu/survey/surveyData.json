@@ -317,7 +317,7 @@
           "id": "menuFeedback2",
           "label": "",
           "type": "imageRating",
-          "imageUrl": "https://ldb-phinf.pstatic.net/20250810_291/1754825691334KgN4e_PNG/%B0%ED%B1%E2%B1%B9%BC%F6%B8%DE%B4%BA.png",
+          "imageUrl": "/menuImages/menu1.png",
           "questionText": "제주의 맛을 서울에서 느낄 수 있는 음식,\n합리적인 가격에 든든한 한 끼 식사 가능,\n푸짐한 고기와 깊은 육수가 특징",
           "title": "고기국수 (9,000원)",
           "subtitle": "제주상회 (제주요리 전문점)",
@@ -340,7 +340,7 @@
           "id": "menuFeedback3",
           "label": "",
           "type": "imageRating",
-          "imageUrl": "https://file.notion.so/f/f/6d7cc596-d2db-45ec-b8c4-1cf2e6604e9a/266f95e3-e673-45e1-91c8-6ae0dea57941/d31abfa3-a303-4ed9-a5d7-e2f419bc49e7.png?table=block&id=2990be5e-fd61-8097-830e-d4664f2abede&spaceId=6d7cc596-d2db-45ec-b8c4-1cf2e6604e9a&expirationTimestamp=1761573600000&signature=pVG4ptMKF882cyQzLwPURV8UuNKp_hwV44IpYTTQngU&downloadName=IMG_1800.JPG.png",
+          "imageUrl": "/menuImages/menu2.png",
           "questionText": "동경제과학교출신 제빵사님이 만드는 일본식 빵,\n커피와 잘 어울리는 귀여운 일본식 빵을 가성비있게,\n고소한 버터향과 쫄깃한 빵식감이 특징",
           "title": "메롬팡과 시오바타 (4,000원)",
           "subtitle": "모리노팡 (일본식 베이커리)",
@@ -363,7 +363,7 @@
           "id": "menuFeedback4",
           "label": "",
           "type": "imageRating",
-          "imageUrl": "https://ldb-phinf.pstatic.net/20241128_204/1732796066721uItQt_JPEG/WY_01865.jpg",
+          "imageUrl": "/menuImages/menu3.jpg",
           "questionText": "노량진 가성비 1등 돈까스 맛집\n저렴한 가격에 돈까스 3장을 즐길수 있는 푸짐한 양\n가마솥에 튀겨 배달로 먹어도 바삭한 튀김옷이 특징",
           "title": "삼삼돈까스(3조각) (8,900원)",
           "subtitle": "삼삼가마솥돈까스 (돈까스 전문점)",
@@ -386,7 +386,7 @@
           "id": "menuFeedback5",
           "label": "",
           "type": "imageRating",
-          "imageUrl": "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTA3MDNfMzAg%2FMDAxNjI1Mjg3MTAwMTIw.PwgIZyFHSfpm0mhbABAklbfXYgdP-MZeDcvNO19Q9Ecg.nGSdJTroqg0hGMz4DriEFT9TpLAC0dckUuJmtNiwVAQg.JPEG.jjeung8%2FIMG_0206.JPG&type=sc960_832",
+          "imageUrl": "/menuImages/menu4.jpg",
           "questionText": "인도인 요리사가 직접 만드는 인도식 커리\n부드럽고 맛있는 커리 스프 + 밥 + 난을 한번에\n이색적이지만 맛있고 든든한 한끼 식사",
           "title": "치킨에그마살라도시락 (12,500원)",
           "subtitle": "베나레스 숙대점 (인도음식 전문점)",
@@ -409,7 +409,7 @@
           "id": "menuFeedback6",
           "label": "",
           "type": "imageRating",
-          "imageUrl": "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNTA3MjVfMTAw%2FMDAxNzUzNDQ1NDM4Nzk0.uZWAqluazx7pvI4I6ZVxE5orh0F0Sx_xRiXQzTN0oz8g.ks-6oj6BvvRYookcu8n0dPIU4AMTOnY_0uMcIZ_gbLIg.JPEG%2FKakaoTalk_20250725_193133608_06.jpg&type=sc960_832",
+          "imageUrl": "/menuImages/menu5.jpg",
           "questionText": "24만 김밥 인플루언서가 추천한 낙성대 대표 김밥집,\n기존 김밥 대비 1.5배 양으로 간편하고 든든하게,\n밥 사이 꽉찬 계란으로 폭신한 식감이 특징",
           "title": "밥도둑김밥 (6,300원)",
           "subtitle": "오월의김밥 (김밥 전문점)",
@@ -432,7 +432,7 @@
           "id": "menuFeedback7",
           "label": "",
           "type": "imageRating",
-          "imageUrl": "https://ldb-phinf.pstatic.net/20211230_31/16408701269793HRO2_JPEG/1540171049087.jpg",
+          "imageUrl": "/menuImages/menu6.jpg",
           "questionText": "서울대입구 연어롤&마제루롤 맛집,\n연어회,새우튀김, 크림치즈가 곁들여진 롤,\n다양한 재료의 조합으로 만들어진 맛있는 한입",
           "title": "사케롤 정식 런치 (15,000원)",
           "subtitle": "동경산책 (일식 전문점)",
@@ -455,7 +455,7 @@
           "id": "menuFeedback8",
           "label": "",
           "type": "imageRating",
-          "imageUrl": "https://ldb-phinf.pstatic.net/20220623_113/1655910734397iRF3Q_JPEG/IMG_4711.JPG",
+          "imageUrl": "/menuImages/menu7.jpg",
           "questionText": "미쉐린가이드에 선정된 인증 맛집\n먹어보지 못했던 이색적인 중식요리\n삼겹살에 특제 소스를 발라 숯불화덕에 구운 요리",
           "title": "광둥 챠슈 라이스 (런치) (12,800원)",
           "subtitle": "원 디그리 노스 강남점 (광둥지방 중식 전문점)",
@@ -478,7 +478,7 @@
           "id": "menuFeedback9",
           "label": "",
           "type": "imageRating",
-          "imageUrl": "https://file.notion.so/f/f/6d7cc596-d2db-45ec-b8c4-1cf2e6604e9a/b7b77a72-ce6a-4fde-9710-99211455814d/IMG_1757.jpg?table=block&id=2880be5e-fd61-8037-958b-c4e55f4a46bc&spaceId=6d7cc596-d2db-45ec-b8c4-1cf2e6604e9a&expirationTimestamp=1761573600000&signature=pofVl-ZqW1_v0_w-TVrm7Sk31VRtM3R17iWHFAsicIc&downloadName=IMG_1757.JPG.jpg",
+          "imageUrl": "/menuImages/menu8.png",
           "questionText": "숙대생들의 인정을 받은 두툼한 샌드위치 가게\n꽉찬 에그마요와 햄치즈가 들어 있는 샌드위치,\n커피와 함께 즐기는 든든한 한끼 식사",
           "title": "에그마요 or 햄치즈 샌드위치 (6,900원)",
           "subtitle": "ASAP 샌드위치 (샌드위치 전문점)",
@@ -501,7 +501,7 @@
           "id": "menuFeedback10",
           "label": "",
           "type": "imageRating",
-          "imageUrl": "https://naverbooking-phinf.pstatic.net/20250828_178/1756360851409rXhiE_JPEG/%BF%C0%B8%AE%C1%F6%B3%CE%C2%F7%BF%C0%B9%CC%BF%A3.jpg?type=f459_345_60_sharpen",
+          "imageUrl": "/menuImages/menu9.jpg",
           "questionText": "미국식 아메리칸 차이니즈 누들을 체험할 수 있는 곳\n한국인의 입맛에 맞춘 메뉴\n야채를 담백하게 볶아낸 깔끔한 맛",
           "title": "오리지널 차오미엔 (10,000원)",
           "subtitle": "웍스터 연남 (퓨전중식 전문점)",
@@ -517,8 +517,8 @@
     },
     {
       "id": 13,
-      "title": "Mipick 서비스 소개 1",
-      "subtitle": ".",
+      "title": "Mipick 서비스 소개",
+      "subtitle": "",
       "questions": [
         {
           "id": "introService",
@@ -534,7 +534,7 @@
     {
       "id": 14,
       "title": "Mipick 서비스 소개 2",
-      "subtitle": ".",
+      "subtitle": "",
       "questions": [
         {
           "id": "introService",
@@ -550,7 +550,7 @@
     {
       "id": 15,
       "title": "Mipick 서비스 소개 3",
-      "subtitle": ".",
+      "subtitle": "",
       "questions": [
         {
           "id": "introService",
@@ -630,7 +630,7 @@
     {
       "id": 17,
       "title": "개인정보 입력",
-      "subtitle": "추첨권 제공 및 이벤트 당첨 안내에 필요합니다 🔒",
+      "subtitle": "이벤트 당첨 안내 및 기프티콘 발송에 필요합니다!",
       "questions": [
         {
           "id": "privacyAgreement",
@@ -643,7 +643,7 @@
           "id": "privacyConsent2",
           "label": "위 개인정보 수집 및 이용에 동의하십니까? *",
           "type": "single",
-          "options": ["동의합니다"],
+          "options": ["동의합니다", "동의하지 않습니다."],
           "required": true,
           "children": [
             {
@@ -660,6 +660,14 @@
               "label": "전화번호 *",
               "type": "tel",
               "placeholder": "010-0000-0000",
+              "required": true
+            },
+            {
+              "parentOption": "동의하지 않습니다.",
+              "id": "privacyDeclineConfirm",
+              "label": "동의하지 않을 경우 경품 추첨에서 제외됩니다.*",
+              "type": "single",
+              "options": ["확인했습니다"],
               "required": true
             }
           ]

@@ -8,14 +8,29 @@ export interface SingleChoiceFieldProps {
 }
 
 export default function SingleChoiceField({ options, value, onChange }: SingleChoiceFieldProps) {
+  const handleClick = (option: string) => {
+    // 이미 선택된 옵션을 다시 클릭하면 선택 해제
+    if (value === option) {
+      onChange("");
+    } else {
+      onChange(option);
+    }
+  };
+
   return (
     <RadioGroup>
       {options.map((option) => (
-        <RadioLabel key={option}>
+        <RadioLabel 
+          key={option} 
+          onClick={(e) => {
+            e.preventDefault();
+            handleClick(option);
+          }}
+        >
           <CheckboxInput
             type="radio"
             checked={value === option}
-            onChange={() => onChange(option)}
+            readOnly
           />
           <CheckboxBox checked={value === option}>
             {value === option && (

@@ -4,6 +4,8 @@ import SingleChoiceField from "./SingleChoiceField";
 import MultipleChoiceField from "./MultipleChoiceField";
 import LikertField from "./LikertField";
 import LikertGroupField from "./LikertGroupField";
+import DescriptionField from "./DescriptionField";
+import PhoneField from "./PhoneField";
 
 export interface ChildrenRendererProps {
   childQuestions: ChildQuestion[];
@@ -33,6 +35,13 @@ export default function ChildrenRenderer({
     };
 
     switch (child.type) {
+      case "description":
+        return (
+          <DescriptionField
+            content={child.content}
+            label={child.label}
+          />
+        );
       case "single":
         return (
           <SingleChoiceField
@@ -69,13 +78,20 @@ export default function ChildrenRenderer({
           />
         );
       case "text":
-      case "tel":
         return (
           <Input
-            type={child.type}
+            type="text"
             placeholder={child.placeholder || ""}
             value={value}
             onChange={(e) => onChange(e.target.value)}
+          />
+        );
+      case "tel":
+        return (
+          <PhoneField
+            value={value}
+            onChange={onChange}
+            placeholder={child.placeholder}
           />
         );
       case "textarea":

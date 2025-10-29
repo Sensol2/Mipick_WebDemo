@@ -9,6 +9,7 @@ import ImageRatingField from "./fields/ImageRatingField";
 import ImageWithDescriptionField from "./fields/ImageWithDescriptionField";
 import DescriptionField from "./fields/DescriptionField";
 import DropdownField from "./fields/DropdownField";
+import PhoneField from "./fields/PhoneField";
 import ChildrenRenderer from "./fields/ConditionalField";
 import type {
   SurveyPage,
@@ -156,6 +157,15 @@ export default function SurveySection({ formData, onFormChange, onSubmit }: Surv
     }
     if (q.type === "text" || q.type === "tel") {
       const tq = q as TextQuestion;
+      if (q.type === "tel") {
+        return (
+          <PhoneField
+            value={value}
+            onChange={onChange}
+            placeholder={tq.placeholder}
+          />
+        );
+      }
       return (
         <Input
           type={q.type}

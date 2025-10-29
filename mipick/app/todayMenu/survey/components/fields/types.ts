@@ -11,6 +11,7 @@ export type ChildQuestion = {
   anchors?: [string, string]; // likert용
   items?: Array<{ id: string; label: string }>; // likertGroup용 - 평가할 항목들
   placeholder?: string; // text/tel/textarea용
+  content?: string; // description용
   required?: boolean;
   children?: ChildQuestion[]; // 재귀적으로 중첩 가능
 };
