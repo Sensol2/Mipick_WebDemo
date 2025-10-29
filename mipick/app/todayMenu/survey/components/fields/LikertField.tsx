@@ -52,13 +52,10 @@ const Scale = styled.div<{ columns: number }>`
 
 const Item = styled.button<{ selected: boolean }>`
   height: 40px;
-  border-radius: 999px;
+  border-radius: 10px;
   border: 2px solid ${(p) => (p.selected ? "#FF6B35" : "#e0e0e0")};
   background: ${(p) => (p.selected ? "#FFF4E6" : "#fff")};
   color: ${(p) => (p.selected ? "#FF6B35" : "#666")};
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s;
-
-  &:hover { border-color: #FF6B35; }
 `;

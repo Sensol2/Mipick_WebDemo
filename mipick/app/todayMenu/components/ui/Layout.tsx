@@ -20,11 +20,11 @@ export const Sheet = styled.div`
   border-radius: 0;
   max-width: 420px;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+  overflow: visible;
 `;
 
 export const Header = styled.div`

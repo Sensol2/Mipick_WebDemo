@@ -9,10 +9,28 @@ export default function InAppBrowserDetector() {
   useEffect(() => {
     const userAgent = navigator.userAgent.toLowerCase();
     const targetUrl = window.location.href;
+    const isIos = userAgent.match(/iphone|ipad|ipod/i);
 
     // 카카오톡 인앱 브라우저 - 자동 우회
     if (userAgent.match(/kakaotalk/i)) {
-      location.href = `kakaotalk://web/openExternal?url=${encodeURIComponent(targetUrl)}`;
+      // 외부 브라우저로 열기
+      if (isIos) {
+        // iOS: Safari 또는 Chrome으로 열기
+        location.href = `kakaotalk://web/openExternal?url=${encodeURIComponent(targetUrl)}`;
+      } else {
+        // Android: Chrome으로 열기
+        location.href = `kakaotalk://web/openExternal?url=${encodeURIComponent(targetUrl)}`;
+      }
+      
+      // 외부 브라우저 열린 후 카카오톡 인앱 브라우저 닫기
+      setTimeout(() => {
+        if (isIos) {
+          location.href = 'kakaoweb://closeBrowser';
+        } else {
+          location.href = 'kakaotalk://inappbrowser/close';
+        }
+      }, 500);
+      
       return;
     }
 
@@ -45,28 +63,46 @@ export default function InAppBrowserDetector() {
 
   const handleOpenExternalBrowser = () => {
     const targetUrl = window.location.href;
+    const userAgent = navigator.userAgent.toLowerCase();
+    const isIos = userAgent.match(/iphone|ipad|ipod/i);
 
-    // URL을 클립보드에 복사
-    const textarea = document.createElement("textarea");
-    textarea.value = targetUrl;
-    textarea.style.position = "fixed";
-    textarea.style.opacity = "0";
-    document.body.appendChild(textarea);
-    textarea.select();
+    if (isIos) {
+      // iOS에서 Safari로 열기 시도
+      const urlWithoutProtocol = targetUrl.replace(/^https?:\/\//i, '');
+      
+      // Safari로 열기 (https만 지원)
+      if (targetUrl.startsWith('https')) {
+        location.href = 'x-safari-https://' + urlWithoutProtocol;
+      } else {
+        // Chrome으로 열기 시도
+        location.href = 'googlechrome://' + urlWithoutProtocol;
+      }
+      
+      // 1초 후에도 페이지가 그대로 있으면 클립보드 복사 안내
+      setTimeout(() => {
+        // URL을 클립보드에 복사
+        const textarea = document.createElement("textarea");
+        textarea.value = targetUrl;
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.select();
 
-    try {
-      document.execCommand("copy");
-      document.body.removeChild(textarea);
+        try {
+          document.execCommand("copy");
+          document.body.removeChild(textarea);
 
-      alert(
-        "URL주소가 복사되었습니다.\n\nSafari가 열리면 주소창을 길게 터치한 뒤,\n'붙여넣기 및 이동'을 누르면 정상적으로 이용하실 수 있습니다."
-      );
+          alert(
+            "URL주소가 복사되었습니다.\n\nSafari가 열리면 주소창을 길게 터치한 뒤,\n'붙여넣기 및 이동'을 누르면 정상적으로 이용하실 수 있습니다."
+          );
 
-      // Safari 강제 실행
-      location.href = "x-web-search://?";
-    } catch {
-      alert("클립보드 복사에 실패했습니다. 수동으로 링크를 복사해주세요.");
-      document.body.removeChild(textarea);
+          // Safari 강제 실행
+          location.href = "x-web-search://?";
+        } catch {
+          alert("클립보드 복사에 실패했습니다. 수동으로 링크를 복사해주세요.");
+          document.body.removeChild(textarea);
+        }
+      }, 1000);
     }
   };
 

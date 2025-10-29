@@ -2,6 +2,7 @@
 
 import styled from "styled-components"
 import Container from "@/app/landing/components/ui/Container"
+import { MdFastfood } from "react-icons/md"
 
 const Bar = styled.footer`
   margin-top: 40px; padding: 24px 0; border-top: 1px solid rgba(0,0,0,0.06);
@@ -27,10 +28,7 @@ export default function Footer(){
       <Container>
         <Row>
           <Logo>
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="3" y="6" width="18" height="12" rx="3" stroke="#FF6B35" strokeWidth="2"/>
-              <path d="M3 10h18" stroke="#FF6B35" strokeWidth="2"/>
-            </svg>
+            <MdFastfood size={18} color="#FF6B35" />
             MiPick
           </Logo>
           <Links>

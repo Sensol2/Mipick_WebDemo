@@ -1,17 +1,29 @@
 import { useMemo, useState } from "react";
 import styled from "styled-components";
 import surveyData from "../surveyData.json";
-import RadioGroupField from "./fields/RadioGroupField";
-import CheckboxGroupField from "./fields/CheckboxGroupField";
+import SingleChoiceField from "./fields/SingleChoiceField";
+import MultipleChoiceField from "./fields/MultipleChoiceField";
 import LikertField from "./fields/LikertField";
+import LikertGroupField from "./fields/LikertGroupField";
+import ImageRatingField from "./fields/ImageRatingField";
+import ImageWithDescriptionField from "./fields/ImageWithDescriptionField";
+import DescriptionField from "./fields/DescriptionField";
+import DropdownField from "./fields/DropdownField";
+import PhoneField from "./fields/PhoneField";
+import ChildrenRenderer from "./fields/ConditionalField";
 import type {
   SurveyPage,
   Question,
-  RadioQuestion,
-  CheckboxQuestion,
+  SingleChoiceQuestion,
+  DropdownQuestion,
+  MultipleChoiceQuestion,
   LikertQuestion,
+  LikertGroupQuestion,
   TextQuestion,
   TextareaQuestion,
+  ImageRatingQuestion,
+  ImageWithDescriptionQuestion,
+  DescriptionQuestion,
 } from "./fields/types";
 
 interface SurveySectionProps {
@@ -23,7 +35,13 @@ interface SurveySectionProps {
 export default function SurveySection({ formData, onFormChange, onSubmit }: SurveySectionProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const pages = surveyData.pages as unknown as SurveyPage[];
-  const totalPages = pages.length;
+  
+  // imageRating 페이지가 아닌 것만 카운트
+  const totalPages = useMemo(() => {
+    return pages.filter(page => 
+      !page.questions.every(q => q.type === 'imageRating')
+    ).length;
+  }, [pages]);
 
   type FormDataKeys = keyof SurveySectionProps["formData"];
 
@@ -31,11 +49,75 @@ export default function SurveySection({ formData, onFormChange, onSubmit }: Surv
 
   const validateCurrentPage = () => {
     if (!pageConfig) return true;
-    const missing = pageConfig.questions.filter((q) => {
-      const key = q.id as FormDataKeys;
-      const val = formData[key] as unknown as string | undefined;
-      return q.required && !String(val ?? "").trim();
-    });
+    
+    const validateQuestions = (questions: Question[]): Question[] => {
+      const missing: Question[] = [];
+      
+      for (const q of questions) {
+        // imageRating 타입의 경우 모든 옵션이 선택되었는지 확인
+        if (q.type === "imageRating" && q.required) {
+          const key = q.id as FormDataKeys;
+          const val = formData[key] as unknown as string | undefined;
+          
+          if (!val || !val.trim()) {
+            missing.push(q);
+          } else {
+            try {
+              const ratings = JSON.parse(val);
+              const irq = q as ImageRatingQuestion;
+              const allOptionsFilled = irq.options.every(opt => 
+                ratings[opt.id] && ratings[opt.id].trim() !== ""
+              );
+              
+              if (!allOptionsFilled) {
+                missing.push(q);
+              }
+            } catch {
+              missing.push(q);
+            }
+          }
+          continue;
+        }
+        
+        // 일반 질문 검증
+        const key = q.id as FormDataKeys;
+        const val = formData[key] as unknown as string | undefined;
+        if (q.required && !String(val ?? "").trim()) {
+          missing.push(q);
+        }
+
+        // children이 있는 경우 하위 질문 검증
+        if (q.children && q.children.length > 0) {
+          const parentValue = (formData[q.id] as string) ?? "";
+          const parentValues = q.type === "multiple"
+            ? parentValue.split(",").map((v) => v.trim()).filter(Boolean)
+            : [parentValue];
+
+          for (const child of q.children) {
+            // 부모 옵션이 선택되었는지 확인
+            if (parentValues.includes(child.parentOption)) {
+              // description 타입은 검증 스킵
+              if (child.type === "description") {
+                continue;
+              }
+              
+              // 하위 질문 검증
+              if (child.id) {
+                const childVal = (formData[child.id] as string) ?? "";
+                if (child.required && !childVal.trim()) {
+                  missing.push({ ...q, id: child.id, label: child.label || "" } as Question);
+                }
+              }
+            }
+          }
+        }
+      }
+      
+      return missing;
+    };
+    
+    const missing = validateQuestions(pageConfig.questions);
+    
     if (missing.length > 0) {
       alert("모든 필수 항목을 입력/선택해주세요!");
       return false;
@@ -45,7 +127,11 @@ export default function SurveySection({ formData, onFormChange, onSubmit }: Surv
 
   const handleNext = () => {
     if (!validateCurrentPage()) return;
-    if (currentPage < totalPages) setCurrentPage((p) => p + 1);
+    if (currentPage < pages.length) {
+      setCurrentPage((p) => p + 1);
+      // 페이지 변경 후 스크롤을 최상단으로 이동
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   const handlePrev = () => {
@@ -60,8 +146,26 @@ export default function SurveySection({ formData, onFormChange, onSubmit }: Surv
   };
 
   const renderQuestion = (q: Question, value: string, onChange: (v: string) => void) => {
+    if (q.type === "description") {
+      const dq = q as DescriptionQuestion;
+      return (
+        <DescriptionField
+          label={q.label}
+          content={dq.content}
+        />
+      );
+    }
     if (q.type === "text" || q.type === "tel") {
       const tq = q as TextQuestion;
+      if (q.type === "tel") {
+        return (
+          <PhoneField
+            value={value}
+            onChange={onChange}
+            placeholder={tq.placeholder}
+          />
+        );
+      }
       return (
         <Input
           type={q.type}
@@ -71,11 +175,32 @@ export default function SurveySection({ formData, onFormChange, onSubmit }: Surv
         />
       );
     }
-    if (q.type === "radio") {
-      return <RadioGroupField options={(q as RadioQuestion).options || []} value={value} onChange={onChange} />;
+    if (q.type === "single") {
+      return <SingleChoiceField options={(q as SingleChoiceQuestion).options || []} value={value} onChange={onChange} />;
     }
-    if (q.type === "checkbox") {
-      return <CheckboxGroupField options={(q as CheckboxQuestion).options || []} value={value} onChange={onChange} />;
+    if (q.type === "dropdown") {
+      return (
+        <DropdownField
+          id={q.id}
+          label={q.label}
+          options={(q as DropdownQuestion).options || []}
+          value={value}
+          onChange={onChange}
+          required={q.required}
+        />
+      );
+    }
+    if (q.type === "multiple") {
+      const mq = q as MultipleChoiceQuestion;
+      return (
+        <MultipleChoiceField
+          options={mq.options || []}
+          value={value}
+          onChange={onChange}
+          minimum={mq.minimum}
+          maximum={mq.maximum}
+        />
+      );
     }
     if (q.type === "likert") {
       const lq = q as LikertQuestion;
@@ -85,6 +210,43 @@ export default function SurveySection({ formData, onFormChange, onSubmit }: Surv
           anchors={lq.anchors}
           value={value}
           onChange={onChange}
+        />
+      );
+    }
+    if (q.type === "likertGroup") {
+      const lgq = q as LikertGroupQuestion;
+      return (
+        <LikertGroupField
+          items={lgq.items}
+          scale={lgq.scale || 5}
+          anchors={lgq.anchors}
+          formData={formData}
+          onChange={onFormChange}
+        />
+      );
+    }
+    if (q.type === "imageRating") {
+      const irq = q as ImageRatingQuestion;
+      return (
+        <ImageRatingField
+          imageUrl={irq.imageUrl}
+          questionText={irq.questionText}
+          title={irq.title}
+          subtitle={irq.subtitle}
+          address={irq.address}
+          options={irq.options}
+          value={value}
+          onChange={onChange}
+        />
+      );
+    }
+    if (q.type === "imageWithDescription") {
+      const iwdq = q as ImageWithDescriptionQuestion;
+      return (
+        <ImageWithDescriptionField
+          imageUrl={iwdq.imageUrl}
+          title={iwdq.title}
+          subtitle={iwdq.subtitle}
         />
       );
     }
@@ -105,10 +267,17 @@ export default function SurveySection({ formData, onFormChange, onSubmit }: Surv
   return (
     <Container>
       <ProgressBar>
-        <ProgressFill width={`${(currentPage / totalPages) * 100}%`} />
+        <ProgressFill width={`${
+          (pages.slice(0, currentPage).filter(p => !p.questions.every(q => q.type === 'imageRating')).length / totalPages) * 100
+        }%`} />
       </ProgressBar>
 
-      <PageIndicator>{currentPage} / {totalPages}</PageIndicator>
+      {/* imageRating 페이지가 아닐 때만 페이지 인디케이터 표시 */}
+      {pageConfig && !pageConfig.questions.every(q => q.type === 'imageRating') && (
+        <PageIndicator>
+          {pages.slice(0, currentPage).filter(p => !p.questions.every(q => q.type === 'imageRating')).length} / {totalPages}
+        </PageIndicator>
+      )}
 
       {/* 현재 페이지 동적 렌더링 */}
       {pageConfig && (
@@ -126,6 +295,16 @@ export default function SurveySection({ formData, onFormChange, onSubmit }: Surv
                 <FormSection key={q.id}>
                   <Label>{q.label}</Label>
                   {renderQuestion(q, value, onChange)}
+                  
+                  {/* children 렌더링 */}
+                  {q.children && q.children.length > 0 && (
+                    <ChildrenRenderer
+                      childQuestions={q.children}
+                      parentValue={value}
+                      formData={formData}
+                      onFormChange={onFormChange}
+                    />
+                  )}
                 </FormSection>
               );
             })}
@@ -134,14 +313,8 @@ export default function SurveySection({ formData, onFormChange, onSubmit }: Surv
       )}
 
       {/* 네비게이션 버튼 */}
-      <ButtonGroup>
-        {currentPage > 1 && (
-          <PrevButton onClick={handlePrev}>
-            이전
-          </PrevButton>
-        )}
-        
-        {currentPage < totalPages ? (
+      <ButtonGroup>        
+        {currentPage < pages.length ? (
           <NextButton onClick={handleNext}>
             다음
           </NextButton>
@@ -198,8 +371,8 @@ const FormSection = styled.div``;
 
 const Label = styled.label`
   display: block;
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 800;
   color: #333;
   margin-bottom: 12px;
 `;

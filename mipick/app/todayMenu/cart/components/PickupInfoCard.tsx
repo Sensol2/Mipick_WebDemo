@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { MdCameraAlt, MdAccessTime } from "react-icons/md";
 
 interface PickupInfoCardProps {
   type: "location" | "time";
@@ -20,10 +21,12 @@ export default function PickupInfoCard({
     <InfoCard>
       {type === "location" ? (
         <CardMedia>
-          <MediaPlaceholder>📸</MediaPlaceholder>
+          <MdCameraAlt size={28} />
         </CardMedia>
       ) : (
-        <IconCircle>{icon || "⏰"}</IconCircle>
+        <IconCircle>
+          {icon || <MdAccessTime size={24} />}
+        </IconCircle>
       )}
       
       <InfoContent>
@@ -55,11 +58,10 @@ const CardMedia = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
-
-const MediaPlaceholder = styled.div`
-  opacity: 0.6;
-  font-size: 28px;
+  
+  svg {
+    opacity: 0.6;
+  }
 `;
 
 const IconCircle = styled.div`
