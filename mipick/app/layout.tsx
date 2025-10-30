@@ -14,16 +14,16 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <head>
-        <title>미픽</title>
-        <meta name="description" content="맛집이 학교 안으로" />
+        <title>MiPick – 미리 주문하면, 맛집이 학교 앞으로</title>
+        <meta name="description" content="미리 주문만 하면, 맛집이 학교 안으로" />
       </head>
       <body>
         <StyledComponentsProvider>
-          {/* <ThemeProvider theme={theme}>
-            <GlobalStyle /> */}
+          <ThemeProvider theme={theme}>
+            <GlobalStyle />
             <InAppBrowserDetector />
             {children}
-          {/* </ThemeProvider> */}
+          </ThemeProvider>
         </StyledComponentsProvider>
       </body>
     </html>

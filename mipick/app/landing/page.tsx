@@ -15,6 +15,7 @@ export default function LandingPage() {
   return (
     <>
       <Header />
+      <main>
         <Hero />
         <HowItWorks />
         <Features />
@@ -23,6 +24,7 @@ export default function LandingPage() {
         <SocialProof />
         <FAQ />
         <CTA />
+      </main>
       <Footer />
     </>
   )

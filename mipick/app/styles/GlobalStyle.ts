@@ -11,6 +11,7 @@ export const GlobalStyle = createGlobalStyle`
     scroll-behavior: smooth; 
     scroll-padding-top: 80px; /* 헤더 높이보다 조금 더 크게 설정 */
   }
+  *, *::before, *::after { box-sizing: border-box; }
   body {
     margin: 0;
     font-family: Inter, Pretendard, Noto Sans KR, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
