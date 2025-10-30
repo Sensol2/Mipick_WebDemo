@@ -13,6 +13,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <head>
+<<<<<<< Updated upstream
         <title>MiPick – 미리 주문하면, 맛집이 학교 앞으로</title>
         <meta name="description" content="대학가/오피스 근처 테마 박스 사전 주문·픽업 서비스" />
       </head>
@@ -22,6 +23,19 @@ export default function RootLayout({
           <InAppBrowserDetector />
           {children}
         </ThemeProvider>
+=======
+        <title>미픽</title>
+        <meta name="description" content="맛집이 학교 안으로" />
+      </head>
+      <body>
+        <StyledComponentsProvider>
+          {/* <ThemeProvider theme={theme}>
+            <GlobalStyle /> */}
+            <InAppBrowserDetector />
+            {children}
+          {/* </ThemeProvider> */}
+        </StyledComponentsProvider>
+>>>>>>> Stashed changes
       </body>
     </html>
   );
