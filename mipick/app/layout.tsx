@@ -1,6 +1,7 @@
 "use client";
 
 import InAppBrowserDetector from "@/lib/utils/InAppBrowserDetector";
+import { StyleProvider } from "@/lib/providers";
 
 export default function RootLayout({
   children,
@@ -14,8 +15,10 @@ export default function RootLayout({
         <meta name="description" content="맛집이 학교 안으로" />
       </head>
       <body>
-        <InAppBrowserDetector />
-        {children}
+        <StyleProvider>
+          <InAppBrowserDetector />
+          {children}
+        </StyleProvider>
       </body>
     </html>
   );

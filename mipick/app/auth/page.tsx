@@ -1,12 +1,18 @@
 "use client"
 
 import styled from 'styled-components'
+import { useEffect, useState } from 'react'
 import { signInWithKakao } from '@/lib/auth/kakaoService'
 import { signInWithGoogle } from '@/lib/auth/googleService'
 import { RiKakaoTalkFill } from 'react-icons/ri'
 import { FcGoogle } from 'react-icons/fc'
 
 export default function AuthPage() {
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   const handleKakaoLogin = async () => {
     console.log('카카오 로그인')
@@ -17,6 +23,26 @@ export default function AuthPage() {
     // 구글 로그인 로직 구현
     console.log('구글 로그인')
     await signInWithGoogle();
+  }
+
+  if (!isMounted) {
+    return (
+      <div style={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: 'linear-gradient(to bottom, #ffedd5, #ffffff, #fff7ed)'
+      }}>
+        <div style={{
+          background: 'white',
+          borderRadius: '20px',
+          padding: '48px',
+          width: '100%',
+          maxWidth: '400px'
+        }} />
+      </div>
+    )
   }
 
   return (
