@@ -4,22 +4,17 @@ import React from "react";
 import styled from "styled-components";
 import HeaderSection from "./components/HeaderSection";
 import CTA from "./components/CTA";
+import ImageSection from "./components/ImageSection";
+import MenuDescriptionSection from "./components/MenuDescriptionSection";
 
 export default function IntroSection() {
   return (
     <>
       <HeaderSection />
       <Title>원 디그리 노스</Title>
-            <Title>원 디그리 노스</Title>
-                  <Title>원 디그리 노스</Title>
-                        <Title>원 디그리 노스</Title>
-                              <Title>원 디그리 노스</Title>
-                                    <Title>원 디그리 노스</Title>
-                                          <Title>원 디그리 노스</Title>
-                                                <Title>원 디그리 노스</Title>
-                                                      <Title>원 디그리 노스</Title>
-                                                            <Title>원 디그리 노스</Title>
-                                                            <Title>원 디그리 노스</Title>
+      <ImageSection />
+      <MenuDescriptionSection />
+
       <CTA />
     </>
   );

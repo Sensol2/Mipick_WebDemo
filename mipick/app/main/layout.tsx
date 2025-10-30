@@ -27,14 +27,12 @@ export default function MainMobileLayout({
 }
 
 export const Page = styled.div<{ theme: Theme }>`
-  min-height: 100vh;
   background: ${({ theme }) => theme.colors.pageBackground};
 
   //내부에 있는 Sheet를 화면 정중앙에 배치.
   display: flex;
   align-items: center;
   justify-content: center;
-
 `;
 
 export const Sheet = styled.div<{ theme: Theme }>`
@@ -58,4 +56,7 @@ export const Grid = styled.div<{ theme: Theme }>`
   flex-direction: column;
   flex: 1;                      /* 남는 높이를 채우게 */
   margin: ${({ theme }) => theme.spacing.lg};
+
+  // CTA 영역 가려지지 않게 하단에 패딩 추가
+  padding-bottom: ${({ theme }) => theme.spacing.xxxl};
 `;

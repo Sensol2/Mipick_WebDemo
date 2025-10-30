@@ -33,15 +33,20 @@ export const CTAButton = styled.button<{ theme: Theme }>`
 `;
 
 export const CTAWrapper = styled.div<{ theme: Theme }>`
+  display: flex;
   position: fixed;
-  bottom: 10px; /* 하단에서 10px 위 */
-  left: 50%;
-  transform: translateX(-50%); /* 가운데 정렬 */
 
+  bottom: 10px; /* 하단에서 10px 위 */
+  
+  /* 가운데 정렬 */
+  left: 50%;
+  transform: translateX(-50%); 
+
+  /* Sheet 최대 폭에 맞추기 */
   width: 100%;
-  max-width: 460px; /* Sheet 최대 폭에 맞추기 */
+  max-width: 460px; 
   padding: 0 ${({ theme }) => theme.spacing.lg};
   box-sizing: border-box;
 
-  display: flex;
+
 `;

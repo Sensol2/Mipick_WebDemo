@@ -32,6 +32,8 @@ export const theme = {
     md: '16px',
     lg: 'clamp(16px, 3vw, 24px)',
     xl: 'clamp(24px, 5vw, 32px)',
+    xxl: 'clamp(32px, 7vw, 48px)',
+    xxxl: 'clamp(48px, 10vw, 64px)',
   },
   radius: {
     sm: '4px',

@@ -5,7 +5,7 @@ export default function HeaderSection() {
     <>
       <HeaderWrapper>
         <TopRow>
-          <Date>구독하기</Date>
+          <Date>2025-10-30</Date>
           <Subscribe>구독하기</Subscribe>
         </TopRow>
 
