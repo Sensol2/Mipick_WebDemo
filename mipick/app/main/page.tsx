@@ -1,15 +1,15 @@
-import IntroSection from "./intro/legacy";
+import IntroSection from "./intro/IntroSection";
 import OrderSection from "./order/OrderSection";
 import PaymentSection from "./payment/PaymentSection";
 
 export default function Home() {
   return (
     <>
-      {/* <IntroSection /> */}
+      <IntroSection />
 
-      <OrderSection />
+      {/* <OrderSection /> */}
 
-      <PaymentSection />
+      {/* <PaymentSection /> */}
     </>
   );
 }

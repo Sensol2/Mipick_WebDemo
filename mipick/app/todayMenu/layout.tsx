@@ -1,8 +1,10 @@
 "use client";
 
 import React, { Suspense } from "react";
-import styled from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
 import { Page, Sheet } from "./components/ui";
+import { GlobalStyle } from "../landing/styles/GlobalStyle";
+import { theme } from "../landing/styles/theme";
 
 interface TodayMenuLayoutProps {
   children: React.ReactNode;
@@ -10,21 +12,24 @@ interface TodayMenuLayoutProps {
 
 export default function TodayMenuLayout({ children }: TodayMenuLayoutProps) {
   return (
-    <Suspense fallback={
-      <Page>
-        <Sheet>
-          <LoadingContainer>
-            로딩 중...
-          </LoadingContainer>
-        </Sheet>
-      </Page>
-    }>
-      <Page>
-        <Sheet>
-          {children}
-        </Sheet>
-      </Page>
-    </Suspense>
+    <>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <Suspense
+          fallback={
+            <Page>
+              <Sheet>
+                <LoadingContainer>로딩 중...</LoadingContainer>
+              </Sheet>
+            </Page>
+          }
+        >
+          <Page>
+            <Sheet>{children}</Sheet>
+          </Page>
+        </Suspense>
+      </ThemeProvider>
+    </>
   );
 }
 

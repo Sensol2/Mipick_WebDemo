@@ -1,6 +1,4 @@
-import { DefaultTheme } from 'styled-components';
-
-const theme: DefaultTheme = {
+export const theme = {
   colors: {
     primary: '#2E4057',      // 딥 네이비 (포인트)
     secondary: '#B89F8A',    // 웜 모카 (보조)
@@ -13,11 +11,19 @@ const theme: DefaultTheme = {
     cta: '#000000',          // CTA 버튼 전용 컬러
   },
   fontSizes: {
-    small: '12px',
-    medium: '14px',
-    large: '16px',
-    heading: '24px',
-    display: '32px',         // 큰 타이틀 (예: 원 디그리 노스)
+    xs: '8px',   // 극소
+    sm: '14px',   // 캡션/보조
+    md: '18px',  // 기본 본문
+    lg: '32px',   // 강조 본문, 버튼
+    xl: '48px', // 섹션 제목
+    xxl: '64px', // 메인 디스플레이 (Hero 타이틀)
+  },
+  fontWeights: {
+    xs: 300,
+    sm: 400,
+    md: 500,
+    lg: 600,
+    xl: 700,
   },
   spacing: {
     xs: '4px',
@@ -36,4 +42,4 @@ const theme: DefaultTheme = {
   },
 };
 
-export default theme;
+export type Theme = typeof theme
