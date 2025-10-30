@@ -2,18 +2,20 @@ import styled from "styled-components";
 
 export default function HeaderSection() {
   return (
-    <HeaderWrapper>
-      <TopRow>
-        <Date>구독하기</Date>
-        <Subscribe>구독하기</Subscribe>
-      </TopRow>
+    <>
+      <HeaderWrapper>
+        <TopRow>
+          <Date>구독하기</Date>
+          <Subscribe>구독하기</Subscribe>
+        </TopRow>
 
-      <Divider />
+        <Divider />
 
-      <Subtitle>점심 읽어주는 남자</Subtitle>
+        <Subtitle>점심 읽어주는 남자</Subtitle>
 
-      <Divider />
-    </HeaderWrapper>
+        <Divider />
+      </HeaderWrapper>
+    </>
   );
 }
 

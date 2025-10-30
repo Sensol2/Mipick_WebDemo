@@ -3,13 +3,24 @@
 import React from "react";
 import styled from "styled-components";
 import HeaderSection from "./components/HeaderSection";
+import CTA from "./components/CTA";
 
 export default function IntroSection() {
   return (
     <>
       <HeaderSection />
-
       <Title>원 디그리 노스</Title>
+            <Title>원 디그리 노스</Title>
+                  <Title>원 디그리 노스</Title>
+                        <Title>원 디그리 노스</Title>
+                              <Title>원 디그리 노스</Title>
+                                    <Title>원 디그리 노스</Title>
+                                          <Title>원 디그리 노스</Title>
+                                                <Title>원 디그리 노스</Title>
+                                                      <Title>원 디그리 노스</Title>
+                                                            <Title>원 디그리 노스</Title>
+                                                            <Title>원 디그리 노스</Title>
+      <CTA />
     </>
   );
 }

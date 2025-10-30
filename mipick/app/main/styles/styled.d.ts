@@ -5,7 +5,8 @@ declare module 'styled-components' {
     colors: {
       primary: string;
       secondary: string;
-      background: string;
+      sheetBackground: string;
+      pageBackground: string;
       surface: string;
       text: string;
       textSecondary: string;
