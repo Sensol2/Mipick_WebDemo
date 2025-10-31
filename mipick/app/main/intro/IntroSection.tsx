@@ -3,7 +3,7 @@
 import React from "react";
 import styled from "styled-components";
 import HeaderSection from "./components/HeaderSection";
-import CTA, { CTASpacer } from "./components/CTA";
+import CTA, { CTASpacer } from "../components/CTA";
 import ImageSection from "./components/ImageSection";
 import MenuDescriptionSection from "./components/MenuDescriptionSection";
 import PickupDescription from "./components/PickupDescription";

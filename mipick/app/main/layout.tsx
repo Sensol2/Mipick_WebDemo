@@ -12,7 +12,7 @@ export default function MainMobileLayout({ children }: { children: React.ReactNo
         <LocalStyle />
         <Page>
           <Sheet>
-            <Grid>{children}</Grid>
+            <Grid id="main-scroll">{children}</Grid>
           </Sheet>
         </Page>
       </ThemeProvider>
@@ -27,6 +27,7 @@ export const Page = styled.div<{ theme: Theme }>`
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden; // 외부 스크롤 생성 방지
 `;
 
 export const Sheet = styled.div<{ theme: Theme }>`
@@ -42,28 +43,14 @@ export const Sheet = styled.div<{ theme: Theme }>`
   flex-direction: column;
 
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  overflow: hidden; // 외부 스크롤 생성 방지
 `;
 
 export const Grid = styled.div<{ theme: Theme }>`
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: ${({ theme }) => theme.spacing.lg};
+  padding: ${({ theme }) => `${theme.spacing.lg} ${theme.spacing.lg} 0`};
 
   // 섹션 스크롤 스냅
   overflow-y: auto;
-  max-height: 100svh;
-  scroll-snap-type: y mandatory; // 살짝 걸리는 느낌
-  scroll-padding-top: ${({ theme }) => theme.spacing.sm};
-  scroll-padding-bottom: ${({ theme }) => theme.spacing.xl};
-  scroll-behavior: smooth;
-
-  /* 스크롤바 숨기기 (크로스 브라우징) */
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE 10+ */
-
-  &::-webkit-scrollbar {
-    display: none; /* Chrome, Safari */
-  }
 `;

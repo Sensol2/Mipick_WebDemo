@@ -1,11 +1,46 @@
+"use client";
+
 import styled from "styled-components";
-import { Theme } from "../../styles/theme";
+import { Theme } from "../styles/theme";
+import { getCurrentSectionIndex, PageScrollDown, PageScrollUp, scrollToIndex } from "./scroll";
+import { useEffect, useState } from "react";
 
 export default function CTA() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const CTA_CONFIG = [
+    {
+      id: "intro",
+      content: "내일 학교에서 먹어보기",
+      onClick: () => {
+        PageScrollDown();
+        setCurrentIndex(1);
+      },
+    },
+    {
+      id: "order",
+      content: "주문하기",
+      onClick: () => {
+        PageScrollDown();
+        setCurrentIndex(2);
+      },
+    },
+    {
+      id: "payment",
+      content: "결제하기",
+      onClick: () => {
+        scrollToIndex(0);
+        setCurrentIndex(0);
+      },
+    },
+  ];
+
+  const current = CTA_CONFIG[currentIndex];
+
   return (
     <>
       <CTAWrapper>
-        <CTAButton>내일 학교에서 먹어보기</CTAButton>
+        <CTAButton onClick={current.onClick}>{current.content}</CTAButton>
       </CTAWrapper>
     </>
   );
@@ -13,8 +48,7 @@ export default function CTA() {
 
 export const CTASpacer = styled.div<{ theme: Theme }>`
   flex-shrink: 0; /* 높이 줄어드는 것 방지 */
-  height: calc(${({ theme }) => theme.spacing.md} * 2 + 1.5rem);
-  /* CTAButton의 padding(md) 상하 + font-size(md) 기준으로 계산된 높이 */
+  height: 15vh;
   width: 100%;
 `;
 

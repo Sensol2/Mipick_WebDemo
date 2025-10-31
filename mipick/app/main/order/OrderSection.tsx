@@ -1,5 +1,4 @@
-import CTA from "./components/CTA";
-import { CTASpacer } from "./components/CTA";
+import { CTASpacer } from "../components/CTA";
 import HeaderSection from "./components/HeaderSection";
 import ImageSection from "./components/ImageSection";
 import InfoButton from "./components/InfoButton";
@@ -16,7 +15,7 @@ export default function OrderSection() {
       <OptionSection />
       <TogetherSection />
       <PriceSection />
-      <CTA />
+      {/* <CTA /> */}
       <CTASpacer />
     </>
   );
