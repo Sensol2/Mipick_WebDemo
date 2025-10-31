@@ -16,8 +16,6 @@ export default function IntroSection() {
       <ImageSection />
       <MenuDescriptionSection />
       <PickupDescription />
-
-      <CTA />
       <CTASpacer />
     </>
   );

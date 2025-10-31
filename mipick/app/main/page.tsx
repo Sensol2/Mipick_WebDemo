@@ -6,10 +6,12 @@ import PaymentSection from "./payment/PaymentSection";
 import styled from "styled-components";
 import type { Theme } from "./styles/theme";
 import CTA from "./components/CTA";
+import ScrollUpArrow from "./components/ScrollUpArrow";
 
 export default function Home() {
   return (
     <Container>
+      <ScrollUpArrow />
       <Section id="intro">
         <IntroSection />
       </Section>

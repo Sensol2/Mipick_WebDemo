@@ -11,11 +11,10 @@ export default function OrderSection() {
     <>
       <HeaderSection />
       <ImageSection />
-      {/* <InfoButton /> */}
+      <InfoButton />
       <OptionSection />
       <TogetherSection />
       <PriceSection />
-      {/* <CTA /> */}
       <CTASpacer />
     </>
   );
