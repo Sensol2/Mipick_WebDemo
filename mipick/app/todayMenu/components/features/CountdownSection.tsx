@@ -14,24 +14,24 @@ export default function CountdownSection({ hours, minutes, seconds }: CountdownS
         <Clock size={18} />
         <Title>주문 마감까지 남은 시간</Title>
       </Header>
-      
+
       <Timer>
         <TimeBox>
-          <TimeValue>{String(hours).padStart(2, '0')}</TimeValue>
+          <TimeValue>{String(hours).padStart(2, "0")}</TimeValue>
           <TimeLabel>시간</TimeLabel>
         </TimeBox>
-        
+
         <TimeSeparator>:</TimeSeparator>
-        
+
         <TimeBox>
-          <TimeValue>{String(minutes).padStart(2, '0')}</TimeValue>
+          <TimeValue>{String(minutes).padStart(2, "0")}</TimeValue>
           <TimeLabel>분</TimeLabel>
         </TimeBox>
-        
+
         <TimeSeparator>:</TimeSeparator>
-        
+
         <TimeBox>
-          <TimeValue>{String(seconds).padStart(2, '0')}</TimeValue>
+          <TimeValue>{String(seconds).padStart(2, "0")}</TimeValue>
           <TimeLabel>초</TimeLabel>
         </TimeBox>
       </Timer>

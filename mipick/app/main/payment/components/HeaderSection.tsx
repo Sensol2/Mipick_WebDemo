@@ -2,15 +2,15 @@
 
 import styled from "styled-components";
 
-export default function HeaderSection() { 
-    return (
-        <>
-            <HeaderWrapper>
-                <Title>결제하기</Title>
-                <Divider />
-            </HeaderWrapper>
-        </>
-    );
+export default function HeaderSection() {
+  return (
+    <>
+      <HeaderWrapper>
+        <Title>결제하기</Title>
+        <Divider />
+      </HeaderWrapper>
+    </>
+  );
 }
 
 const HeaderWrapper = styled.div`

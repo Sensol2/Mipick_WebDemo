@@ -10,10 +10,7 @@ export default function StoreHeaderImage({ store }: StoreHeaderImageProps) {
   return (
     <StoreImageContainer>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={store.thumbnail}
-        alt={store.name}
-      />
+      <img src={store.thumbnail} alt={store.name} />
       <ImageOverlay />
       <StoreInfoOverlay>
         <StoreName>{store.name}</StoreName>

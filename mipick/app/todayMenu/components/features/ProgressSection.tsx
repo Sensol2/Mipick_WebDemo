@@ -73,17 +73,18 @@ const StepLabel = styled.p`
 const StepCircle = styled.div<{ $active?: boolean }>`
   width: 38px;
   height: 38px;
-  border: 3px solid ${props => props.$active ? '#22c55e' : '#d1d5db'};
+  border: 3px solid ${(props) => (props.$active ? "#22c55e" : "#d1d5db")};
   border-radius: 50%;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${props => props.$active ? 'white' : '#6b7280'};
-  background: ${props => props.$active ? '#22c55e' : 'white'};
+  color: ${(props) => (props.$active ? "white" : "#6b7280")};
+  background: ${(props) => (props.$active ? "#22c55e" : "white")};
   font-size: 13px;
   font-weight: 700;
-  box-shadow: ${props => props.$active ? '0 2px 8px rgba(34, 197, 94, 0.3)' : '0 2px 4px rgba(0, 0, 0, 0.1)'};
+  box-shadow: ${(props) =>
+    props.$active ? "0 2px 8px rgba(34, 197, 94, 0.3)" : "0 2px 4px rgba(0, 0, 0, 0.1)"};
 `;
 
 const StepReward = styled.p`
@@ -109,5 +110,5 @@ const ProgressFill = styled.div<{ $width: number }>`
   background: linear-gradient(90deg, #22c55e, #16a34a);
   border-radius: 3px;
   transition: width 0.3s ease;
-  width: ${props => props.$width}%;
+  width: ${(props) => props.$width}%;
 `;

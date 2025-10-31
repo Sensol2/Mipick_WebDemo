@@ -1,41 +1,51 @@
-"use client"
+"use client";
 
-import styled from "styled-components"
-import Container from "./ui/Container"
-import { Button } from "./ui/Button"
-import { Input } from "./ui/Input"
+import styled from "styled-components";
+import Container from "./ui/Container";
+import { Button } from "./ui/Button";
+import { Input } from "./ui/Input";
 
 const Wrap = styled.section`
   padding: ${({ theme }) => theme.layout.sectionPadY} 0;
-`
+`;
 
 const Box = styled.div`
-  background: #fff; border-radius: 16px; border: 1px solid rgba(0,0,0,0.06);
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
   box-shadow: ${({ theme }) => theme.shadow.card};
-  padding: 24px; display: grid; gap: 12px; text-align: center;
-`
+  padding: 24px;
+  display: grid;
+  gap: 12px;
+  text-align: center;
+`;
 
 const Title = styled.h2`
   font-size: clamp(22px, 3vw, 28px);
-`
+`;
 
 const Row = styled.form`
-  display: grid; grid-template-columns: 1fr auto; gap: 8px; margin-top: 4px;
-  @media (max-width: 520px) { grid-template-columns: 1fr; }
-`
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  margin-top: 4px;
+  @media (max-width: 520px) {
+    grid-template-columns: 1fr;
+  }
+`;
 
 const SurveyButton = styled(Button)`
   margin-top: 16px;
   width: 100%;
-`
+`;
 
-export default function CTA(){
+export default function CTA() {
   const onSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault()
-    const fd = new FormData(e.currentTarget)
-    alert(`알림 신청 완료: ${fd.get('email')}`)
-    e.currentTarget.reset()
-  }
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    alert(`알림 신청 완료: ${fd.get("email")}`);
+    e.currentTarget.reset();
+  };
 
   return (
     <Wrap id="cta">
@@ -53,5 +63,5 @@ export default function CTA(){
         </Box>
       </Container>
     </Wrap>
-  )
+  );
 }

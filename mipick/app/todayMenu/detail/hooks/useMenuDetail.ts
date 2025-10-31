@@ -14,7 +14,7 @@ interface SelectedOption {
 
 export function useMenuDetail(menuId: string | null) {
   const router = useRouter();
-  
+
   const [menu, setMenu] = useState<Menu | null>(null);
   const [options, setOptions] = useState<MenuOptionGroup[]>([]);
   const [selectedOptions, setSelectedOptions] = useState<SelectedOption[]>([]);
@@ -79,9 +79,7 @@ export function useMenuDetail(menuId: string | null) {
       if (option === null) {
         // 선택 해제
         return prev.map((item) =>
-          item.groupId === groupId
-            ? { groupId, optionIds: [], prices: {} }
-            : item
+          item.groupId === groupId ? { groupId, optionIds: [], prices: {} } : item,
         );
       }
 
@@ -95,7 +93,7 @@ export function useMenuDetail(menuId: string | null) {
                 optionIds: isCurrentlySelected ? [] : [option.id],
                 prices: isCurrentlySelected ? {} : { [option.id]: option.price },
               }
-            : item
+            : item,
         );
       } else {
         // 다중 선택
@@ -103,16 +101,14 @@ export function useMenuDetail(menuId: string | null) {
 
         if (isCurrentlySelected) {
           // 선택 해제
-          const newOptionIds = groupSelection.optionIds.filter(
-            (id) => id !== option.id
-          );
+          const newOptionIds = groupSelection.optionIds.filter((id) => id !== option.id);
           const newPrices = { ...groupSelection.prices };
           delete newPrices[option.id];
 
           return prev.map((item) =>
             item.groupId === groupId
               ? { groupId, optionIds: newOptionIds, prices: newPrices }
-              : item
+              : item,
           );
         } else {
           // 선택 추가
@@ -126,7 +122,7 @@ export function useMenuDetail(menuId: string | null) {
                     [option.id]: option.price,
                   },
                 }
-              : item
+              : item,
           );
         }
       }
@@ -139,10 +135,7 @@ export function useMenuDetail(menuId: string | null) {
 
     const basePrice = menu.price;
     const optionsPrice = selectedOptions.reduce((sum, selection) => {
-      const selectionTotal = Object.values(selection.prices).reduce(
-        (s, p) => s + p,
-        0
-      );
+      const selectionTotal = Object.values(selection.prices).reduce((s, p) => s + p, 0);
       return sum + selectionTotal;
     }, 0);
     return (basePrice + optionsPrice) * quantity;
@@ -158,9 +151,7 @@ export function useMenuDetail(menuId: string | null) {
     if (!menu) return;
 
     try {
-      const selectedOptionIds = selectedOptions.flatMap(
-        (selection) => selection.optionIds
-      );
+      const selectedOptionIds = selectedOptions.flatMap((selection) => selection.optionIds);
 
       const success = await CartService.addToCart(TEMP_USER_ID, {
         menuId: menu.id,

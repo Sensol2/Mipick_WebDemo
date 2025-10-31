@@ -20,13 +20,9 @@ interface OrderItemProps {
 
 export default function OrderItem({ item, onIncrease, onDecrease }: OrderItemProps) {
   const format = (n: number) => `₩${n.toLocaleString()}`;
-  
+
   // PriceCalculator를 사용하여 총 가격 계산
-  const totalPrice = PriceCalculator.calculateTotal(
-    item.price,
-    item.options || [],
-    item.quantity
-  );
+  const totalPrice = PriceCalculator.calculateTotal(item.price, item.options || [], item.quantity);
 
   return (
     <Row>
@@ -54,17 +50,11 @@ export default function OrderItem({ item, onIncrease, onDecrease }: OrderItemPro
       </RowInfo>
 
       <QtyControls>
-        <CircleBtn
-          aria-label="decrease"
-          onClick={() => onDecrease(item.id)}
-        >
+        <CircleBtn aria-label="decrease" onClick={() => onDecrease(item.id)}>
           −
         </CircleBtn>
         <QtyValue>{item.quantity}</QtyValue>
-        <CircleBtn
-          aria-label="increase"
-          onClick={() => onIncrease(item.id)}
-        >
+        <CircleBtn aria-label="increase" onClick={() => onIncrease(item.id)}>
           +
         </CircleBtn>
       </QtyControls>

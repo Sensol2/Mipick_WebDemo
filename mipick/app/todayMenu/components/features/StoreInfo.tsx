@@ -12,7 +12,7 @@ export default function StoreInfo({ store }: StoreInfoProps) {
       <TitleRow>
         <StoreTitle>{store.name}</StoreTitle>
       </TitleRow>
-      
+
       <StoreDescription>{store.description || "#맛집 #가성비 #든든한끼"}</StoreDescription>
 
       <InfoItem>

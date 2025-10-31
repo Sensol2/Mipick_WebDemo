@@ -1,9 +1,9 @@
 export default function CTA() {
   return (
     <>
-        <CTAWrapper>
-            <CTAButton>내일 학교에서 먹어보기</CTAButton>
-        </CTAWrapper>
+      <CTAWrapper>
+        <CTAButton>내일 학교에서 먹어보기</CTAButton>
+      </CTAWrapper>
     </>
   );
 }
@@ -37,16 +37,14 @@ export const CTAWrapper = styled.div<{ theme: Theme }>`
   position: fixed;
 
   bottom: 10px; /* 하단에서 10px 위 */
-  
+
   /* 가운데 정렬 */
   left: 50%;
-  transform: translateX(-50%); 
+  transform: translateX(-50%);
 
   /* Sheet 최대 폭에 맞추기 */
   width: 100%;
-  max-width: 460px; 
+  max-width: 460px;
   padding: 0 ${({ theme }) => theme.spacing.lg};
   box-sizing: border-box;
-
-
 `;

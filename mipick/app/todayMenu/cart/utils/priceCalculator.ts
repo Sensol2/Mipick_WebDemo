@@ -1,4 +1,4 @@
-import type { MenuOption } from '@/lib/api/supabase';
+import type { MenuOption } from "@/lib/api/supabase";
 
 /**
  * 가격 계산 유틸리티 클래스
@@ -14,11 +14,10 @@ export class PriceCalculator {
    */
   static calculateTotal(
     menuPrice: number,
-    options: Pick<MenuOption, 'price'>[],
-    quantity: number
+    options: Pick<MenuOption, "price">[],
+    quantity: number,
   ): number {
     const optionsPrice = options.reduce((sum, opt) => sum + opt.price, 0);
     return (menuPrice + optionsPrice) * quantity;
   }
-
 }

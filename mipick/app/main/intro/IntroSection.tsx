@@ -8,7 +8,6 @@ import ImageSection from "./components/ImageSection";
 import MenuDescriptionSection from "./components/MenuDescriptionSection";
 import PickupDescription from "./components/PickupDescription";
 
-
 export default function IntroSection() {
   return (
     <>

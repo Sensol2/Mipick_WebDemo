@@ -7,7 +7,12 @@ export interface LikertFieldProps {
   onChange: (value: string) => void;
 }
 
-export default function LikertField({ scale, anchors = ["", ""], value, onChange }: LikertFieldProps) {
+export default function LikertField({
+  scale,
+  anchors = ["", ""],
+  value,
+  onChange,
+}: LikertFieldProps) {
   return (
     <Container>
       <Anchors>

@@ -7,27 +7,20 @@ interface QuantitySelectorProps {
   onDecrease: () => void;
 }
 
-export default function QuantitySelector({ 
-  quantity, 
-  onIncrease, 
-  onDecrease 
+export default function QuantitySelector({
+  quantity,
+  onIncrease,
+  onDecrease,
 }: QuantitySelectorProps) {
   return (
     <>
       <SectionTitle>수량</SectionTitle>
       <QtyControls>
-        <CircleBtn
-          aria-label="decrease"
-          onClick={onDecrease}
-          disabled={quantity <= 1}
-        >
+        <CircleBtn aria-label="decrease" onClick={onDecrease} disabled={quantity <= 1}>
           −
         </CircleBtn>
         <QtyValue>{quantity}</QtyValue>
-        <CircleBtn
-          aria-label="increase"
-          onClick={onIncrease}
-        >
+        <CircleBtn aria-label="increase" onClick={onIncrease}>
           +
         </CircleBtn>
       </QtyControls>

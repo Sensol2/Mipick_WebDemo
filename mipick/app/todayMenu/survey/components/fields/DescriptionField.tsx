@@ -6,18 +6,14 @@ interface DescriptionFieldProps {
 }
 
 export default function DescriptionField({ content, label }: DescriptionFieldProps) {
-  return (
-    <Container>
-      {content && <Text>{content}</Text>}
-    </Container>
-  );
+  return <Container>{content && <Text>{content}</Text>}</Container>;
 }
 
 const Container = styled.div`
   padding: 16px;
   background: #f8f8f8;
   border-radius: 8px;
-  border-left: 4px solid #FF6B35;
+  border-left: 4px solid #ff6b35;
 `;
 
 const Text = styled.p`
@@ -26,7 +22,7 @@ const Text = styled.p`
   line-height: 1.6;
   white-space: pre-line;
   margin: 0;
-  
+
   &:not(:last-child) {
     margin-bottom: 8px;
   }

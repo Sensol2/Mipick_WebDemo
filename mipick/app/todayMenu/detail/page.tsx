@@ -70,8 +70,8 @@ export default function MenuDetailPage() {
         </Section>
 
         {options.map((group) => {
-          const selected = selectedOptions.find(s => s.groupId === group.id);
-          
+          const selected = selectedOptions.find((s) => s.groupId === group.id);
+
           return (
             <Section key={group.id}>
               <OptionGroup

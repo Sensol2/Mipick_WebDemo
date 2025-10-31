@@ -10,9 +10,9 @@ interface IntroSectionProps {
 }
 
 export default function IntroSection({ onStart, hasParticipated, isLoading }: IntroSectionProps) {
-  const [expandedCard, setExpandedCard] = useState<'survey' | 'beta' | null>(null);
+  const [expandedCard, setExpandedCard] = useState<"survey" | "beta" | null>(null);
 
-  const toggleCard = (card: 'survey' | 'beta') => {
+  const toggleCard = (card: "survey" | "beta") => {
     setExpandedCard(expandedCard === card ? null : card);
   };
 
@@ -23,14 +23,17 @@ export default function IntroSection({ onStart, hasParticipated, isLoading }: In
           <BadgeWrapper>
             <EventBadge>설문 이벤트</EventBadge>
           </BadgeWrapper>
-          
+
           <MainTitle>
-            설문 참여하고<br />
+            설문 참여하고
+            <br />
             <Highlight>커피 기프티콘</Highlight> 받아가세요!
           </MainTitle>
 
           <EventPeriod>
-            <ClockIcon><MdAccessTime /></ClockIcon>
+            <ClockIcon>
+              <MdAccessTime />
+            </ClockIcon>
             <span>이벤트 기간: 11월 19일 23시 59분까지</span>
           </EventPeriod>
         </HeaderSection>
@@ -43,45 +46,47 @@ export default function IntroSection({ onStart, hasParticipated, isLoading }: In
 
         <BenefitsSection>
           <SectionTitle>참여 혜택</SectionTitle>
-          
+
           <BenefitCards>
-            <AccordionCard 
-              $expanded={expandedCard === 'survey'}
-              onClick={() => toggleCard('survey')}
+            <AccordionCard
+              $expanded={expandedCard === "survey"}
+              onClick={() => toggleCard("survey")}
             >
               <CardHeader>
-                <IconWrapper><BiSolidCoffee /></IconWrapper>
+                <IconWrapper>
+                  <BiSolidCoffee />
+                </IconWrapper>
                 <CardContent>
                   <CardTitle>설문 참여</CardTitle>
                   <CardReward>커피 기프티콘</CardReward>
                 </CardContent>
-                <ToggleIcon $expanded={expandedCard === 'survey'}>
-                  {expandedCard === 'survey' ? '−' : '+'}
+                <ToggleIcon $expanded={expandedCard === "survey"}>
+                  {expandedCard === "survey" ? "−" : "+"}
                 </ToggleIcon>
               </CardHeader>
-              
-              <CardDescription $expanded={expandedCard === 'survey'}>
+
+              <CardDescription $expanded={expandedCard === "survey"}>
                 설문 참여 시 30명에게 추첨을 통해 지급
               </CardDescription>
             </AccordionCard>
-            
-            <AccordionCard 
-              $expanded={expandedCard === 'beta'}
-              onClick={() => toggleCard('beta')}
-            >
+
+            <AccordionCard $expanded={expandedCard === "beta"} onClick={() => toggleCard("beta")}>
               <CardHeader>
-                <IconWrapper><BiSolidGift /></IconWrapper>
+                <IconWrapper>
+                  <BiSolidGift />
+                </IconWrapper>
                 <CardContent>
                   <CardTitle>베타 테스터 신청</CardTitle>
                   <CardReward>무료 점심 제공</CardReward>
                 </CardContent>
-                <ToggleIcon $expanded={expandedCard === 'beta'}>
-                  {expandedCard === 'beta' ? '−' : '+'}
+                <ToggleIcon $expanded={expandedCard === "beta"}>
+                  {expandedCard === "beta" ? "−" : "+"}
                 </ToggleIcon>
               </CardHeader>
-              
-              <CardDescription $expanded={expandedCard === 'beta'}>
-                사전알림 신청한 분들 중 추첨을 통해 선발, 테스터 선정 시 테스트 기간동안 무료 점심 제공
+
+              <CardDescription $expanded={expandedCard === "beta"}>
+                사전알림 신청한 분들 중 추첨을 통해 선발, 테스터 선정 시 테스트 기간동안 무료 점심
+                제공
               </CardDescription>
             </AccordionCard>
           </BenefitCards>
@@ -89,12 +94,11 @@ export default function IntroSection({ onStart, hasParticipated, isLoading }: In
 
         <ActionSection>
           <StartButton onClick={onStart} disabled={hasParticipated || isLoading}>
-            {isLoading 
-              ? "확인 중..." 
-              : hasParticipated 
-                ? "이미 설문에 참여하셨습니다" 
-                : "지금 바로 시작하기"
-            }
+            {isLoading
+              ? "확인 중..."
+              : hasParticipated
+                ? "이미 설문에 참여하셨습니다"
+                : "지금 바로 시작하기"}
           </StartButton>
         </ActionSection>
       </ContentWrapper>
@@ -108,7 +112,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100%;
-  background: linear-gradient(180deg, #FFF5EB 0%, #FFFFFF 50%);
+  background: linear-gradient(180deg, #fff5eb 0%, #ffffff 50%);
 `;
 
 const ContentWrapper = styled.div`
@@ -136,7 +140,7 @@ const EventBadge = styled.div`
   align-items: center;
   gap: 6px;
   padding: 8px 16px;
-  background: linear-gradient(135deg, #FF6B35 0%, #FF8F5C 100%);
+  background: linear-gradient(135deg, #ff6b35 0%, #ff8f5c 100%);
   color: white;
   border-radius: 20px;
   font-size: 13px;
@@ -149,27 +153,27 @@ const MainTitle = styled.h1`
   font-size: 28px;
   font-weight: 900;
   line-height: 1.35;
-  color: #1F2937;
+  color: #1f2937;
   margin: 0 0 16px 0;
   letter-spacing: -0.8px;
   word-break: keep-all;
 `;
 
 const Highlight = styled.span`
-  background: linear-gradient(135deg, #FF6B35 0%, #FF8F5C 100%);
+  background: linear-gradient(135deg, #ff6b35 0%, #ff8f5c 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   position: relative;
-  
+
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     left: 0;
     bottom: -2px;
     width: 100%;
     height: 3px;
-    background: linear-gradient(90deg, #FF6B35 0%, #FF8F5C 100%);
+    background: linear-gradient(90deg, #ff6b35 0%, #ff8f5c 100%);
     opacity: 0.3;
     border-radius: 2px;
   }
@@ -182,7 +186,7 @@ const EventPeriod = styled.div`
   padding: 10px 20px;
   background: rgba(255, 107, 53, 0.08);
   border-radius: 12px;
-  color: #6B7280;
+  color: #6b7280;
   font-size: 13px;
   font-weight: 600;
   letter-spacing: -0.2px;
@@ -192,10 +196,10 @@ const ClockIcon = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   svg {
     font-size: 16px;
-    color: #FF6B35;
+    color: #ff6b35;
   }
 `;
 
@@ -214,9 +218,9 @@ const CharacterWrapper = styled.div`
   position: relative;
   width: 100%;
   max-width: 280px;
-  
+
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     bottom: -10px;
     left: 50%;
@@ -244,7 +248,7 @@ const BenefitsSection = styled.div`
 const SectionTitle = styled.h2`
   font-size: 18px;
   font-weight: 800;
-  color: #1F2937;
+  color: #1f2937;
   margin: 0 0 16px 0;
   text-align: center;
   letter-spacing: -0.5px;
@@ -257,23 +261,20 @@ const BenefitCards = styled.div`
 `;
 
 const AccordionCard = styled.div<{ $primary?: boolean; $expanded?: boolean }>`
-  background: ${props => props.$primary 
-    ? 'linear-gradient(135deg, #FFF5EB 0%, #FFE8D6 100%)'
-    : '#FFFFFF'};
-  border: 2px solid ${props => props.$primary ? '#FF6B35' : '#F3F4F6'};
+  background: ${(props) =>
+    props.$primary ? "linear-gradient(135deg, #FFF5EB 0%, #FFE8D6 100%)" : "#FFFFFF"};
+  border: 2px solid ${(props) => (props.$primary ? "#FF6B35" : "#F3F4F6")};
   border-radius: 16px;
-  box-shadow: ${props => props.$primary 
-    ? '0 4px 16px rgba(255, 107, 53, 0.15)'
-    : '0 2px 8px rgba(0, 0, 0, 0.04)'};
+  box-shadow: ${(props) =>
+    props.$primary ? "0 4px 16px rgba(255, 107, 53, 0.15)" : "0 2px 8px rgba(0, 0, 0, 0.04)"};
   transition: all 0.3s ease;
   cursor: pointer;
   overflow: hidden;
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: ${props => props.$primary 
-      ? '0 8px 24px rgba(255, 107, 53, 0.2)'
-      : '0 4px 12px rgba(0, 0, 0, 0.08)'};
+    box-shadow: ${(props) =>
+      props.$primary ? "0 8px 24px rgba(255, 107, 53, 0.2)" : "0 4px 12px rgba(0, 0, 0, 0.08)"};
   }
 
   &:active {
@@ -298,10 +299,10 @@ const IconWrapper = styled.div`
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   flex-shrink: 0;
-  
+
   svg {
     font-size: 24px;
-    color: #FF6B35;
+    color: #ff6b35;
   }
 `;
 
@@ -321,7 +322,7 @@ const CardTitle = styled.div`
 const CardReward = styled.div`
   font-size: 14px;
   font-weight: 800;
-  color: #FF6B35;
+  color: #ff6b35;
   letter-spacing: -0.2px;
 `;
 
@@ -334,20 +335,20 @@ const ToggleIcon = styled.div<{ $expanded?: boolean }>`
   background: rgba(255, 107, 53, 0.1);
   border-radius: 8px;
   font-size: 20px;
-  color: #FF6B35;
+  color: #ff6b35;
   font-weight: 700;
   flex-shrink: 0;
   transition: all 0.3s ease;
-  transform: ${props => props.$expanded ? 'rotate(180deg)' : 'rotate(0deg)'};
+  transform: ${(props) => (props.$expanded ? "rotate(180deg)" : "rotate(0deg)")};
 `;
 
 const CardDescription = styled.div<{ $expanded?: boolean }>`
-  padding: ${props => props.$expanded ? '0 20px 18px 82px' : '0 20px 0 82px'};
-  max-height: ${props => props.$expanded ? '200px' : '0'};
-  opacity: ${props => props.$expanded ? '1' : '0'};
+  padding: ${(props) => (props.$expanded ? "0 20px 18px 82px" : "0 20px 0 82px")};
+  max-height: ${(props) => (props.$expanded ? "200px" : "0")};
+  opacity: ${(props) => (props.$expanded ? "1" : "0")};
   font-size: 13px;
   line-height: 1.6;
-  color: #6B7280;
+  color: #6b7280;
   transition: all 0.3s ease;
   overflow: hidden;
 `;
@@ -361,7 +362,7 @@ const ActionSection = styled.div`
 const StartButton = styled.button`
   width: 100%;
   padding: 18px 24px;
-  background: linear-gradient(135deg, #FF6B35 0%, #FF8F5C 100%);
+  background: linear-gradient(135deg, #ff6b35 0%, #ff8f5c 100%);
   color: white;
   border: none;
   border-radius: 14px;

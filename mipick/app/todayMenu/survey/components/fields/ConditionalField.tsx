@@ -23,11 +23,14 @@ export default function ChildrenRenderer({
   // parentValue가 multiple인 경우 배열로 변환
   // MultipleChoiceField에서 사용하는 구분자에 맞춰 split
   const parentValues = parentValue
-    ? parentValue.split("|||").map((v) => v.trim()).filter(Boolean)
+    ? parentValue
+        .split("|||")
+        .map((v) => v.trim())
+        .filter(Boolean)
     : [];
 
   const renderChildQuestion = (child: ChildQuestion): React.ReactNode => {
-    const value = child.id ? (formData[child.id] || "") : "";
+    const value = child.id ? formData[child.id] || "" : "";
     const onChange = (val: string) => {
       if (child.id) {
         onFormChange(child.id, val);
@@ -36,27 +39,14 @@ export default function ChildrenRenderer({
 
     switch (child.type) {
       case "description":
-        return (
-          <DescriptionField
-            content={child.content}
-            label={child.label}
-          />
-        );
+        return <DescriptionField content={child.content} label={child.label} />;
       case "single":
         return (
-          <SingleChoiceField
-            options={child.options || []}
-            value={value}
-            onChange={onChange}
-          />
+          <SingleChoiceField options={child.options || []} value={value} onChange={onChange} />
         );
       case "multiple":
         return (
-          <MultipleChoiceField
-            options={child.options || []}
-            value={value}
-            onChange={onChange}
-          />
+          <MultipleChoiceField options={child.options || []} value={value} onChange={onChange} />
         );
       case "likert":
         return (
@@ -87,13 +77,7 @@ export default function ChildrenRenderer({
           />
         );
       case "tel":
-        return (
-          <PhoneField
-            value={value}
-            onChange={onChange}
-            placeholder={child.placeholder}
-          />
-        );
+        return <PhoneField value={value} onChange={onChange} placeholder={child.placeholder} />;
       case "textarea":
         return (
           <TextArea
@@ -124,7 +108,9 @@ export default function ChildrenRenderer({
         return (
           <ChildContainer key={uniqueKey}>
             {child.label && child.type !== "likertGroup" && <ChildLabel>{child.label}</ChildLabel>}
-            {child.type === "likertGroup" && child.label && <GroupHeader>{child.label}</GroupHeader>}
+            {child.type === "likertGroup" && child.label && (
+              <GroupHeader>{child.label}</GroupHeader>
+            )}
             {renderChildQuestion(child)}
 
             {/* 재귀: 하위 children이 있으면 다시 렌더링 */}
@@ -146,7 +132,7 @@ export default function ChildrenRenderer({
 const ChildContainer = styled.div`
   margin: 30px 0;
   padding-left: 20px;
-  border-left: 3px solid #FF6B35;
+  border-left: 3px solid #ff6b35;
   animation: slideIn 0.3s ease-out;
 
   @keyframes slideIn {
@@ -187,7 +173,7 @@ const Input = styled.input`
 
   &:focus {
     outline: none;
-    border-color: #FF6B35;
+    border-color: #ff6b35;
   }
 
   &::placeholder {
@@ -207,11 +193,10 @@ const TextArea = styled.textarea`
 
   &:focus {
     outline: none;
-    border-color: #FF6B35;
+    border-color: #ff6b35;
   }
 
   &::placeholder {
     color: #aaa;
   }
 `;
-

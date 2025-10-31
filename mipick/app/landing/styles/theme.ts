@@ -6,20 +6,20 @@ export const theme = {
     textSecondary: "#555555",
     neutralGray: "#EEEEEE",
     cardBg: "#FFFFFF",
-    inputBorder: "#CCCCCC"
+    inputBorder: "#CCCCCC",
   },
   layout: {
     maxWidth: "900px",
-    sectionPadY: "48px"
+    sectionPadY: "48px",
   },
   radius: {
     button: "8px",
     card: "12px",
-    input: "8px"
+    input: "8px",
   },
   shadow: {
-    card: "0 8px 24px rgba(0,0,0,0.06)"
-  }
-}
+    card: "0 8px 24px rgba(0,0,0,0.06)",
+  },
+};
 
-export type Theme = typeof theme
+export type Theme = typeof theme;

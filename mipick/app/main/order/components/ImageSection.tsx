@@ -5,14 +5,16 @@ import type { Theme } from "../../styles/theme";
 
 export default function ImageSection() {
   return (
-    <ImageWrapper>
-      <Image src="/menuImages/menu7.jpg" alt="Intro Image" />
-      <ImageOverlay />
-      <TextWrapper>
-        <Title>광동 차슈 덮밥</Title>
-        <Price>14,900원</Price>
-      </TextWrapper>
-    </ImageWrapper>
+    <>
+      <ImageWrapper>
+        <Image src="/menuImages/menu7.jpg" alt="Intro Image" />
+        <ImageOverlay />
+        <TextWrapper>
+          <Title>광동 차슈 덮밥</Title>
+          <Price>14,900원</Price>
+        </TextWrapper>
+      </ImageWrapper>
+    </>
   );
 }
 

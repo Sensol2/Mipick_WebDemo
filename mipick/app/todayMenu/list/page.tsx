@@ -51,17 +51,13 @@ export default function MenuListPage() {
       <Body>
         <Section>
           <SectionTitle>메뉴 ({menus.length})</SectionTitle>
-          
+
           {menus.length === 0 ? (
             <NoMenus>등록된 메뉴가 없습니다.</NoMenus>
           ) : (
             <List>
               {menus.map((menu) => (
-                <MenuListItem
-                  key={menu.id}
-                  menu={menu}
-                  onClick={handleMenuClick}
-                />
+                <MenuListItem key={menu.id} menu={menu} onClick={handleMenuClick} />
               ))}
             </List>
           )}

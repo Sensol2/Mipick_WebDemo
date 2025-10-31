@@ -13,16 +13,18 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
   if (!isOpen) return null;
 
   const handleKakaoLogin = async () => {
-    const redirectTo = typeof window !== 'undefined' 
-      ? `${window.location.origin}/todayMenu/survey?postLogin=1` 
-      : undefined;
+    const redirectTo =
+      typeof window !== "undefined"
+        ? `${window.location.origin}/todayMenu/survey?postLogin=1`
+        : undefined;
     await signInWithKakao(redirectTo);
   };
 
   const handleGoogleLogin = async () => {
-    const redirectTo = typeof window !== 'undefined' 
-      ? `${window.location.origin}/todayMenu/survey?postLogin=1` 
-      : undefined;
+    const redirectTo =
+      typeof window !== "undefined"
+        ? `${window.location.origin}/todayMenu/survey?postLogin=1`
+        : undefined;
     await signInWithGoogle(redirectTo);
   };
 
@@ -30,11 +32,12 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
     <Overlay onClick={onClose}>
       <ModalContent onClick={(e) => e.stopPropagation()}>
         <CloseButton onClick={onClose}>×</CloseButton>
-        
+
         <Icon>🎫</Icon>
         <Title>설문 제출을 위해 로그인해주세요!</Title>
         <Description>
-          간편 로그인을 통해 설문을 제출하고<br />
+          간편 로그인을 통해 설문을 제출하고
+          <br />
           보상을 받아보세요
         </Description>
 
@@ -49,9 +52,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
             Google로 로그인
           </GoogleButton>
 
-          <SkipButton onClick={onClose}>
-            취소
-          </SkipButton>
+          <SkipButton onClick={onClose}>취소</SkipButton>
         </ButtonGroup>
       </ModalContent>
     </Overlay>
@@ -74,8 +75,12 @@ const Overlay = styled.div`
   animation: fadeIn 0.2s ease-out;
 
   @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 `;
 
@@ -179,20 +184,20 @@ const SocialButtonBase = styled.button`
 `;
 
 const KakaoButton = styled(SocialButtonBase)`
-  background: #FEE500;
-  color: #3A1D1D;
+  background: #fee500;
+  color: #3a1d1d;
 
   &:hover {
-    background: #FFD600;
+    background: #ffd600;
   }
 `;
 
 const GoogleButton = styled(SocialButtonBase)`
-  background: #4285F4;
+  background: #4285f4;
   color: white;
 
   &:hover {
-    background: #3367D6;
+    background: #3367d6;
   }
 `;
 

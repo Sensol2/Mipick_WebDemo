@@ -36,12 +36,13 @@ export function useCart() {
         price: item.menu.price,
         quantity: item.quantity,
         thumbnail: item.menu.thumbnail || null,
-        options: item.menu_options?.map((opt) => ({
-          name: opt.name,
-          price: opt.price,
-        })) || [],
+        options:
+          item.menu_options?.map((opt) => ({
+            name: opt.name,
+            price: opt.price,
+          })) || [],
       })),
-    [cartItems]
+    [cartItems],
   );
 
   // 총 가격 계산
@@ -51,11 +52,11 @@ export function useCart() {
         const itemTotal = PriceCalculator.calculateTotal(
           item.menu.price,
           item.menu_options || [],
-          item.quantity
+          item.quantity,
         );
         return sum + itemTotal;
       }, 0),
-    [cartItems]
+    [cartItems],
   );
 
   // 수량 증가
@@ -67,9 +68,7 @@ export function useCart() {
 
     // Optimistic Update
     setCartItems((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, quantity: newQuantity } : item
-      )
+      prev.map((item) => (item.id === id ? { ...item, quantity: newQuantity } : item)),
     );
 
     const success = await CartService.updateCartItemQuantity(id, newQuantity);
@@ -77,9 +76,7 @@ export function useCart() {
     // 실패 시 롤백
     if (!success) {
       setCartItems((prev) =>
-        prev.map((item) =>
-          item.id === id ? { ...item, quantity: cartItem.quantity } : item
-        )
+        prev.map((item) => (item.id === id ? { ...item, quantity: cartItem.quantity } : item)),
       );
     }
   };
@@ -95,25 +92,21 @@ export function useCart() {
       // 삭제
       setCartItems((prev) => prev.filter((item) => item.id !== id));
       const success = await CartService.removeFromCart(id);
-      
+
       if (!success) {
         setCartItems((prev) => [...prev, cartItem]);
       }
     } else {
       // 수량 감소
       setCartItems((prev) =>
-        prev.map((item) =>
-          item.id === id ? { ...item, quantity: newQuantity } : item
-        )
+        prev.map((item) => (item.id === id ? { ...item, quantity: newQuantity } : item)),
       );
 
       const success = await CartService.updateCartItemQuantity(id, newQuantity);
 
       if (!success) {
         setCartItems((prev) =>
-          prev.map((item) =>
-            item.id === id ? { ...item, quantity: cartItem.quantity } : item
-          )
+          prev.map((item) => (item.id === id ? { ...item, quantity: cartItem.quantity } : item)),
         );
       }
     }

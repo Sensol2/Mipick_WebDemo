@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import styled from "styled-components"
+import styled from "styled-components";
 
 /**
  * Landing Page 전용 Button 컴포넌트
  * todayMenu 등 다른 기능 페이지에서는 해당 페이지의 styled-components 사용
  */
 
-type Variant = "primary" | "secondary"
+type Variant = "primary" | "secondary";
 
 export const Button = styled.button<{ variant?: Variant }>`
   appearance: none;
@@ -17,7 +17,7 @@ export const Button = styled.button<{ variant?: Variant }>`
   padding: 14px 28px;
   font-weight: 600;
   font-size: 16px;
-  transition: all .2s ease;
+  transition: all 0.2s ease;
   white-space: nowrap;
 
   ${({ theme, variant = "primary" }) =>
@@ -31,5 +31,7 @@ export const Button = styled.button<{ variant?: Variant }>`
         ? `background: #1F2937; border-color: #1F2937; transform: translateY(-1px);`
         : `background: #F9F9F9; border-color: #D1D5DB;`}
   }
-  &:active { transform: translateY(0); }
-`
+  &:active {
+    transform: translateY(0);
+  }
+`;

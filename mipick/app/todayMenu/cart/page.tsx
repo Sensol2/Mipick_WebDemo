@@ -3,11 +3,11 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import styled from "styled-components";
-import { 
-  EmptyCart, 
-  OrderItem, 
-  OrderSummary, 
-  PickupInfoCard, 
+import {
+  EmptyCart,
+  OrderItem,
+  OrderSummary,
+  PickupInfoCard,
   PaymentMethodSelector,
 } from "./components";
 import { Header, HeaderTitle, Body, Footer, CloseButton } from "../components/ui";
@@ -79,11 +79,7 @@ export default function CheckoutPage() {
             ))}
           </List>
 
-          <OrderSummary 
-            subtotal={subtotal}
-            deliveryFee={deliveryFee}
-            total={total}
-          />
+          <OrderSummary subtotal={subtotal} deliveryFee={deliveryFee} total={total} />
         </Section>
 
         <Section>
@@ -108,17 +104,12 @@ export default function CheckoutPage() {
 
         <Section>
           <SectionTitle>결제 수단</SectionTitle>
-          <PaymentMethodSelector
-            selectedMethod={paymentMethod}
-            onMethodSelect={setPaymentMethod}
-          />
+          <PaymentMethodSelector selectedMethod={paymentMethod} onMethodSelect={setPaymentMethod} />
         </Section>
       </Body>
 
       <Footer>
-        <PayBtn onClick={handlePay}>
-          {`${formatCurrency(total)} 결제하기`}
-        </PayBtn>
+        <PayBtn onClick={handlePay}>{`${formatCurrency(total)} 결제하기`}</PayBtn>
       </Footer>
     </>
   );

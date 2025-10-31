@@ -1,24 +1,30 @@
-"use client"
+"use client";
 
-import styled from "styled-components"
-import Container from "./ui/Container"
-import { Card } from "./ui/Card"
+import styled from "styled-components";
+import Container from "./ui/Container";
+import { Card } from "./ui/Card";
 
 const Wrap = styled.section`
   padding: ${({ theme }) => theme.layout.sectionPadY} 0;
-`
+`;
 
 const Grid = styled.div`
-  display: grid; gap: 16px;
-  @media (min-width: 900px) { grid-template-columns: repeat(3, 1fr); }
-`
+  display: grid;
+  gap: 16px;
+  @media (min-width: 900px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+`;
 
 const Stat = styled(Card)`
   text-align: center;
-  h3 { font-size: 28px; margin-bottom: 6px; }
-`
+  h3 {
+    font-size: 28px;
+    margin-bottom: 6px;
+  }
+`;
 
-export default function SocialProof(){
+export default function SocialProof() {
   return (
     <Wrap>
       <Container>
@@ -38,5 +44,5 @@ export default function SocialProof(){
         </Grid>
       </Container>
     </Wrap>
-  )
+  );
 }

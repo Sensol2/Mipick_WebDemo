@@ -20,18 +20,14 @@ export default function SingleChoiceField({ options, value, onChange }: SingleCh
   return (
     <RadioGroup>
       {options.map((option) => (
-        <RadioLabel 
-          key={option} 
+        <RadioLabel
+          key={option}
           onClick={(e) => {
             e.preventDefault();
             handleClick(option);
           }}
         >
-          <CheckboxInput
-            type="radio"
-            checked={value === option}
-            readOnly
-          />
+          <CheckboxInput type="radio" checked={value === option} readOnly />
           <CheckboxBox checked={value === option}>
             {value === option && (
               <svg width="12" height="10" viewBox="0 0 12 10" fill="none">

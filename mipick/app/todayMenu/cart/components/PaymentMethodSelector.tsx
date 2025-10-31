@@ -8,9 +8,9 @@ interface PaymentMethodSelectorProps {
 
 const PAYMENT_METHODS = ["신용/체크카드", "카카오페이", "네이버페이"];
 
-export default function PaymentMethodSelector({ 
-  selectedMethod, 
-  onMethodSelect 
+export default function PaymentMethodSelector({
+  selectedMethod,
+  onMethodSelect,
 }: PaymentMethodSelectorProps) {
   return (
     <PayMethods>

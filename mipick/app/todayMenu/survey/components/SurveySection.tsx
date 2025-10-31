@@ -35,12 +35,10 @@ interface SurveySectionProps {
 export default function SurveySection({ formData, onFormChange, onSubmit }: SurveySectionProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const pages = surveyData.pages as unknown as SurveyPage[];
-  
+
   // imageRating 페이지가 아닌 것만 카운트
   const totalPages = useMemo(() => {
-    return pages.filter(page => 
-      !page.questions.every(q => q.type === 'imageRating')
-    ).length;
+    return pages.filter((page) => !page.questions.every((q) => q.type === "imageRating")).length;
   }, [pages]);
 
   type FormDataKeys = keyof SurveySectionProps["formData"];
@@ -49,26 +47,26 @@ export default function SurveySection({ formData, onFormChange, onSubmit }: Surv
 
   const validateCurrentPage = () => {
     if (!pageConfig) return true;
-    
+
     const validateQuestions = (questions: Question[]): Question[] => {
       const missing: Question[] = [];
-      
+
       for (const q of questions) {
         // imageRating 타입의 경우 모든 옵션이 선택되었는지 확인
         if (q.type === "imageRating" && q.required) {
           const key = q.id as FormDataKeys;
           const val = formData[key] as unknown as string | undefined;
-          
+
           if (!val || !val.trim()) {
             missing.push(q);
           } else {
             try {
               const ratings = JSON.parse(val);
               const irq = q as ImageRatingQuestion;
-              const allOptionsFilled = irq.options.every(opt => 
-                ratings[opt.id] && ratings[opt.id].trim() !== ""
+              const allOptionsFilled = irq.options.every(
+                (opt) => ratings[opt.id] && ratings[opt.id].trim() !== "",
               );
-              
+
               if (!allOptionsFilled) {
                 missing.push(q);
               }
@@ -78,7 +76,7 @@ export default function SurveySection({ formData, onFormChange, onSubmit }: Surv
           }
           continue;
         }
-        
+
         // 일반 질문 검증
         const key = q.id as FormDataKeys;
         const val = formData[key] as unknown as string | undefined;
@@ -89,9 +87,13 @@ export default function SurveySection({ formData, onFormChange, onSubmit }: Surv
         // children이 있는 경우 하위 질문 검증
         if (q.children && q.children.length > 0) {
           const parentValue = (formData[q.id] as string) ?? "";
-          const parentValues = q.type === "multiple"
-            ? parentValue.split(",").map((v) => v.trim()).filter(Boolean)
-            : [parentValue];
+          const parentValues =
+            q.type === "multiple"
+              ? parentValue
+                  .split(",")
+                  .map((v) => v.trim())
+                  .filter(Boolean)
+              : [parentValue];
 
           for (const child of q.children) {
             // 부모 옵션이 선택되었는지 확인
@@ -100,7 +102,7 @@ export default function SurveySection({ formData, onFormChange, onSubmit }: Surv
               if (child.type === "description") {
                 continue;
               }
-              
+
               // 하위 질문 검증
               if (child.id) {
                 const childVal = (formData[child.id] as string) ?? "";
@@ -112,12 +114,12 @@ export default function SurveySection({ formData, onFormChange, onSubmit }: Surv
           }
         }
       }
-      
+
       return missing;
     };
-    
+
     const missing = validateQuestions(pageConfig.questions);
-    
+
     if (missing.length > 0) {
       alert("모든 필수 항목을 입력/선택해주세요!");
       return false;
@@ -130,7 +132,7 @@ export default function SurveySection({ formData, onFormChange, onSubmit }: Surv
     if (currentPage < pages.length) {
       setCurrentPage((p) => p + 1);
       // 페이지 변경 후 스크롤을 최상단으로 이동
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
@@ -148,23 +150,12 @@ export default function SurveySection({ formData, onFormChange, onSubmit }: Surv
   const renderQuestion = (q: Question, value: string, onChange: (v: string) => void) => {
     if (q.type === "description") {
       const dq = q as DescriptionQuestion;
-      return (
-        <DescriptionField
-          label={q.label}
-          content={dq.content}
-        />
-      );
+      return <DescriptionField label={q.label} content={dq.content} />;
     }
     if (q.type === "text" || q.type === "tel") {
       const tq = q as TextQuestion;
       if (q.type === "tel") {
-        return (
-          <PhoneField
-            value={value}
-            onChange={onChange}
-            placeholder={tq.placeholder}
-          />
-        );
+        return <PhoneField value={value} onChange={onChange} placeholder={tq.placeholder} />;
       }
       return (
         <Input
@@ -176,7 +167,13 @@ export default function SurveySection({ formData, onFormChange, onSubmit }: Surv
       );
     }
     if (q.type === "single") {
-      return <SingleChoiceField options={(q as SingleChoiceQuestion).options || []} value={value} onChange={onChange} />;
+      return (
+        <SingleChoiceField
+          options={(q as SingleChoiceQuestion).options || []}
+          value={value}
+          onChange={onChange}
+        />
+      );
     }
     if (q.type === "dropdown") {
       return (
@@ -205,12 +202,7 @@ export default function SurveySection({ formData, onFormChange, onSubmit }: Surv
     if (q.type === "likert") {
       const lq = q as LikertQuestion;
       return (
-        <LikertField
-          scale={lq.scale || 5}
-          anchors={lq.anchors}
-          value={value}
-          onChange={onChange}
-        />
+        <LikertField scale={lq.scale || 5} anchors={lq.anchors} value={value} onChange={onChange} />
       );
     }
     if (q.type === "likertGroup") {
@@ -267,15 +259,26 @@ export default function SurveySection({ formData, onFormChange, onSubmit }: Surv
   return (
     <Container>
       <ProgressBar>
-        <ProgressFill width={`${
-          (pages.slice(0, currentPage).filter(p => !p.questions.every(q => q.type === 'imageRating')).length / totalPages) * 100
-        }%`} />
+        <ProgressFill
+          width={`${
+            (pages
+              .slice(0, currentPage)
+              .filter((p) => !p.questions.every((q) => q.type === "imageRating")).length /
+              totalPages) *
+            100
+          }%`}
+        />
       </ProgressBar>
 
       {/* imageRating 페이지가 아닐 때만 페이지 인디케이터 표시 */}
-      {pageConfig && !pageConfig.questions.every(q => q.type === 'imageRating') && (
+      {pageConfig && !pageConfig.questions.every((q) => q.type === "imageRating") && (
         <PageIndicator>
-          {pages.slice(0, currentPage).filter(p => !p.questions.every(q => q.type === 'imageRating')).length} / {totalPages}
+          {
+            pages
+              .slice(0, currentPage)
+              .filter((p) => !p.questions.every((q) => q.type === "imageRating")).length
+          }{" "}
+          / {totalPages}
         </PageIndicator>
       )}
 
@@ -295,7 +298,7 @@ export default function SurveySection({ formData, onFormChange, onSubmit }: Surv
                 <FormSection key={q.id}>
                   <Label>{q.label}</Label>
                   {renderQuestion(q, value, onChange)}
-                  
+
                   {/* children 렌더링 */}
                   {q.children && q.children.length > 0 && (
                     <ChildrenRenderer
@@ -313,15 +316,11 @@ export default function SurveySection({ formData, onFormChange, onSubmit }: Surv
       )}
 
       {/* 네비게이션 버튼 */}
-      <ButtonGroup>        
+      <ButtonGroup>
         {currentPage < pages.length ? (
-          <NextButton onClick={handleNext}>
-            다음
-          </NextButton>
+          <NextButton onClick={handleNext}>다음</NextButton>
         ) : (
-          <SubmitButton onClick={handleFinalSubmit}>
-            제출
-          </SubmitButton>
+          <SubmitButton onClick={handleFinalSubmit}>제출</SubmitButton>
         )}
       </ButtonGroup>
     </Container>
@@ -344,7 +343,7 @@ const ProgressBar = styled.div`
 const ProgressFill = styled.div<{ width: string }>`
   width: ${(props) => props.width};
   height: 100%;
-  background: linear-gradient(90deg, #FF6B35 0%, #FF8C42 100%);
+  background: linear-gradient(90deg, #ff6b35 0%, #ff8c42 100%);
   transition: width 0.5s ease-out;
 `;
 
@@ -388,7 +387,7 @@ const Input = styled.input`
 
   &:focus {
     outline: none;
-    border-color: #FF6B35;
+    border-color: #ff6b35;
   }
 
   &::placeholder {
@@ -401,7 +400,7 @@ const Input = styled.input`
 const SubmitButton = styled.button`
   width: 100%;
   padding: 16px;
-  background: linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%);
+  background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
   color: white;
   border: none;
   border-radius: 12px;
@@ -430,7 +429,7 @@ const PageIndicator = styled.div`
 
 const PageContent = styled.div`
   animation: fadeIn 0.3s ease-out;
-  
+
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -456,7 +455,7 @@ const TextArea = styled.textarea`
 
   &:focus {
     outline: none;
-    border-color: #FF6B35;
+    border-color: #ff6b35;
   }
 
   &::placeholder {
@@ -484,8 +483,8 @@ const PrevButton = styled.button`
   transition: all 0.2s;
 
   &:hover {
-    border-color: #FF6B35;
-    color: #FF6B35;
+    border-color: #ff6b35;
+    color: #ff6b35;
   }
 
   &:active {
@@ -496,7 +495,7 @@ const PrevButton = styled.button`
 const NextButton = styled.button`
   width: 100%;
   padding: 16px;
-  background: linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%);
+  background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
   color: white;
   border: none;
   border-radius: 12px;

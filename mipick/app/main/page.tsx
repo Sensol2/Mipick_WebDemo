@@ -14,9 +14,11 @@ export default function Home() {
   );
 }
 
-{/* <IntroSection />
+{
+  /* <IntroSection />
 <OrderSection />
-<PaymentSection /> */}
+<PaymentSection /> */
+}
 
 const Section = styled.section<{ theme: Theme }>`
   /* 각 섹션을 한 화면 높이로 배치 (상하 여백 고려) */

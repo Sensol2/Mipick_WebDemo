@@ -39,12 +39,12 @@ export default function SurveyPage() {
   // 로그인 후 자동 제출 훅
   useSurveyAutoSubmit({
     onSuccess: () => {
-      console.log('✅ Auto-submit completed, redirecting to share page...');
+      console.log("✅ Auto-submit completed, redirecting to share page...");
       setTimeout(() => setCurrentStep("share"), 1500);
     },
     onError: (error) => {
-      console.error('Auto-submit failed:', error);
-      alert('설문 제출에 실패했습니다. 다시 시도해주세요.');
+      console.error("Auto-submit failed:", error);
+      alert("설문 제출에 실패했습니다. 다시 시도해주세요.");
     },
   });
 
@@ -64,7 +64,7 @@ export default function SurveyPage() {
 
   // 폼 입력 핸들러
   const handleFormChange = (field: string, value: string) =>
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
 
   // 설문 제출 핸들러
   const handleSubmitClick = async () => {
@@ -85,8 +85,8 @@ export default function SurveyPage() {
         </LoadingContainer>
       ),
       intro: (
-        <IntroSection 
-          onStart={() => setCurrentStep("survey")} 
+        <IntroSection
+          onStart={() => setCurrentStep("survey")}
           hasParticipated={false}
           isLoading={false}
         />
@@ -98,12 +98,10 @@ export default function SurveyPage() {
           onSubmit={handleSubmitClick}
         />
       ),
-      share: (
-        <ShareSection />
-      ),
+      share: <ShareSection />,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [formData, isSubmitting]
+    [formData, isSubmitting],
   );
 
   return (
@@ -158,7 +156,7 @@ const Spinner = styled.div`
   width: 48px;
   height: 48px;
   border: 4px solid #f3f3f3;
-  border-top: 4px solid #FF6B35;
+  border-top: 4px solid #ff6b35;
   border-radius: 50%;
   animation: ${spin} 1s linear infinite;
   margin-bottom: 16px;

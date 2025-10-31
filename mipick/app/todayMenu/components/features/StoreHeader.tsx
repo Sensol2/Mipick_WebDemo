@@ -10,7 +10,10 @@ export default function StoreHeader({ store }: StoreHeaderProps) {
     <StoreImageContainer>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={store.thumbnail || "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20250813_132%2F1755070254048Vr7FN_JPEG%2F%25C1%25A6%25C1%25D6%25BB%25F3%25C8%25B8_%25B8%25DE%25C0%25CE%25BB%25E7%25C1%25F8.jpg"}
+        src={
+          store.thumbnail ||
+          "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20250813_132%2F1755070254048Vr7FN_JPEG%2F%25C1%25A6%25C1%25D6%25BB%25F3%25C8%25B8_%25B8%25DE%25C0%25CE%25BB%25E7%25C1%25F8.jpg"
+        }
         alt="오늘의 메뉴"
       />
       <StoreBadge>{store.name}</StoreBadge>

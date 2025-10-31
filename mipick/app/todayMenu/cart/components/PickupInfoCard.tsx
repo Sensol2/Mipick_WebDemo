@@ -10,12 +10,12 @@ interface PickupInfoCardProps {
   onChangeClick: () => void;
 }
 
-export default function PickupInfoCard({ 
-  type, 
-  title, 
-  subtitle, 
-  icon, 
-  onChangeClick 
+export default function PickupInfoCard({
+  type,
+  title,
+  subtitle,
+  icon,
+  onChangeClick,
 }: PickupInfoCardProps) {
   return (
     <InfoCard>
@@ -24,16 +24,14 @@ export default function PickupInfoCard({
           <MdCameraAlt size={28} />
         </CardMedia>
       ) : (
-        <IconCircle>
-          {icon || <MdAccessTime size={24} />}
-        </IconCircle>
+        <IconCircle>{icon || <MdAccessTime size={24} />}</IconCircle>
       )}
-      
+
       <InfoContent>
         <InfoTitle>{title}</InfoTitle>
         <InfoSub>{subtitle}</InfoSub>
       </InfoContent>
-      
+
       <LinkBtn onClick={onChangeClick}>변경</LinkBtn>
     </InfoCard>
   );
@@ -58,7 +56,7 @@ const CardMedia = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   svg {
     opacity: 0.6;
   }

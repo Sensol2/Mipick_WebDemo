@@ -2,7 +2,7 @@ import { supabase } from "../api/supabase";
 
 export async function signInWithGoogle(redirectTo?: string) {
   const response = await supabase.auth.signInWithOAuth({
-    provider: 'google',
+    provider: "google",
     options: redirectTo ? { redirectTo } : undefined,
   });
   return response;

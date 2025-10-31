@@ -1,20 +1,27 @@
-"use client"
+"use client";
 
-import styled from "styled-components"
-import Container from "./ui/Container"
+import styled from "styled-components";
+import Container from "./ui/Container";
 
 const Wrap = styled.section`
   padding: ${({ theme }) => theme.layout.sectionPadY} 0;
-`
+`;
 
 const Item = styled.details`
-  background: #fff; border-radius: 12px; border: 1px solid rgba(0,0,0,0.06);
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
   padding: 16px 18px;
-  summary { cursor: pointer; font-weight: 700; }
-  p { margin-top: 8px; }
-`
+  summary {
+    cursor: pointer;
+    font-weight: 700;
+  }
+  p {
+    margin-top: 8px;
+  }
+`;
 
-export default function FAQ(){
+export default function FAQ() {
   return (
     <Wrap id="faq">
       <Container>
@@ -35,5 +42,5 @@ export default function FAQ(){
         </div>
       </Container>
     </Wrap>
-  )
+  );
 }

@@ -5,7 +5,16 @@ export type ChildQuestion = {
   parentOption: string; // 부모의 어떤 옵션이 선택됐을 때 표시할지
   id?: string;
   label?: string; // 하위 질문 레이블
-  type: "single" | "multiple" | "dropdown" | "likert" | "likertGroup" | "text" | "tel" | "textarea" | "description";
+  type:
+    | "single"
+    | "multiple"
+    | "dropdown"
+    | "likert"
+    | "likertGroup"
+    | "text"
+    | "tel"
+    | "textarea"
+    | "description";
   options?: string[]; // single/multiple/dropdown용
   scale?: number; // likert용
   anchors?: [string, string]; // likert용

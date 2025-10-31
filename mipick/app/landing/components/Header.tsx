@@ -1,33 +1,51 @@
-"use client"
+"use client";
 
-import styled from "styled-components"
-import { useRouter } from "next/navigation"
-import Container from "@/app/landing/components/ui/Container"
-import { useAuth, signOut } from "@/app/hooks/auth"
-import { MdFastfood } from "react-icons/md"
+import styled from "styled-components";
+import { useRouter } from "next/navigation";
+import Container from "@/app/landing/components/ui/Container";
+import { useAuth, signOut } from "@/app/hooks/auth";
+import { MdFastfood } from "react-icons/md";
 
 const Bar = styled.header`
-  position: sticky; top: 0; z-index: 50;
-  background: rgba(255,255,255,0.8);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.8);
   backdrop-filter: saturate(180%) blur(8px);
-  border-bottom: 1px solid rgba(0,0,0,0.06);
-`
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+`;
 
 const Row = styled.div`
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   height: 64px;
-`
+`;
 
 const Nav = styled.nav`
-  display: none; gap: 16px; align-items: center;
-  a { font-weight: 600; color: ${({ theme }) => theme.colors.textSecondary}; }
-  @media (min-width: 768px) { display: flex; }
-`
+  display: none;
+  gap: 16px;
+  align-items: center;
+  a {
+    font-weight: 600;
+    color: ${({ theme }) => theme.colors.textSecondary};
+  }
+  @media (min-width: 768px) {
+    display: flex;
+  }
+`;
 
 const Logo = styled.div`
-  display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 18px;
-  svg { width: 22px; height: 22px; }
-`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 800;
+  font-size: 18px;
+  svg {
+    width: 22px;
+    height: 22px;
+  }
+`;
 
 const AuthButton = styled.button`
   padding: 8px 20px;
@@ -49,9 +67,9 @@ const AuthButton = styled.button`
     opacity: 0.5;
     cursor: not-allowed;
   }
-`
+`;
 
-export default function Header(){
+export default function Header() {
   const router = useRouter();
   const { isAuthenticated, loading } = useAuth();
 
@@ -84,5 +102,5 @@ export default function Header(){
         </Row>
       </Container>
     </Bar>
-  )
+  );
 }

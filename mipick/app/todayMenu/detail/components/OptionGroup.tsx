@@ -8,10 +8,10 @@ interface OptionGroupProps {
   onOptionSelect: (option: MenuOption | null) => void;
 }
 
-export default function OptionGroup({ 
-  group, 
-  selectedOptionIds, 
-  onOptionSelect 
+export default function OptionGroup({
+  group,
+  selectedOptionIds,
+  onOptionSelect,
 }: OptionGroupProps) {
   const isSingleSelect = group.maxSelections === 1;
   const canSelectMore = selectedOptionIds.length < group.maxSelections;
@@ -24,7 +24,7 @@ export default function OptionGroup({
     } else {
       // 다중 선택
       const isCurrentlySelected = selectedOptionIds.includes(option.id);
-      
+
       if (isCurrentlySelected) {
         // 이미 선택된 경우: 선택 해제
         onOptionSelect(option);
@@ -59,10 +59,7 @@ export default function OptionGroup({
       <List>
         {/* 필수가 아닌 경우 '선택 안함' 옵션 추가 */}
         {!group.isRequired && (
-          <Row
-            $selected={selectedOptionIds.length === 0}
-            onClick={handleNoneSelect}
-          >
+          <Row $selected={selectedOptionIds.length === 0} onClick={handleNoneSelect}>
             {isSingleSelect ? (
               <Radio $checked={selectedOptionIds.length === 0}>
                 {selectedOptionIds.length === 0 && <RadioDot />}
@@ -90,20 +87,14 @@ export default function OptionGroup({
               onClick={() => !isDisabled && handleOptionClick(option)}
             >
               {isSingleSelect ? (
-                <Radio $checked={isSelected}>
-                  {isSelected && <RadioDot />}
-                </Radio>
+                <Radio $checked={isSelected}>{isSelected && <RadioDot />}</Radio>
               ) : (
-                <Checkbox $checked={isSelected}>
-                  {isSelected && "✓"}
-                </Checkbox>
+                <Checkbox $checked={isSelected}>{isSelected && "✓"}</Checkbox>
               )}
               <RowInfo>
                 <RowTitle $disabled={isDisabled}>{option.name}</RowTitle>
                 {option.price > 0 && (
-                  <RowPrice $disabled={isDisabled}>
-                    +₩{option.price.toLocaleString()}
-                  </RowPrice>
+                  <RowPrice $disabled={isDisabled}>+₩{option.price.toLocaleString()}</RowPrice>
                 )}
               </RowInfo>
             </Row>
@@ -159,16 +150,16 @@ const Row = styled.div<{ $selected?: boolean; $disabled?: boolean }>`
   display: flex;
   align-items: center;
   padding: 12px;
-  border: 1px solid ${props => props.$selected ? '#f97316' : '#e5e7eb'};
+  border: 1px solid ${(props) => (props.$selected ? "#f97316" : "#e5e7eb")};
   border-radius: 12px;
-  background: ${props => props.$selected ? '#fff7ed' : '#fff'};
-  cursor: ${props => props.$disabled ? 'not-allowed' : 'pointer'};
-  opacity: ${props => props.$disabled ? 0.5 : 1};
+  background: ${(props) => (props.$selected ? "#fff7ed" : "#fff")};
+  cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
+  opacity: ${(props) => (props.$disabled ? 0.5 : 1)};
   transition: all 0.2s ease;
 
   &:hover {
-    border-color: ${props => props.$disabled ? '#e5e7eb' : '#f97316'};
-    background: ${props => props.$disabled ? '#fff' : '#fff7ed'};
+    border-color: ${(props) => (props.$disabled ? "#e5e7eb" : "#f97316")};
+    background: ${(props) => (props.$disabled ? "#fff" : "#fff7ed")};
   }
 `;
 
@@ -215,12 +206,12 @@ const RowInfo = styled.div`
 const RowTitle = styled.div<{ $disabled?: boolean }>`
   font-size: 14px;
   font-weight: 700;
-  color: ${props => props.$disabled ? '#9ca3af' : '#1f2937'};
+  color: ${(props) => (props.$disabled ? "#9ca3af" : "#1f2937")};
 `;
 
 const RowPrice = styled.div<{ $disabled?: boolean }>`
   font-size: 12px;
-  color: ${props => props.$disabled ? '#d1d5db' : '#f97316'};
+  color: ${(props) => (props.$disabled ? "#d1d5db" : "#f97316")};
   font-weight: 700;
   margin-top: 4px;
 `;

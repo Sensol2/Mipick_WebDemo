@@ -19,11 +19,11 @@ export function useCountdown(initialSeconds: number) {
 
   const formatted = `${String(Math.floor(secondsLeft / 60)).padStart(2, "0")}:${String(secondsLeft % 60).padStart(2, "0")}`;
 
-  return { 
-    secondsLeft, 
+  return {
+    secondsLeft,
     hours,
-    minutes, 
+    minutes,
     seconds,
-    formatted 
+    formatted,
   };
 }

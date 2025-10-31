@@ -20,14 +20,18 @@ export function useAuth(): AuthState {
     let mounted = true;
 
     (async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (mounted) {
         setUser(user ?? null);
         setLoading(false);
       }
     })();
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_, session) => {
       if (mounted) {
         setUser(session?.user ?? null);
         setLoading(false);
@@ -55,7 +59,10 @@ export async function signOut() {
 }
 
 export async function refreshUser() {
-  const { data: { user }, error } = await supabase.auth.getUser();
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
   if (error) throw error;
   return user;
 }

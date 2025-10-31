@@ -19,7 +19,6 @@ export default function DropdownField({
 }: DropdownFieldProps) {
   return (
     <FieldWrapper>
-
       <SelectWrapper>
         <Select
           id={id}
@@ -75,7 +74,7 @@ const Select = styled.select<{ $hasValue: boolean }>`
   padding-right: 40px;
   font-size: 15px;
   font-weight: 500;
-  color: ${props => props.$hasValue ? '#1f2937' : '#9ca3af'};
+  color: ${(props) => (props.$hasValue ? "#1f2937" : "#9ca3af")};
   background: white;
   border: 2px solid #e5e7eb;
   border-radius: 12px;

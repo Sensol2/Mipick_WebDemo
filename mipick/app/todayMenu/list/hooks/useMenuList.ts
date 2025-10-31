@@ -6,7 +6,7 @@ import { type Menu, type Store } from "@/lib/api/supabase";
 
 export function useMenuList(storeId: string | null) {
   const router = useRouter();
-  
+
   const [store, setStore] = useState<Store | null>(null);
   const [menus, setMenus] = useState<Menu[]>([]);
   const [loading, setLoading] = useState(true);

@@ -21,16 +21,16 @@ export default function InAppBrowserDetector() {
         // Android: Chrome으로 열기
         location.href = `kakaotalk://web/openExternal?url=${encodeURIComponent(targetUrl)}`;
       }
-      
+
       // 외부 브라우저 열린 후 카카오톡 인앱 브라우저 닫기
       setTimeout(() => {
         if (isIos) {
-          location.href = 'kakaoweb://closeBrowser';
+          location.href = "kakaoweb://closeBrowser";
         } else {
-          location.href = 'kakaotalk://inappbrowser/close';
+          location.href = "kakaotalk://inappbrowser/close";
         }
       }, 500);
-      
+
       return;
     }
 
@@ -47,13 +47,13 @@ export default function InAppBrowserDetector() {
     // 기타 인앱 브라우저 감지
     if (
       userAgent.match(
-        /inapp|naver|snapchat|wirtschaftswoche|thunderbird|instagram|everytimeapp|whatsapp|electron|wadiz|aliapp|zumapp|iphone(.*)whale|android(.*)whale|kakaostory|band|twitter|daumapps|daumdevice\/mobile|fb_iab|fb4a|fban|fbios|fbss|trill|samsungbrowser\/[^1]/i
+        /inapp|naver|snapchat|wirtschaftswoche|thunderbird|instagram|everytimeapp|whatsapp|electron|wadiz|aliapp|zumapp|iphone(.*)whale|android(.*)whale|kakaostory|band|twitter|daumapps|daumdevice\/mobile|fb_iab|fb4a|fban|fbios|fbss|trill|samsungbrowser\/[^1]/i,
       )
     ) {
       // iOS - Safari 강제 실행 불가, 안내 화면 표시
       if (userAgent.match(/iphone|ipad|ipod/i)) {
         setShowIOSGuide(true);
-      } 
+      }
       // Android - Chrome으로 자동 리다이렉트
       else {
         location.href = `intent://${targetUrl.replace(/https?:\/\//i, "")}#Intent;scheme=http;package=com.android.chrome;end`;
@@ -68,16 +68,16 @@ export default function InAppBrowserDetector() {
 
     if (isIos) {
       // iOS에서 Safari로 열기 시도
-      const urlWithoutProtocol = targetUrl.replace(/^https?:\/\//i, '');
-      
+      const urlWithoutProtocol = targetUrl.replace(/^https?:\/\//i, "");
+
       // Safari로 열기 (https만 지원)
-      if (targetUrl.startsWith('https')) {
-        location.href = 'x-safari-https://' + urlWithoutProtocol;
+      if (targetUrl.startsWith("https")) {
+        location.href = "x-safari-https://" + urlWithoutProtocol;
       } else {
         // Chrome으로 열기 시도
-        location.href = 'googlechrome://' + urlWithoutProtocol;
+        location.href = "googlechrome://" + urlWithoutProtocol;
       }
-      
+
       // 1초 후에도 페이지가 그대로 있으면 클립보드 복사 안내
       setTimeout(() => {
         // URL을 클립보드에 복사
@@ -93,7 +93,7 @@ export default function InAppBrowserDetector() {
           document.body.removeChild(textarea);
 
           alert(
-            "URL주소가 복사되었습니다.\n\nSafari가 열리면 주소창을 길게 터치한 뒤,\n'붙여넣기 및 이동'을 누르면 정상적으로 이용하실 수 있습니다."
+            "URL주소가 복사되었습니다.\n\nSafari가 열리면 주소창을 길게 터치한 뒤,\n'붙여넣기 및 이동'을 누르면 정상적으로 이용하실 수 있습니다.",
           );
 
           // Safari 강제 실행
@@ -114,18 +114,23 @@ export default function InAppBrowserDetector() {
   return (
     <Container>
       <Content>
-        <Title>인앱브라우저 호환문제로 인해<br />Safari로 접속해야합니다.</Title>
+        <Title>
+          인앱브라우저 호환문제로 인해
+          <br />
+          Safari로 접속해야합니다.
+        </Title>
         <Description>
-          아래 버튼을 눌러 Safari를 실행해주세요<br />
-          Safari가 열리면, 주소창을 길게 터치한 뒤,<br />
-          '붙여놓기 및 이동'을 누르면<br />
+          아래 버튼을 눌러 Safari를 실행해주세요
+          <br />
+          Safari가 열리면, 주소창을 길게 터치한 뒤,
+          <br />
+          '붙여놓기 및 이동'을 누르면
+          <br />
           정상적으로 이용할 수 있습니다.
         </Description>
-        <OpenButton onClick={handleOpenExternalBrowser}>
-          Safari로 열기
-        </OpenButton>
-        <GuideImage 
-          src="https://tistory3.daumcdn.net/tistory/1893869/skin/images/inappbrowserout.jpeg" 
+        <OpenButton onClick={handleOpenExternalBrowser}>Safari로 열기</OpenButton>
+        <GuideImage
+          src="https://tistory3.daumcdn.net/tistory/1893869/skin/images/inappbrowserout.jpeg"
           alt="Safari로 열기 가이드"
         />
       </Content>
@@ -148,7 +153,12 @@ const Container = styled.div`
 const Content = styled.div`
   padding: 50px 20px 20px;
   text-align: center;
-  font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family:
+    "Noto Sans KR",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
 `;
 
 const Title = styled.h2`
@@ -171,7 +181,7 @@ const Description = styled.article`
 const OpenButton = styled.button`
   min-width: 180px;
   height: 54px;
-  background-color: #FF6B35;
+  background-color: #ff6b35;
   color: white;
   border: none;
   border-radius: 12px;
@@ -183,7 +193,7 @@ const OpenButton = styled.button`
 
   &:active {
     transform: scale(0.98);
-    background-color: #FF5722;
+    background-color: #ff5722;
   }
 `;
 

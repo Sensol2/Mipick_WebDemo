@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { createGlobalStyle } from "styled-components"
+import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
   :root {
@@ -20,4 +20,4 @@ export const GlobalStyle = createGlobalStyle`
   p { margin: 0 0 0px;}
   a { color: inherit; text-decoration: none; }
   img { max-width: 100%; height: auto; display: block; }
-`
+`;

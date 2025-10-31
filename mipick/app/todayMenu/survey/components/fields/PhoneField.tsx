@@ -9,8 +9,8 @@ export interface PhoneFieldProps {
 export default function PhoneField({ value, onChange, placeholder }: PhoneFieldProps) {
   const formatPhoneNumber = (inputValue: string): string => {
     // 숫자만 추출
-    const numbers = inputValue.replace(/[^\d]/g, '');
-    
+    const numbers = inputValue.replace(/[^\d]/g, "");
+
     // 길이에 따라 포맷팅
     if (numbers.length <= 3) {
       return numbers;
@@ -49,7 +49,7 @@ const Input = styled.input`
 
   &:focus {
     outline: none;
-    border-color: #FF6B35;
+    border-color: #ff6b35;
   }
 
   &::placeholder {

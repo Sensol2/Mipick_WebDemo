@@ -7,7 +7,6 @@ import { IoShareSocial, IoLink } from "react-icons/io5";
 import { FaInstagram, FaHome } from "react-icons/fa";
 import { IoCheckmarkCircle } from "react-icons/io5";
 
-
 export default function ShareSection() {
   const { isInitialized } = useKakaoSDK();
   const router = useRouter();
@@ -19,7 +18,8 @@ export default function ShareSection() {
 
     shareToKakao({
       title: "Mipick 설문조사 참여하기",
-      description: "미리 주문하면, 맛집이 학교 앞으로! Mipick 서비스 개발을 위한 설문조사에 참여해주세요.",
+      description:
+        "미리 주문하면, 맛집이 학교 앞으로! Mipick 서비스 개발을 위한 설문조사에 참여해주세요.",
       imageUrl: `${window.location.origin}/character.png`,
       linkUrl: `${window.location.origin}/todayMenu/survey`,
       buttonText: "설문 참여하기",
@@ -47,7 +47,7 @@ export default function ShareSection() {
 
   const handleLinkCopy = async () => {
     const url = `${window.location.origin}/todayMenu/survey`;
-    
+
     try {
       await navigator.clipboard.writeText(url);
       alert("링크가 복사되었습니다!");
@@ -58,14 +58,14 @@ export default function ShareSection() {
       textArea.style.opacity = "0";
       document.body.appendChild(textArea);
       textArea.select();
-      
+
       try {
         document.execCommand("copy");
         alert("링크가 복사되었습니다!");
       } catch {
         alert("링크 복사에 실패했습니다.");
       }
-      
+
       document.body.removeChild(textArea);
     }
   };
@@ -75,7 +75,7 @@ export default function ShareSection() {
   };
 
   const handleHomePageVisit = () => {
-    router.push("/")
+    router.push("/");
   };
 
   return (
@@ -85,9 +85,10 @@ export default function ShareSection() {
           <CompleteBadge>
             <IoCheckmarkCircle /> 설문조사 완료
           </CompleteBadge>
-          
+
           <MainTitle>
-            설문에 참여해주셔서<br />
+            설문에 참여해주셔서
+            <br />
             감사합니다!
           </MainTitle>
         </HeaderSection>
@@ -100,27 +101,34 @@ export default function ShareSection() {
 
         <MessageSection>
           <ThankYouMessage>
-            여러분의 소중한 응답은<br />
-            미픽이 더 나은 서비스를 개발하는 데에<br />
-            큰 도움이 됩니다
+            여러분의 소중한 응답은
+            <br />
+            미픽이 더 나은 서비스를 개발하는 데에
+            <br />큰 도움이 됩니다
           </ThankYouMessage>
         </MessageSection>
 
         <ShareActionSection>
           <ShareTitle>친구에게도 이벤트 공유하기!</ShareTitle>
-          
+
           <ShareButtons>
             <ShareButton $primary onClick={handleKakaoShare}>
-              <ShareIcon><RiKakaoTalkFill /></ShareIcon>
+              <ShareIcon>
+                <RiKakaoTalkFill />
+              </ShareIcon>
               <ButtonText>카카오톡 공유</ButtonText>
             </ShareButton>
             <ShareButtonRow>
               <ShareButton onClick={handleSystemShare}>
-                <ShareIcon><IoShareSocial /></ShareIcon>
+                <ShareIcon>
+                  <IoShareSocial />
+                </ShareIcon>
                 <ButtonText>기타 공유</ButtonText>
               </ShareButton>
               <ShareButton onClick={handleLinkCopy}>
-                <ShareIcon><IoLink /></ShareIcon>
+                <ShareIcon>
+                  <IoLink />
+                </ShareIcon>
                 <ButtonText>링크 복사</ButtonText>
               </ShareButton>
             </ShareButtonRow>
@@ -144,7 +152,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100%;
-  background: linear-gradient(180deg, #FFF5EB 0%, #FFFFFF 50%);
+  background: linear-gradient(180deg, #fff5eb 0%, #ffffff 50%);
 `;
 
 const ContentWrapper = styled.div`
@@ -164,7 +172,7 @@ const CompleteBadge = styled.div`
   align-items: center;
   gap: 6px;
   padding: 8px 16px;
-  background: linear-gradient(135deg, #10B981 0%, #34D399 100%);
+  background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
   color: white;
   border-radius: 20px;
   font-size: 13px;
@@ -172,7 +180,7 @@ const CompleteBadge = styled.div`
   box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
   letter-spacing: -0.3px;
   margin-bottom: 20px;
-  
+
   svg {
     font-size: 16px;
   }
@@ -182,7 +190,7 @@ const MainTitle = styled.h1`
   font-size: 30px;
   font-weight: 900;
   line-height: 1.35;
-  color: #1F2937;
+  color: #1f2937;
   margin: 0;
   letter-spacing: -0.8px;
   word-break: keep-all;
@@ -201,9 +209,9 @@ const CharacterWrapper = styled.div`
   position: relative;
   width: 100%;
   max-width: 240px;
-  
+
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     bottom: -10px;
     left: 50%;
@@ -231,7 +239,7 @@ const ThankYouMessage = styled.p`
   font-size: 16px;
   font-weight: 500;
   line-height: 1.7;
-  color: #6B7280;
+  color: #6b7280;
   margin: 0;
   letter-spacing: -0.3px;
   word-break: keep-all;
@@ -244,7 +252,7 @@ const ShareActionSection = styled.div`
 const ShareTitle = styled.h2`
   font-size: 18px;
   font-weight: 800;
-  color: #1F2937;
+  color: #1f2937;
   margin: 0 0 16px 0;
   text-align: center;
   letter-spacing: -0.5px;
@@ -262,22 +270,19 @@ const ShareButton = styled.button<{ $primary?: boolean }>`
   justify-content: center;
   gap: 10px;
   padding: 16px 20px;
-  background: ${props => props.$primary 
-    ? 'linear-gradient(135deg, #FEE500 0%, #FFD000 100%)'
-    : '#FFFFFF'};
-  border: 2px solid ${props => props.$primary ? '#FEE500' : '#F3F4F6'};
+  background: ${(props) =>
+    props.$primary ? "linear-gradient(135deg, #FEE500 0%, #FFD000 100%)" : "#FFFFFF"};
+  border: 2px solid ${(props) => (props.$primary ? "#FEE500" : "#F3F4F6")};
   border-radius: 14px;
-  box-shadow: ${props => props.$primary 
-    ? '0 4px 16px rgba(254, 229, 0, 0.3)'
-    : '0 2px 8px rgba(0, 0, 0, 0.04)'};
+  box-shadow: ${(props) =>
+    props.$primary ? "0 4px 16px rgba(254, 229, 0, 0.3)" : "0 2px 8px rgba(0, 0, 0, 0.04)"};
   cursor: pointer;
   transition: all 0.3s ease;
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: ${props => props.$primary 
-      ? '0 8px 24px rgba(254, 229, 0, 0.4)'
-      : '0 4px 12px rgba(0, 0, 0, 0.08)'};
+    box-shadow: ${(props) =>
+      props.$primary ? "0 8px 24px rgba(254, 229, 0, 0.4)" : "0 4px 12px rgba(0, 0, 0, 0.08)"};
   }
 
   &:active {
@@ -296,7 +301,7 @@ const ShareIcon = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   svg {
     font-size: 20px;
   }
@@ -305,7 +310,7 @@ const ShareIcon = styled.span`
 const ButtonText = styled.span`
   font-size: 15px;
   font-weight: 700;
-  color: #1F2937;
+  color: #1f2937;
   letter-spacing: -0.3px;
 `;
 
@@ -323,8 +328,8 @@ const SocialIconButton = styled.button`
   justify-content: center;
   width: 56px;
   height: 56px;
-  background: #FFFFFF;
-  border: 2px solid #F3F4F6;
+  background: #ffffff;
+  border: 2px solid #f3f4f6;
   border-radius: 50%;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -332,15 +337,15 @@ const SocialIconButton = styled.button`
 
   svg {
     font-size: 24px;
-    color: #6B7280;
+    color: #6b7280;
   }
 
   &:hover {
-    background: #F9FAFB;
-    border-color: #E5E7EB;
+    background: #f9fafb;
+    border-color: #e5e7eb;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    
+
     svg {
       color: #374151;
     }

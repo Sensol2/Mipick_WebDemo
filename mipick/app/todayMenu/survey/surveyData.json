@@ -485,7 +485,7 @@
           "subtitle": "ASAP 샌드위치 (샌드위치 전문점)",
           "address": "서울 용산구 청파로49길 54 1층",
           "options": [
-            { "id": "preference", "label": "선호도", "min": 1, "max": 5},
+            { "id": "preference", "label": "선호도", "min": 1, "max": 5 },
             { "id": "amount", "label": "양", "min": 1, "max": 5 },
             { "id": "value", "label": "값", "min": 1, "max": 5 }
           ],

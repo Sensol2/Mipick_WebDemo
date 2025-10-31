@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React from "react";
 import styled from "styled-components";
@@ -267,7 +267,7 @@ const CTAText = styled.div`
 `;
 
 /* ───────── Exported Component ───────── */
-export default function IntroSection2 () {
+export default function IntroSection2() {
   return (
     <Page>
       <Frame>
@@ -291,11 +291,10 @@ export default function IntroSection2 () {
             <Hero src={"/menuImages/menu1.png"} alt="원 디그리 노스 대표 이미지" />
             <SectionTitle>오늘의 데일리 큐레이션</SectionTitle>
             <Body>
-              닭, 오리, 돼지. 촉촉하게 구운 싱가포르식 닭과 오리. 그리고 차슈.
-              껍질을 바삭하게 구운 돼지바베큐. 다 구워, 먹기 좋게 썰어 나오고,
-              찬요리로 나오니 기다릴 필요가 없다. 성수에는 없는 덤플링이 있어
-              맛볼 수 있다. 와인도 백주도 맥주도 잘 어울리는 안주. 밥과 누들을
-              곁들이면 식사로도 손색이 없다.
+              닭, 오리, 돼지. 촉촉하게 구운 싱가포르식 닭과 오리. 그리고 차슈. 껍질을 바삭하게 구운
+              돼지바베큐. 다 구워, 먹기 좋게 썰어 나오고, 찬요리로 나오니 기다릴 필요가 없다.
+              성수에는 없는 덤플링이 있어 맛볼 수 있다. 와인도 백주도 맥주도 잘 어울리는 안주. 밥과
+              누들을 곁들이면 식사로도 손색이 없다.
             </Body>
             <EditorTitle>에디터 코멘트</EditorTitle>
             <EditorQuote>“미쉐린 가이드에는 감동과 낭만이 있다.”</EditorQuote>
@@ -323,4 +322,4 @@ export default function IntroSection2 () {
       </Frame>
     </Page>
   );
-};
+}

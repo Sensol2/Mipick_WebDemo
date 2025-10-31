@@ -1,1 +1,1 @@
-export { StyleProvider, useStyleContext } from './StyleProvider'
+export { StyleProvider, useStyleContext } from "./StyleProvider";

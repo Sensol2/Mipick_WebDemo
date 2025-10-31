@@ -1,12 +1,12 @@
-import { useState } from 'react';
-import { useAuth } from '../../../hooks/auth';
-import { 
+import { useState } from "react";
+import { useAuth } from "../../../hooks/auth";
+import {
   validateFormData,
   createSurveyResponse,
   saveSurveyToLocalStorage,
-  clearSurveyFromLocalStorage
-} from '../utils/surveyUtils';
-import { setSurveyResponse, hasUserSubmittedSurvey } from '../../../../lib/api/surveyService';
+  clearSurveyFromLocalStorage,
+} from "../utils/surveyUtils";
+import { setSurveyResponse, hasUserSubmittedSurvey } from "../../../../lib/api/surveyService";
 
 interface UseSurveySubmitOptions {
   formData: Record<string, string>;
@@ -24,7 +24,7 @@ interface UseSurveySubmitOptions {
  * - 중복 제출 방지
  * - LocalStorage 저장 (비로그인 시)
  * - DB 제출 (로그인 시)
- * 
+ *
  * @example
  * const { submitSurvey, isSubmitting } = useSurveySubmit({
  *   formData,
@@ -46,7 +46,7 @@ export function useSurveySubmit(options: UseSurveySubmitOptions) {
     try {
       // 1단계: 유효성 검증
       if (!validateFormData(options.formData)) {
-        const message = '모든 필수 항목을 입력해주세요!';
+        const message = "모든 필수 항목을 입력해주세요!";
         if (options.onValidationError) {
           options.onValidationError(message);
         } else {
@@ -57,29 +57,29 @@ export function useSurveySubmit(options: UseSurveySubmitOptions) {
 
       // 2단계: 로그인 여부 확인
       if (!isAuthenticated) {
-        console.log('💾 Saving survey data to localStorage before login...');
-        
+        console.log("💾 Saving survey data to localStorage before login...");
+
         // LocalStorage에 저장
         const saved = saveSurveyToLocalStorage(options.formData);
-        
+
         if (!saved) {
-          throw new Error('Failed to save survey data to localStorage');
+          throw new Error("Failed to save survey data to localStorage");
         }
 
-        console.log('✅ Survey data saved to localStorage');
+        console.log("✅ Survey data saved to localStorage");
 
         // 로그인 모달 열기
         if (options.onLoginRequired) {
           options.onLoginRequired();
         }
-        
+
         return false;
       }
 
       // 3단계: 중복 제출 확인
       const hasSubmitted = await hasUserSubmittedSurvey();
       if (hasSubmitted) {
-        const message = '이미 설문에 참여하셨습니다!';
+        const message = "이미 설문에 참여하셨습니다!";
         if (options.onAlreadySubmitted) {
           options.onAlreadySubmitted();
         } else {
@@ -89,11 +89,11 @@ export function useSurveySubmit(options: UseSurveySubmitOptions) {
       }
 
       // 4단계: DB에 제출
-      console.log('📤 Submitting survey to database...');
+      console.log("📤 Submitting survey to database...");
       const surveyResponse = createSurveyResponse(options.formData);
       await setSurveyResponse(surveyResponse);
-      
-      console.log('✅ Survey submitted successfully');
+
+      console.log("✅ Survey submitted successfully");
 
       // LocalStorage 정리 (혹시 남아있을 수 있는 데이터)
       clearSurveyFromLocalStorage();
@@ -105,14 +105,14 @@ export function useSurveySubmit(options: UseSurveySubmitOptions) {
 
       return true;
     } catch (error) {
-      console.error('❌ Survey submission error:', error);
-      
+      console.error("❌ Survey submission error:", error);
+
       if (options.onError) {
         options.onError(error as Error);
       } else {
-        alert('설문 제출에 실패했습니다. 다시 시도해주세요.');
+        alert("설문 제출에 실패했습니다. 다시 시도해주세요.");
       }
-      
+
       return false;
     } finally {
       setIsSubmitting(false);

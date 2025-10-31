@@ -1,26 +1,37 @@
-"use client"
+"use client";
 
-import styled from "styled-components"
-import Container from "./ui/Container"
-import { Card } from "./ui/Card"
-import { Clock, MapPin, ShieldCheck, Package } from "lucide-react"
+import styled from "styled-components";
+import Container from "./ui/Container";
+import { Card } from "./ui/Card";
+import { Clock, MapPin, ShieldCheck, Package } from "lucide-react";
 
 const Wrap = styled.section`
   padding: ${({ theme }) => theme.layout.sectionPadY} 0;
-`
+`;
 
 const Grid = styled.div`
-  display: grid; gap: 16px;
-  @media (min-width: 768px) { grid-template-columns: repeat(4, 1fr); }
-`
+  display: grid;
+  gap: 16px;
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+`;
 
 const Item = styled(Card)`
-  display: grid; gap: 8px; align-content: start;
-  svg { width: 24px; height: 24px; color: ${({ theme }) => theme.colors.primary}; }
-  h3 { font-size: 18px; }
-`
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  svg {
+    width: 24px;
+    height: 24px;
+    color: ${({ theme }) => theme.colors.primary};
+  }
+  h3 {
+    font-size: 18px;
+  }
+`;
 
-export default function Features(){
+export default function Features() {
   return (
     <Wrap id="features">
       <Container>
@@ -49,5 +60,5 @@ export default function Features(){
         </Grid>
       </Container>
     </Wrap>
-  )
+  );
 }

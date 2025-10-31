@@ -49,7 +49,7 @@ export function useKakaoSDK() {
       if (!window.Kakao.isInitialized()) {
         // TODO: 환경 변수에서 JavaScript 키 가져오기
         const kakaoAppKey = process.env.NEXT_PUBLIC_KAKAO_APP_KEY || "";
-        
+
         if (kakaoAppKey) {
           window.Kakao.init(kakaoAppKey);
           console.log("Kakao SDK initialized");
@@ -71,7 +71,7 @@ export function useKakaoSDK() {
     script.onload = () => {
       if (window.Kakao) {
         const kakaoAppKey = process.env.NEXT_PUBLIC_KAKAO_APP_KEY || "";
-        
+
         if (kakaoAppKey) {
           window.Kakao.init(kakaoAppKey);
           console.log("Kakao SDK loaded and initialized");

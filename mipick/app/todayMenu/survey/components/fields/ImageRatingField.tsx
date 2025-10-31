@@ -54,17 +54,17 @@ export default function ImageRatingField({
       <ImageWrapper>
         <MenuImage src={imageUrl} alt="메뉴 이미지" />
       </ImageWrapper>
-      
+
       <MenuInfo>
         <MenuTitle>{title}</MenuTitle>
         <RestaurantName>{subtitle}</RestaurantName>
         <Address>{address}</Address>
       </MenuInfo>
-      
+
       <QuestionWrapper>
         <QuestionText>{questionText}</QuestionText>
       </QuestionWrapper>
-      
+
       <RatingGroups>
         {options.map((option) => (
           <RatingGroup key={option.id}>
@@ -73,7 +73,7 @@ export default function ImageRatingField({
               {Array.from({ length: option.max - option.min + 1 }, (_, i) => {
                 const score = option.min + i;
                 const isSelected = ratings[option.id] === String(score);
-                
+
                 return (
                   <ScaleButton
                     key={score}
@@ -141,9 +141,9 @@ const Address = styled.div`
 
 const QuestionWrapper = styled.div`
   padding: 20px;
-  background: linear-gradient(135deg, #FFF5F0 0%, #FFF8F5 100%);
+  background: linear-gradient(135deg, #fff5f0 0%, #fff8f5 100%);
   border-radius: 12px;
-  border: 1px solid #FFE8DD;
+  border: 1px solid #ffe8dd;
 `;
 
 const QuestionText = styled.div`
@@ -182,9 +182,9 @@ const ScaleButtons = styled.div`
 const ScaleButton = styled.button<{ $isSelected: boolean }>`
   flex: 1;
   padding: 12px;
-  border: 2px solid ${props => props.$isSelected ? "#FF6B35" : "#e0e0e0"};
-  background: ${props => props.$isSelected ? "#FF6B35" : "white"};
-  color: ${props => props.$isSelected ? "white" : "#666"};
+  border: 2px solid ${(props) => (props.$isSelected ? "#FF6B35" : "#e0e0e0")};
+  background: ${(props) => (props.$isSelected ? "#FF6B35" : "white")};
+  color: ${(props) => (props.$isSelected ? "white" : "#666")};
   border-radius: 10px;
   font-size: 15px;
   font-weight: 600;

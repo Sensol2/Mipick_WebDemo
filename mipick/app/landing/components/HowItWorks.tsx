@@ -1,30 +1,45 @@
-"use client"
+"use client";
 
-import styled from "styled-components"
-import Container from "./ui/Container"
-import { Card } from "./ui/Card"
-import { ShoppingBasket, CreditCard, Store } from "lucide-react"
+import styled from "styled-components";
+import Container from "./ui/Container";
+import { Card } from "./ui/Card";
+import { ShoppingBasket, CreditCard, Store } from "lucide-react";
 
 const Wrap = styled.section`
   padding: ${({ theme }) => theme.layout.sectionPadY} 0;
-`
+`;
 
 const Grid = styled.div`
-  display: grid; gap: 16px; counter-reset: step;
-  @media (min-width: 768px) { grid-template-columns: repeat(3, 1fr); }
-`
+  display: grid;
+  gap: 16px;
+  counter-reset: step;
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+`;
 
 const Step = styled(Card)`
-  position: relative; padding-top: 28px;
+  position: relative;
+  padding-top: 28px;
   &::before {
-    counter-increment: step; content: counter(step);
-    position: absolute; top: 12px; left: 12px; font-weight: 800; color: ${({ theme }) => theme.colors.primary};
+    counter-increment: step;
+    content: counter(step);
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    font-weight: 800;
+    color: ${({ theme }) => theme.colors.primary};
   }
-  display: grid; gap: 8px;
-  svg { width: 24px; height: 24px; color: ${({ theme }) => theme.colors.primary}; }
-`
+  display: grid;
+  gap: 8px;
+  svg {
+    width: 24px;
+    height: 24px;
+    color: ${({ theme }) => theme.colors.primary};
+  }
+`;
 
-export default function HowItWorks(){
+export default function HowItWorks() {
   return (
     <Wrap id="howitworks">
       <Container>
@@ -48,5 +63,5 @@ export default function HowItWorks(){
         </Grid>
       </Container>
     </Wrap>
-  )
+  );
 }

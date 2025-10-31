@@ -22,7 +22,7 @@ export default function Home() {
         const storeData = await StoreService.getTodayStore();
         setStore(storeData);
       } catch (error) {
-        console.error('Failed to fetch today store:', error);
+        console.error("Failed to fetch today store:", error);
       } finally {
         setLoading(false);
       }
@@ -64,7 +64,7 @@ export default function Home() {
 
       <Body>
         <StoreInfo store={store} />
-        
+
         <Section>
           <ProgressSection currentOrders={currentOrders} />
           <CountdownSection hours={hours} minutes={minutes} seconds={seconds} />
@@ -72,9 +72,7 @@ export default function Home() {
       </Body>
 
       <Footer>
-        <PayButton href={`/todayMenu/list?storeId=${store.id}`}>
-          주문하고 학교에서 먹기
-        </PayButton>
+        <PayButton href={`/todayMenu/list?storeId=${store.id}`}>주문하고 학교에서 먹기</PayButton>
       </Footer>
     </>
   );
@@ -85,7 +83,7 @@ const Section = styled.section`
   flex-direction: column;
 `;
 
-const Footer = styled.div` 
+const Footer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;

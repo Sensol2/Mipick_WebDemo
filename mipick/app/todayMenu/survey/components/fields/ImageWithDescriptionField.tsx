@@ -16,7 +16,7 @@ export default function ImageWithDescriptionField({
       <ImageWrapper>
         <DescriptionImage src={imageUrl} alt={title} />
       </ImageWrapper>
-      
+
       <Title>{title}</Title>
       <Subtitle>{subtitle}</Subtitle>
     </Container>
@@ -58,7 +58,7 @@ const Subtitle = styled.div`
   padding: 16px;
   background: #f8f8f8;
   border-radius: 8px;
-  border-left: 4px solid #FF6B35;
+  border-left: 4px solid #ff6b35;
   font-size: 14px;
   color: #555;
   line-height: 1.6;
