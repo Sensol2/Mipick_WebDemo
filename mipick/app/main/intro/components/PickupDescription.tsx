@@ -28,10 +28,8 @@ const PickupDescriptionWrapper = styled.section<{ theme: Theme }>`
 `;
 
 const Box = styled.div<{ theme: Theme }>`
-  width: 100%;
-  max-width: 100%;
   background: ${({ theme }) => theme.colors.sheetBackground};
-  border-radius: ${({ theme }) => theme.radius.md};
+  border: 2px solid ${({ theme }) => theme.colors.border};
   box-shadow: ${({ theme }) => theme.shadow.card};
   padding: ${({ theme }) => theme.spacing.lg};
   display: flex;

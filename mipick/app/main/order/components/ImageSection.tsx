@@ -77,7 +77,7 @@ const Price = styled.p<{ theme: Theme }>`
 const InfoWrapper = styled.div<{ theme: Theme }>`
   display: flex;
   align-items: center;
-  margin-top: ${({ theme }) => theme.spacing.sm};
+  margin: ${({ theme }) => theme.spacing.sm} 0;
   gap: ${({ theme }) => theme.spacing.sm};
   color: ${({ theme }) => theme.colors.textSecondary};
   opacity: 0.8;

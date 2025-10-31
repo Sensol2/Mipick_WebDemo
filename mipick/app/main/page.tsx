@@ -9,7 +9,15 @@ import type { Theme } from "./styles/theme";
 export default function Home() {
   return (
     <>
-      <OrderSection />
+      <Section>
+        <IntroSection />
+      </Section>
+      <Section>
+        <OrderSection />
+      </Section>
+      <Section>
+        <PaymentSection />
+      </Section>
     </>
   );
 }

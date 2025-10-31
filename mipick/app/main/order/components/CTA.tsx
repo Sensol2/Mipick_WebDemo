@@ -5,7 +5,7 @@ export default function CTA() {
   return (
     <>
       <CTAWrapper>
-        <CTAButton>내일 학교에서 먹어보기</CTAButton>
+        <CTAButton>주문하기</CTAButton>
       </CTAWrapper>
     </>
   );

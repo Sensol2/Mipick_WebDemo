@@ -6,6 +6,7 @@ import { Users } from "lucide-react";
 import TogetherProgressSection from "./TogetherProgressSection";
 
 export default function TogetherSection() {
+  const MOCK_COUNT = 51;
   return (
     <TogetherWrapper>
       <TogetherHeaderWrapper>
@@ -13,19 +14,18 @@ export default function TogetherSection() {
           <Users size={24} />
         </IconBox>
         <TextArea>
-          <Title>34명의 학우들과 함께하세요.</Title>
-          <Subtitle>뭉치면 혜택이 늘어난다고요.</Subtitle>
+          <Title>{MOCK_COUNT}명의 학우들이 함께하는 중</Title>
+          <Subtitle>뭉치면 혜택이 늘어난다구요.</Subtitle>
         </TextArea>
       </TogetherHeaderWrapper>
-      <TogetherProgressSection />
+      <TogetherProgressSection userCount={MOCK_COUNT} />
     </TogetherWrapper>
   );
 }
 
 const TogetherWrapper = styled.section<{ theme: Theme }>`
-  margin-top: ${({ theme }) => theme.spacing.lg};
+  margin-top: ${({ theme }) => theme.spacing.md};
   background: ${({ theme }) => theme.colors.sheetBackground};
-  //   border-radius: ${({ theme }) => theme.radius.md};
   border: 2px solid ${({ theme }) => theme.colors.border};
   box-shadow: ${({ theme }) => theme.shadow.card};
   padding: ${({ theme }) => theme.spacing.md};

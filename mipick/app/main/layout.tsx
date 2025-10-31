@@ -50,7 +50,6 @@ export const Grid = styled.div<{ theme: Theme }>`
   flex-direction: column;
   flex: 1;
   padding: ${({ theme }) => theme.spacing.lg};
-  margin-bottom: 64px;
 
   // 섹션 스크롤 스냅
   overflow-y: auto;

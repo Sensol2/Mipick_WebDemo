@@ -3,11 +3,12 @@
 import styled from "styled-components";
 import type { Theme } from "../../styles/theme";
 import { Check } from "lucide-react";
+import OptionListSection from "./OptionListSection";
 
 export default function OptionSection() {
   return (
-    <TogetherWrapper>
-      <TogetherHeaderWrapper>
+    <OptionWrapper>
+      <OptionHeaderWrapper>
         <IconBox>
           <Check size={24} />
         </IconBox>
@@ -15,21 +16,21 @@ export default function OptionSection() {
           <Title>옵션 선택</Title>
           <Subtitle>선택사항입니다</Subtitle>
         </TextArea>
-      </TogetherHeaderWrapper>
-    </TogetherWrapper>
+      </OptionHeaderWrapper>
+      <OptionListSection />
+    </OptionWrapper>
   );
 }
 
-const TogetherWrapper = styled.section<{ theme: Theme }>`
-  margin-top: ${({ theme }) => theme.spacing.lg};
+const OptionWrapper = styled.section<{ theme: Theme }>`
+  margin-top: ${({ theme }) => theme.spacing.md};
   background: ${({ theme }) => theme.colors.sheetBackground};
-  //   border-radius: ${({ theme }) => theme.radius.md};
   border: 2px solid ${({ theme }) => theme.colors.border};
   box-shadow: ${({ theme }) => theme.shadow.card};
   padding: ${({ theme }) => theme.spacing.md};
 `;
 
-const TogetherHeaderWrapper = styled.div<{ theme: Theme }>`
+const OptionHeaderWrapper = styled.div<{ theme: Theme }>`
   display: flex;
   align-items: center;
   gap: ${({ theme }) => theme.spacing.md};

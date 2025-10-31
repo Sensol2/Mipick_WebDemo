@@ -22,9 +22,7 @@ export const Button = styled.button<{ theme: Theme }>`
   border-radius: ${({ theme }) => theme.radius.sm};
   cursor: pointer;
   text-align: center;
-  opacity: 0.8;
+  opacity: 0.7;
 `;
 
-export const InfoWrapper = styled.div<{ theme: Theme }>`
-  margin-top: ${({ theme }) => theme.spacing.md};
-`;
+export const InfoWrapper = styled.div<{ theme: Theme }>``;

@@ -5,12 +5,12 @@ import type { Theme } from "../../styles/theme";
 import { Check, Users } from "lucide-react";
 
 type Props = {
-  count?: number; // 현재 인원 수
+  userCount?: number; // 현재 인원 수
   thresholds?: number[]; // 단계 임계값
 };
 
 export default function TogetherProgressSection({
-  count = 34,
+  userCount = 0,
   thresholds = [0, 30, 50, 100],
 }: Props) {
   return (
@@ -18,7 +18,7 @@ export default function TogetherProgressSection({
       <ProgressRow>
         <Connector />
         {thresholds.map((t, idx) => {
-          const isDone = t >= 0 && count >= t;
+          const isDone = t >= 0 && userCount >= t;
           return (
             <Step key={t + "-" + idx}>
               <StepSquare $done={isDone}>
