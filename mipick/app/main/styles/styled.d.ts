@@ -7,7 +7,9 @@ declare module "styled-components" {
       secondary: string;
       sheetBackground: string;
       pageBackground: string;
+      iconBoxBackground: string;
       surface: string;
+      border: string;
       text: string;
       textSecondary: string;
       error: string;

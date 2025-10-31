@@ -2,6 +2,7 @@
 
 import styled from "styled-components";
 import type { Theme } from "../../styles/theme";
+import { Info } from "lucide-react";
 
 export default function ImageSection() {
   return (
@@ -14,6 +15,10 @@ export default function ImageSection() {
           <Price>14,900원</Price>
         </TextWrapper>
       </ImageWrapper>
+      <InfoWrapper>
+        <Info size={20} />
+        <InfoText>메뉴를 고를 필요가 없습니다. 미픽은 엄선된 단 하나의 메뉴만 제공합니다.</InfoText>
+      </InfoWrapper>
     </>
   );
 }
@@ -44,7 +49,7 @@ const ImageOverlay = styled.div<{ theme: Theme }>`
   bottom: 0;
   left: 0;
   right: 0;
-  height: 80%;
+  height: 60%;
   background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.9));
   opacity: 0.8;
   pointer-events: none;
@@ -67,4 +72,19 @@ const Price = styled.p<{ theme: Theme }>`
   font-size: ${({ theme }) => theme.fontSizes.sm};
   margin: ${({ theme }) => theme.spacing.xs} 0 0;
   opacity: 0.9;
+`;
+
+const InfoWrapper = styled.div<{ theme: Theme }>`
+  display: flex;
+  align-items: center;
+  margin-top: ${({ theme }) => theme.spacing.sm};
+  gap: ${({ theme }) => theme.spacing.sm};
+  color: ${({ theme }) => theme.colors.textSecondary};
+  opacity: 0.8;
+`;
+
+const InfoText = styled.p<{ theme: Theme }>`
+  font-size: ${({ theme }) => theme.fontSizes.xs};
+  color: ${({ theme }) => theme.colors.textSecondary};
+  opacity: 0.8;
 `;
