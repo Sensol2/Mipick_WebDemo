@@ -6,16 +6,15 @@ import type { Theme } from "../../styles/theme";
 export default function ImageSection() {
   return (
     <ImageWrapper>
-      <Image src="/menuImages/menu1.png" alt="Intro Image" />
+      <Image src="/menuImages/menu7.jpg" alt="Intro Image" />
     </ImageWrapper>
   );
 }
 
 const ImageWrapper = styled.div<{ theme: Theme }>`
   width: 100%;
-
+  min-height: 200px;
   margin-top: ${({ theme }) => theme.spacing.md};
-
   background: ${({ theme }) => theme.colors.surface};
   border-radius: ${({ theme }) => theme.radius.md};
   box-shadow: ${({ theme }) => theme.shadow.card};
@@ -31,3 +30,4 @@ const Image = styled.img`
   object-fit: cover;
   display: block;
 `;
+

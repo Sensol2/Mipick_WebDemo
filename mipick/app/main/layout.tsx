@@ -41,22 +41,36 @@ export const Sheet = styled.div<{ theme: Theme }>`
   // 해상도 관련
   max-width: 480px;
   width: 100%;
-  min-height: 100vh;
+  height: 100svh;
   
   // 배치 관련
   display: flex;
   flex-direction: column;
 
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  overflow: visible;
+  overflow: hidden; // 외부 스크롤 생성 방지
 `;
 
 export const Grid = styled.div<{ theme: Theme }>`
   display: flex;
   flex-direction: column;
-  flex: 1;                      /* 남는 높이를 채우게 */
-  margin: ${({ theme }) => theme.spacing.lg};
+  flex: 1;
+  padding: ${({ theme }) => theme.spacing.lg};
+  margin-bottom: 64px;
 
-  // CTA 영역 가려지지 않게 하단에 패딩 추가
-  padding-bottom: ${({ theme }) => theme.spacing.xxxl};
+  // 섹션 스크롤 스냅
+  overflow-y: auto;
+  max-height: 100svh; 
+  scroll-snap-type: y mandatory; // 살짝 걸리는 느낌
+  scroll-padding-top: ${({ theme }) => theme.spacing.sm};
+  scroll-padding-bottom: ${({ theme }) => theme.spacing.xl};
+  scroll-behavior: smooth;
+
+  /* 스크롤바 숨기기 (크로스 브라우징) */
+  scrollbar-width: none;          /* Firefox */
+  -ms-overflow-style: none;       /* IE 10+ */
+
+  &::-webkit-scrollbar {
+    display: none;                /* Chrome, Safari */
+  }
 `;

@@ -11,7 +11,7 @@ export default function HeaderSection() {
 
         <Divider />
 
-        <Subtitle>점심 읽어주는 남자</Subtitle>
+        <Title>맛, 잇다</Title>
 
         <Divider />
       </HeaderWrapper>
@@ -57,7 +57,7 @@ const Divider = styled.div`
   background: #868581;
 `;
 
-const Subtitle = styled.h2`
+const Title = styled.h2`
   text-align: center;
   font-size: ${({ theme }) => theme.fontSizes.lg};
   font-weight: 600;

@@ -6,6 +6,8 @@ import HeaderSection from "./components/HeaderSection";
 import CTA from "./components/CTA";
 import ImageSection from "./components/ImageSection";
 import MenuDescriptionSection from "./components/MenuDescriptionSection";
+import PickupDescription from "./components/PickupDescription";
+
 
 export default function IntroSection() {
   return (
@@ -14,6 +16,7 @@ export default function IntroSection() {
       <Title>원 디그리 노스</Title>
       <ImageSection />
       <MenuDescriptionSection />
+      <PickupDescription />
 
       <CTA />
     </>
